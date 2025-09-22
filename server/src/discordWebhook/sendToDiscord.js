@@ -5,10 +5,10 @@ export default async function sendToDiscord(req, res) {
     console.log('sendToDiscord', req.body)
 
     // Build raw username text from inputs
-    const rawUsername = req.body.platform
-        ? (req.body.platform === 'Other' && req.body.otherPlatform)
+    const rawUsername = req.body['platform']
+        ? (req.body['platform'] === 'Other' && req.body.otherPlatform)
             ? `${req.body.username || 'Anonymous'} (${req.body.otherPlatform})`
-            : `${req.body.username || 'Anonymous'} (${req.body.platform})`
+            : `${req.body.username || 'Anonymous'} (${req.body['platform']})`
         : (req.body.username || 'Anonymous')
 
     // Normalize username to satisfy Discord webhook constraints (1-80 chars, no newlines/control chars)
@@ -17,15 +17,10 @@ export default async function sendToDiscord(req, res) {
         .replace(/\s+/g, ' ')                // collapse whitespace
         .replace(/Discord|discord/g, 'Discor.d')  // prevent mass-mentioning
         .replace('@', '@-')
+        .slice(0, 80)
         .trim()
 
     if (!usernameText) usernameText = 'Anonymous'
-
-    // Prevent mass-mentioning and cut to 80 chars max
-    usernameText = usernameText
-        .slice(0, 80)
-
-    console.log('usernameText', usernameText)
 
     if (!req.body.message || typeof req.body.message !== 'string' || !req.body.message.trim()) {
         console.log('No message provided, not sending to Discord.')

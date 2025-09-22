@@ -1,13 +1,12 @@
 import React, {useMemo, useRef} from 'react'
 import {
-    Dialog, DialogActions, Button, Zoom, useTheme, alpha, lighten
+    Dialog, Zoom, useTheme, lighten
 } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 import CancelIcon from '@mui/icons-material/Cancel'
 
 export default function ScopedDialog({
                                          open,
-                                         onClose,
                                          dialogContent,
                                          handleClose,
                                          width = 350,

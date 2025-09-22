@@ -4,7 +4,6 @@ import helmet from 'helmet'
 import dotenv from 'dotenv'
 import EventEmitter from 'events'
 import dayjs from 'dayjs'
-import {API_PREFIX} from '@starter/shared'
 import {prodUser} from './keys/users.js'
 
 dotenv.config()
@@ -25,12 +24,8 @@ const prod = false
 const envText = prod ? '' : ' (DEV)'
 const productionServer = process.env.USER === prodUser
 
-console.log('productionServer:', productionServer, ' (USER:', process.env.USER + ')')
-
-
 const apiPort = productionServer ? 9082 : 4000
 const apiPrefix = productionServer ? '/' : '/api'
-
 
 const myEmitter = new EventEmitter()
 myEmitter.on('myEvent', (data) => {
@@ -50,7 +45,7 @@ app.get(`${apiPrefix}/ready`, (_req, res) => {
 })
 
 // Example echo route with zod validation
-app.post(`${apiPrefix}/echo`, async (req, res) => {
+app.post(`${apiPrefix}/echo`, largeJson, async (req, res) => {
     myEmitter.emit('myEvent', 'Echo Message' + envText)
     req.body ||= {}
     req.body.prod = prod
@@ -67,7 +62,7 @@ app.post(`${apiPrefix}/discord`, async (req, res) => {
 })
 
 const port = apiPort
-const host = process.env.HOST || '0.0.0.0'
+const host = process.env.HOST || '127.0.0.1'
 app.listen(port, host, () => {
     const env = process.env.NODE_ENV || 'development'
     console.log('API listening', {env, port, host, corsOrigin})

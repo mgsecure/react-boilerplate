@@ -75,8 +75,9 @@ module.exports = defineConfig([{
 
         'import/extensions': ['warn', 'never', {
             jsx: 'never',
-            js: 'always',
             json: 'always',
+            js: 'ignorePackages'
+
         }],
 
         'import/no-unresolved': 'off',
