@@ -6,9 +6,9 @@ const isDev = process.env.NODE_ENV !== 'production'
 
 export const httpLogger = pinoHttp({
     logger,
-    genReqId: (req, _res) => req.headers['x-request-id'] || randomUUID(), //eslint-disable-line
+    genReqId: (req, _res) => req.headers['x-request-id'] || randomUUID(),
     redact: {paths: ['req.headers.authorization', 'req.body.password', 'req.body.token'], censor: '[redacted]'},
-    customLogLevel(req, res, err) {
+    customLogLevel(_req, res, err) {
         if (err || res.statusCode >= 500) return 'error'
         if (res.statusCode >= 400) return 'warn'
         return isDev ? 'info' : 'silent'

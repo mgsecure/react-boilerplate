@@ -1,6 +1,8 @@
 {
-  "name": "New Project",
-  "short_name": "New Project",
+  "name": "Lockpickers United",
+  "short_name": "LPU",
+  "start_url": "/",
+  "description": "A community for lockpickers of all skill levels to share knowledge, tips, and experiences.",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
@@ -13,7 +15,9 @@
       "type": "image/png"
     }
   ],
-  "theme_color": "#ddd",
-  "background_color": "#000",
-  "display": "standalone"
+  "theme_color": "#1976d2",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "orientation": "portrait",
+  "scope": "/"
 }

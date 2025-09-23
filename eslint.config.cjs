@@ -41,6 +41,7 @@ module.exports = defineConfig([{
     },
 
     plugins: {
+        react: fixupPluginRules(react),
         'react-hooks': fixupPluginRules(reactHooks),
         import: fixupPluginRules(_import),
     },
@@ -62,6 +63,12 @@ module.exports = defineConfig([{
 
         'no-unused-vars': ['warn', {
             'ignoreRestSiblings': true,
+            'args': 'all',
+            'argsIgnorePattern': '^_',
+            'varsIgnorePattern': '^_',
+            'destructuredArrayIgnorePattern': '^_',
+            'caughtErrors': 'all',
+            'caughtErrorsIgnorePattern': '^_'
         }],
 
         'react-hooks/exhaustive-deps': 'warn',

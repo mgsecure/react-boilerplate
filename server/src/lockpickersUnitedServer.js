@@ -10,8 +10,6 @@ import {registerRoutes} from './routes.js'
 dotenv.config({path: [`.env.${process.env.NODE_ENV}` , '.env']})
 const isDev = process.env.NODE_ENV !== 'production'
 
-console.log(process.env.NOTE)
-
 const app = express()
 app.disable('etag')
 app.disable('x-powered-by')

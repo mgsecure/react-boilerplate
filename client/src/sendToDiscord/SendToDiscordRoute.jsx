@@ -51,7 +51,6 @@ export default function SendToDiscordRoute() {
     const handleFormSubmit = useCallback(async (e) => {
         e?.preventDefault?.()
         setLoading(true)
-        console.log('Form submitted:', form)
         try {
             const res = await axios.post('/api/discord', form)
             setResult(res.data)
@@ -65,7 +64,6 @@ export default function SendToDiscordRoute() {
         } finally {
             setLoading(false)
         }
-        console.log('Form submitted:', form)
     }, [form])
 
     const handleDialogClose = useCallback(() => {
