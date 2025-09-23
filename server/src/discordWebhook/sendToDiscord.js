@@ -1,5 +1,3 @@
-import fetch from 'node-fetch'
-
 export default async function sendToDiscord(req, res) {
     const log = req.log ?? console
 
@@ -17,15 +15,15 @@ export default async function sendToDiscord(req, res) {
     let username = String(rawName || '')
         .replace(/[\r\n\t]/g, ' ')
         .replace(/\s+/g, ' ')
-        .replace(/Discord/gi, 'Discor.d')
+        .replace(/Discord/gi, 'Discor.d') // "discord" isn't allowed in usernames
         .replace('@', '@-')
         .slice(0, 80)
         .trim() || 'Anonymous'
 
     let webhookURL
     try {
-        const { discordWebhookURL } = await import('../keys/discordKeys.js')
-        webhookURL = String(discordWebhookURL).trim()
+        const { mgsecureWebhookURL, lpuWebhookURL } = await import('../keys/discordKeys.js')
+        webhookURL = req.body?.username === 'test' ? String(mgsecureWebhookURL).trim() : String(lpuWebhookURL).trim()
         new URL(webhookURL)
     } catch {
         log.error('Invalid or missing DISCORD_WEBHOOK_URL')
@@ -52,7 +50,7 @@ export default async function sendToDiscord(req, res) {
             })
         }
 
-        log.info('discord webhook sent')
+        req.log.info('discord message sent')
         return res.json({ ok: true })
     } catch (err) {
         log.error({ err }, 'discord webhook error')
