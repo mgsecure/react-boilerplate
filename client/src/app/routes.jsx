@@ -1,22 +1,35 @@
 import React, {Suspense, lazy} from 'react'
-import {redirect, Outlet, Navigate} from 'react-router-dom'
+import {Outlet, Navigate} from 'react-router-dom'
 
 import ErrorBoundary from './ErrorBoundary'
 import LoadingDisplay from '../misc/LoadingDisplay.jsx'
+import EnvAppBar from '../misc/EnvAppBar.jsx'
 
-const style = {maxWidth: 800, marginLeft: 'auto', marginRight: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center'}
+const style = {
+    maxWidth: 800,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
+}
 
 const AppShell = () => (
-    <div style={{...style, fontFamily: 'Roboto, system-ui, sans-serif'}}>
-        <Outlet/>
-    </div>
+    <React.Fragment>
+        <EnvAppBar/>
+        <div style={{...style, fontFamily: 'Roboto, system-ui, sans-serif'}}>
+            <Outlet/>
+        </div>
+    </React.Fragment>
+
 )
 
 export default [{
     element: <AppShell/>,
     errorElement: <ErrorBoundary/>,
     //HydrateFallback: () => <LoadingDisplay/>,
-    HydrateFallback: () => {},
+    HydrateFallback: () => {
+    },
     children: [
         {
             path: '/',
@@ -27,11 +40,12 @@ export default [{
         },
         {
             path: '/suggestions',
+            name: 'suggestion box',
             lazy: async () => {
                 const {default: SendToDiscordRoute} = await import('../sendToDiscord/SendToDiscordRoute')
                 return {element: <Suspense><SendToDiscordRoute/></Suspense>}
             }
-        },{
+        }, {
             path: '/modbox',
             lazy: async () => {
                 const {default: SendToDiscordRoute} = await import('../sendToDiscord/SendToDiscordRoute')
@@ -54,6 +68,13 @@ export default [{
             lazy: async () => {
                 const {default: ThemeViewerRoute} = await import('../test/ThemeViewer.jsx')
                 return {element: <Suspense fallback={<LoadingDisplay/>}><ThemeViewerRoute/></Suspense>}
+            }
+        },
+        {
+            path: '/toggle',
+            lazy: async () => {
+                const {default: ToggleRoute} = await import('../toggle/ToggleRoute.jsx')
+                return {element: <Suspense fallback={<LoadingDisplay/>}><ToggleRoute/></Suspense>}
             }
         },
         {

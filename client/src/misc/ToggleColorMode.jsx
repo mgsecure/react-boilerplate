@@ -15,7 +15,7 @@ function ToggleColorMode() {
         <Tooltip title={`Toggle color mode to ${theme.palette.mode === 'dark' ? 'light' : 'dark'}`} arrow
                  disableFocusListener>
             <IconButton onClick={colorMode.toggleColorMode} color='inherit'>
-                <LightModeIcon fontSize='small'  color={theme.palette.mode === 'dark' ? 'primary' : 'inherit'}/>
+                <LightModeIcon fontSize='small'  style={{color: theme.palette.text.secondary}}/>
             </IconButton>
         </Tooltip>
     )

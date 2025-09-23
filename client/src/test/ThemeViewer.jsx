@@ -600,15 +600,7 @@ export default function ThemeKitchenSink() {
 
     return (
         <Box sx={{minHeight: '100vh', bgcolor: 'background.default', color: 'text.primary'}}>
-            <AppBar position='sticky' elevation={0}>
-                <Toolbar>
-                    <Typography variant='h6' sx={{flexGrow: 1}}>Theme Kitchen Sink</Typography>
-                    <Stack direction='row' spacing={1}>
-                        <IconButton color='inherit' aria-label='icon'>☰</IconButton>
-                        <Button color='inherit' onClick={() => setSnackOpen(true)}>Snack</Button>
-                    </Stack>
-                </Toolbar>
-            </AppBar>
+            <Button color='inherit' onClick={() => setSnackOpen(true)}>Snack</Button>
 
             <Box sx={{p: {xs: 2, md: 4}}}>
                 {/* Inspector + Palette Editor */}

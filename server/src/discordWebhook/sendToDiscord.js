@@ -1,5 +1,6 @@
 export default async function sendToDiscord(req, res) {
     const log = req.log ?? console
+    const isDev = process.env.NODE_ENV !== 'production'
 
     const msg = typeof req.body?.message === 'string' ? req.body.message.trim() : ''
     if (!msg) return res.status(400).json({ error: 'invalid_body', message: 'message is required' })
@@ -23,7 +24,7 @@ export default async function sendToDiscord(req, res) {
     let webhookURL
     try {
         const { mgsecureWebhookURL, lpuWebhookURL } = await import('../keys/discordKeys.js')
-        webhookURL = req.body?.username === 'test' ? String(mgsecureWebhookURL).trim() : String(lpuWebhookURL).trim()
+        webhookURL = isDev ? String(mgsecureWebhookURL).trim() : String(lpuWebhookURL).trim()
         new URL(webhookURL)
     } catch {
         log.error('Invalid or missing DISCORD_WEBHOOK_URL')

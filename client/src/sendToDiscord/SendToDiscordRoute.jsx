@@ -16,6 +16,8 @@ import ScopedDialog from '../misc/ScopedDialog.jsx'
 import IconButton from '@mui/material/IconButton'
 import CancelIcon from '@mui/icons-material/Cancel'
 import usePageTitle from '../util/usePageTitle.jsx'
+import CooldownCheck from '../misc/CooldownCheck.jsx'
+import Box from '@mui/material/Box'
 
 /**
  * @prop otherPlatform
@@ -30,6 +32,9 @@ export default function SendToDiscordRoute() {
     const [result, setResult] = useState(null)
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(false)
+
+    // Cooldown component API holder
+    const [cooldownApi, setCooldownApi] = useState(null)
 
     const handleFormChange = useCallback((event) => {
         let {name, value} = event.target
@@ -50,10 +55,18 @@ export default function SendToDiscordRoute() {
 
     const handleFormSubmit = useCallback(async (e) => {
         e?.preventDefault?.()
+
+        // Check cooldown via component API (will show dialog if blocked)
+        if (!(cooldownApi?.check?.())) {
+            return
+        }
+
         setLoading(true)
         try {
             const res = await axios.post('/api/discord', form)
             setResult(res.data)
+            // mark the time of successful submit
+            cooldownApi?.markSubmitted?.()
             //setForm({})
             setError(null)
         } catch (err) {
@@ -64,7 +77,7 @@ export default function SendToDiscordRoute() {
         } finally {
             setLoading(false)
         }
-    }, [form])
+    }, [form, cooldownApi])
 
     const handleDialogClose = useCallback(() => {
         setResult(null)
@@ -105,13 +118,19 @@ export default function SendToDiscordRoute() {
     return (
 
         <React.Fragment>
-            <div style={{
-                display: 'flex', flexDirection: 'column',
-                maxWidth: 800, padding: isMobile ? 20 : 40, backgroundColor: alpha(theme.palette.text.primary, 0.05),
-                borderRadius: 8,
-                marginLeft: 'auto', marginRight: 'auto',
-                marginTop: 16, marginBottom: 46
-            }}>
+            <Box ref={containerRef}
+                 style={{
+                     display: 'flex',
+                     flexDirection: 'column',
+                     maxWidth: 800,
+                     padding: isMobile ? 20 : 40,
+                     backgroundColor: alpha(theme.palette.text.primary, 0.05),
+                     borderRadius: 8,
+                     marginLeft: 'auto',
+                     marginRight: 'auto',
+                     marginTop: 16,
+                     marginBottom: 46
+                 }}>
 
                 <div style={{fontSize: '1.6rem', fontWeight: 700}}>Hello ModBox!</div>
 
@@ -123,7 +142,6 @@ export default function SendToDiscordRoute() {
                         {String(intro).trim()}
                     </ReactMarkdown>
                 </div>
-
 
                 <div style={{
                     fontSize: '1.2rem',
@@ -188,7 +206,7 @@ export default function SendToDiscordRoute() {
                                 style={{fontWeight: 400, opacity: 0.5}}>(optional)</span>
                             </div>
                             <FormControl variant='standard' sx={{minWidth: 120}}>
-                                <Select onChange={handleFormChange} ref={selectRef}
+                                <Select onChange={handleFormChange}
                                         name='platform' id='platform'
                                         form={form} size='small' style={{width: 180}}
                                         value={form.platform || ''}
@@ -210,8 +228,8 @@ export default function SendToDiscordRoute() {
                                 </Select>
                             </FormControl>
                         </div>
-                        <div ref={containerRef} style={{overflow: 'hidden', marginTop: 5}}>
-                            <Slide in={form.platform === 'Other'} container={containerRef.current} direction='right'>
+                        <div ref={selectRef} style={{overflow: 'hidden', marginTop: 5}}>
+                            <Slide in={form.platform === 'Other'} container={selectRef.current} direction='right'>
                                 <div>
                                     <div style={optionalHeaderStyle}>Other Platform <span
                                         style={{fontWeight: 400, opacity: 0.5}}>(optional)</span>
@@ -239,9 +257,12 @@ export default function SendToDiscordRoute() {
                     handleClose={handleDialogClose}
                     position={{top: 80}}
                     centerX={true}
+                    containerRef={containerRef}
                 />
 
-            </div>
+                <CooldownCheck id={'discord'} windowMs={60_000} onInit={setCooldownApi}/>
+
+            </Box>
 
             <ToggleColorMode/>
 
