@@ -1,6 +1,11 @@
 import {z} from 'zod'
+import { Router } from 'express'
 
-export default async function echoMessage(req, res) {
+const router = Router()
+
+router.post('/echo', (req, res) => echoMessage(req, res))
+
+export async function echoMessage(req, res) {
     const schema = z.object({message: z.string().min(1)})
     const parsed = schema.safeParse(req.body)
     const {prod} = req.body
@@ -9,3 +14,5 @@ export default async function echoMessage(req, res) {
     }
     return res.json({echo: parsed.data.message + (prod ? ' (PROD)' : ' (DEV)')})
 }
+
+export default router

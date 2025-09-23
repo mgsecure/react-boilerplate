@@ -9,7 +9,7 @@ This document captures project-specific practices and commands that help advance
 
 Directory layout highlights:
 - client: Vite app, React 19, MUI; dev server via `vite`, build via `vite build`.
-- server: Node service; dev via `nodemon` watching `src`, start via `node src/index.js`.
+- server: Node service; dev via `nodemon` watching `src`, start via `node src/lockpickersUnitedServer.js`.
 - shared: Common modules consumed by both client and server.
 - client-dist: Build artifact copied from `client/dist` by the root build script (do not edit directly).
 
@@ -23,7 +23,7 @@ Common commands (run at repo root):
 - Development (client + server concurrently):
   - `yarn dev`
     - Runs client: `yarn workspace @starter/client dev` (Vite on default port 5173).
-    - Runs server: `yarn workspace @starter/server dev` (nodemon on src/index.js).
+    - Runs server: `yarn workspace @starter/server dev` (nodemon on src/lockpickersUnitedServer.js).
 - Client-only:
   - `yarn workspace @starter/client dev`
   - `yarn workspace @starter/client build`
@@ -59,7 +59,7 @@ Quick test pattern (example):
 
    Example content:
    - `import assert from 'node:assert/strict'
-import { example } from '../src/index.js' // adjust path as needed
+import { example } from '../src/lockpickersUnitedServer.js' // adjust path as needed
 
 assert.equal(example(2), 4, 'example should double the input')
 console.log('ok: example doubles input')`
@@ -91,7 +91,7 @@ Guidelines for adding tests going forward:
   - Keep modules ESM-friendly; avoid CommonJS-specific patterns unless gated.
 
 ## Environment Configuration
-- Server reads `.env` via `dotenv` in `server/src/index.js`. Place `.env` in `server/`.
+- Server reads `.env` via `dotenv` in `server/src/lockpickersUnitedServer.js`. Place `.env` in `server/`.
 - Required env vars:
   - `CORS_ORIGIN` (optional): comma-separated origins. Defaults to permissive `true` in dev.
   - `DISCORD_WEBHOOK_URL` (required for /api/discord): full Discord webhook URL. Not set in code; must be provided in env. The server returns `{ error: 'server_misconfigured' }` if missing.
