@@ -10,9 +10,11 @@ import Tooltip from '@mui/material/Tooltip'
 import Fab from '@mui/material/Fab'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import Slide from '@mui/material/Slide'
+import {useNavigate} from 'react-router-dom'
 
 export default function EnvAppBar() {
     const {admin, setAdmin, beta, setBeta} = useContext(AppContext)
+    const navigate = useNavigate()
 
     const [showFull, setShowFull] = useState(false)
 
@@ -26,12 +28,6 @@ export default function EnvAppBar() {
         ? '#c46363'
         : isDev ? '#638ac4' : '#aaa'
 
-    const menuItems = routes[0].children.map(route => (
-        <MenuItem key={route.path} onClick={() => {
-            handleClose()
-            window.location.href = route.path
-        }}>{route.name || route.path}</MenuItem>
-    ))
     const [anchorEl, setAnchorEl] = React.useState(null)
     const handleMenu = useCallback((event) => {
         setAnchorEl(event.currentTarget)
@@ -39,6 +35,15 @@ export default function EnvAppBar() {
     const handleClose = useCallback(() => {
         setAnchorEl(null)
     }, [])
+    const handleClick = useCallback(url => () => {
+        handleClose()
+        setShowFull(false)
+        navigate(url)
+    }, [navigate, setShowFull])
+
+    const menuItems = routes[0].children.map(route => (
+        <MenuItem key={route.path} onClick={handleClick(route.path)}>{route.name || route.path}</MenuItem>
+    ))
 
     return (
         <React.Fragment>

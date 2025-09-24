@@ -11,11 +11,11 @@ export const httpLogger = pinoHttp({
     customLogLevel(_req, res, err) {
         if (err || res.statusCode >= 500) return 'error'
         if (res.statusCode >= 400) return 'warn'
-        return isDev ? 'info' : 'silent'
+        return isDev ? 'info' : 'info' // change to 'silent' to not log successful requests in PROD
     },
     serializers: {
         req(req) {
-            return {id: req.id, method: req.method, url: req.url, ip: req.ip}
+            return {id: req.id, method: req.method, url: req.url.replaceAll('//','/'), ip: req.ip}
         },
         res(res) {
             return {statusCode: res.statusCode}

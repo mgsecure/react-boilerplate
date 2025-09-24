@@ -7,8 +7,9 @@ import {httpLogger} from './logger/httpLogger.js'
 import {requestIdHeader} from './logger/requestId.js'
 import {registerRoutes} from './routes.js'
 
-dotenv.config({path: [`.env.${process.env.NODE_ENV}` , '.env']})
-const isDev = process.env.NODE_ENV !== 'production'
+const env = process.env.NODE_ENV || 'development'
+dotenv.config({path: [`.env.${process.env.NODE_ENV}`]})
+const isDev = env !== 'production'
 
 const app = express()
 app.disable('etag')
@@ -35,8 +36,8 @@ const apiPrefix = isDev ? '/api' : ''
 registerRoutes(app, { prefix: apiPrefix })
 
 // Additional routes
-app.get(`${apiPrefix}/readyOld`, (req, res) => {
-    req.log.info({route: '/ready'}, `ok ${envText}`)
+app.get(`${apiPrefix}/readyOld`, (_req, res) => {
+    logger.info({route: '/ready'}, `ok ${envText}`)
     res.json({ready: true})
 })
 
@@ -44,6 +45,6 @@ const port = apiPort
 const host = process.env.HOST || '0.0.0.0'
 
 app.listen(port, host, () => {
-    const env = process.env.NODE_ENV || 'development'
     logger.info({env, port, host, corsOrigin}, 'api listening') // use pino, not console
+    console.log({env, port, host, corsOrigin}, 'api listening')
 })

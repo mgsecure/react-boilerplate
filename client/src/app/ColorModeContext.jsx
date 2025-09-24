@@ -23,9 +23,11 @@ export function ColorModeProvider({children}) {
         },
         components: {
             MuiLink: {
+                defaultProps: {
+                    underline: 'none',
+                },
                 styleOverrides: {
                     root: {
-                        textDecoration: 'none',
                         cursor: 'pointer'
                     }
                 }
@@ -40,9 +42,11 @@ export function ColorModeProvider({children}) {
         typography: {fontFamily: 'Roboto, sans-serif'},
         components: {
             MuiLink: {
+                defaultProps: {
+                    underline: 'none',
+                },
                 styleOverrides: {
                     root: {
-                        textDecoration: 'none',
                         cursor: 'pointer'
                     }
                 }
@@ -95,13 +99,19 @@ const getRootStyle = styleTheme => {
                 padding: 0;
             }
             
-            a {
+            a, .MuiLink-root {
                 color: ${linkTextColor};
-                textDecoration: 'none';
-                cursor: 'pointer';
+                text-decoration: none;
+                cursor: pointer;
             }
-            
-            pre{ 
+
+            .MuiLink-root:hover {
+                color: ${linkTextColor};
+                text-decoration: underline;
+                cursor: pointer;
+            }
+
+            pre { 
                 white-space: pre-wrap; 
                 word-break: break-word;
             }
