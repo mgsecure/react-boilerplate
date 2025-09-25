@@ -21,6 +21,7 @@ app.use((req, _res, next) => {
     if (!isDev && req.body) req.body.prod = true
     next()
 })
+app.set('trust proxy', true)
 app.use(httpLogger)
 app.use(requestIdHeader)
 

@@ -18,6 +18,6 @@ export function registerRoutes(app, { prefix = '/api' } = {}) {
 
     app.use(prefix, r)
 
-    lazyMount(app, `${prefix}/discord`, () => import('./discordWebhook/discord.bundle.js'))
+    lazyMount(app, `${prefix}/discord`, () => import('./sendToDiscord/discord.bundle.js'))
 
 }

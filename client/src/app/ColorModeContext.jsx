@@ -40,18 +40,6 @@ export function ColorModeProvider({children}) {
             mode: 'light'
         },
         typography: {fontFamily: 'Roboto, sans-serif'},
-        components: {
-            MuiLink: {
-                defaultProps: {
-                    underline: 'none',
-                },
-                styleOverrides: {
-                    root: {
-                        cursor: 'pointer'
-                    }
-                }
-            }
-        }
     })
 
     const [mode, setMode] = useState('light')
@@ -105,7 +93,7 @@ const getRootStyle = styleTheme => {
                 cursor: pointer;
             }
 
-            .MuiLink-root:hover {
+            a:hover, .MuiLink-root:hover {
                 color: ${linkTextColor};
                 text-decoration: underline;
                 cursor: pointer;

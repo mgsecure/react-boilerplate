@@ -42,7 +42,7 @@ export default function SendToDiscordRoute() {
             delete form.otherPlatform
             delete form.platform
         } else {
-            value = sanitizeValues(value, {profanityOK: true})
+            value = sanitizeValues(value, {profanityOK: true, urlsOK: true})
         }
         setForm(prev => ({...prev, [name]: value}))
     }, [])
@@ -90,14 +90,17 @@ export default function SendToDiscordRoute() {
             {error ? (
                 <div style={{color: 'red', fontWeight: 'bold'}}>Error: {error}</div>
             ) : (
-                <div style={{fontWeight: 'bold'}}>Success! Your message has been sent.</div>
+                <React.Fragment>
+                    <div style={{fontWeight: 700, fontSize:'1.1rem'}}>Your message has been sent.</div>
+                    <div style={{fontWeight: 700, fontSize:'1.1rem'}}>Thank you for your input.</div>
+                </React.Fragment>
             )}
             <Button onClick={() => {
                 setResult(null)
                 setError(null)
                 setForm({})
-            }} variant='contained' color='info' style={{marginTop: 20}}>
-                Send Another
+            }} variant='outlined' color='info' style={{marginTop: 20}}>
+                Close
             </Button>
         </div>
     ) : (
@@ -132,7 +135,7 @@ export default function SendToDiscordRoute() {
                      marginBottom: 46
                  }}>
 
-                <div style={{fontSize: '1.6rem', fontWeight: 700}}>Hello ModBox!</div>
+                <div style={{fontSize: '1.6rem', fontWeight: 700}}>Hello LPU!</div>
 
                 <div style={{marginBottom: 10, opacity: 0.8, fontSize: '1rem', lineHeight: '1.4rem'}}>
                     <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[[rehypeExternalLinks, {

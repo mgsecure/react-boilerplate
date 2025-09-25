@@ -4,7 +4,7 @@ import AppContext from '../app/AppContext.jsx'
 import Switch from '@mui/material/Switch'
 
 
-export default function TogglePage() {
+export default function SettingsPage() {
 
     const {admin, setAdmin, beta, setBeta} = useContext(AppContext)
     return (

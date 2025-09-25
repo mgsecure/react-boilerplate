@@ -1,4 +1,3 @@
-// utils/sanitizeValues.js
 import DOMPurify from 'dompurify'
 import {
     RegExpMatcher,

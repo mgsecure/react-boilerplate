@@ -17,7 +17,7 @@
     "dev": "concurrently -k -n client,server -c auto \"yarn workspace @starter/client dev\" \"yarn workspace @starter/server dev\"",
     "client": "yarn workspace @starter/client dev",
     "server": "yarn workspace @starter/server dev",
-    "build": "yarn workspace @starter/client build && rm -rf client-dist && cp -r client/dist client-dist",
+    "build": "yarn workspace @starter/client build",
     "build-all": "yarn workspaces foreach -A -v -t --exclude new-project run build",
     "lint": "eslint \"{client,server,shared}/**/*.{js,jsx}\""
   },

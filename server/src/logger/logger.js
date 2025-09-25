@@ -44,7 +44,8 @@ if (isDev) {
     logging = pino(
         {
             level: process.env.LOG_LEVEL || 'info',
-            timestamp
+            timestamp,
+            base: { hostname: undefined }
         },
         fileTransport
     )

@@ -321,7 +321,7 @@ function PaletteEditor({
  * Live Theme Inspector (uses your ToggleColorMode component)
  */
 function ThemeInspector({mode, palettePreview}) {
-    usePageTitle('Theme Viewer Disabled')
+    usePageTitle('Theme Viewer')
 
     const theme = useTheme()
     const {palette, typography, breakpoints, spacing, shape, shadows} = theme

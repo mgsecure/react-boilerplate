@@ -1,11 +1,11 @@
 import React from 'react'
 import usePageTitle from '../util/usePageTitle.jsx'
-import TogglePage from './TogglePage.jsx'
+import SettingsPage from './SettingsPage.jsx'
 
-export default function ToggleRoute() {
+export default function SettingsRoute() {
     usePageTitle('Lockpickers United - Toggle Flags')
 
     return (
-        <TogglePage/>
+        <SettingsPage/>
     )
 }
