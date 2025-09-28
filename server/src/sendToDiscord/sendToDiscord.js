@@ -35,7 +35,11 @@ export default async function sendToDiscord(req, res) {
         return res.status(500).json({error: 'server_misconfigured'})
     }
 
-    const payload = {username, content: msg}
+    const payload = {
+        username,
+        content: msg,
+        avatar_url: 'https://lockpickersunited.org/anon-avatar.png',
+    }
 
     try {
         const r = await fetch(webhookURL, {
