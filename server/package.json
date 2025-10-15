@@ -7,7 +7,9 @@
     "dev": "NODE_ENV=local nodemon --watch src src/index.js",
     "start": "NODE_ENV=production node src/lockpickersUnitedServer.js",
     "start:dev": "NODE_ENV=development node src/lockpickersUnitedServer.js",
-    "start:local": "NODE_ENV=local node src/lockpickersUnitedServer.js"
+    "start:local": "NODE_ENV=local node src/lockpickersUnitedServer.js",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@starter/shared": "workspace:*",
@@ -25,6 +27,8 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "nodemon": "^3.1.4"
+    "nodemon": "^3.1.4",
+    "supertest": "^7.0.0",
+    "vitest": "^2.1.5"
   }
 }

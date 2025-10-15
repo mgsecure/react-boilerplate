@@ -45,7 +45,13 @@ app.get(`${apiPrefix}/readyOld`, (_req, res) => {
 const port = apiPort
 const host = process.env.HOST || '0.0.0.0'
 
-app.listen(port, host, () => {
-    logger.info({env, port, host, corsOrigin}, 'api listening') // use pino, not console
-    console.log({env, port, host, corsOrigin}, 'api listening')
-})
+// Export the app for testing with Supertest
+export { app }
+
+// Only start the server when not running under Vitest
+if (!process.env.VITEST) {
+    app.listen(port, host, () => {
+        logger.info({env, port, host, corsOrigin}, 'api listening') // use pino, not console
+        console.log({env, port, host, corsOrigin}, 'api listening')
+    })
+}
