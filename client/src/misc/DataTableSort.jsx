@@ -95,7 +95,7 @@ const DataTableSort = ({
     const {width} = useWindowSize()
     const mobile360 = width <= 360
     const mobile395 = width <= 395
-    const mobile428 = width <= 428  // but test also at 412
+    const mobile428 = width <= 428  // but tests also at 412
     const window560 = width <= 560
     const window820 = width <= 820
 

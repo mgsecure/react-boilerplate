@@ -20,12 +20,12 @@
     "build": "yarn workspace @starter/client build",
     "build-all": "yarn workspaces foreach -A -v -t --exclude new-project run build",
     "lint": "eslint \"{client,server,shared}/**/*.{js,jsx}\"",
-    "test": "yarn workspace @starter/server test",
-    "vitest": "vitest",
-    "test:run": "vitest run",
-    "test:ui": "vitest --ui",
-    "e2e": "playwright test",
-    "e2e:headed": "playwright test --headed"
+    "test": "yarn workspaces foreach -A -v -t run test",
+    "vitest": "yarn workspaces foreach -A -v -t run test",
+    "vitest:run": "yarn workspaces foreach -A -v -t run test:run",
+    "vitest:ui": "vitest --ui",
+    "e2e": "yarn workspace @starter/server test && playwright test",
+    "e2e:headed": "yarn workspace @starter/server test && playwright test --headed"
   },
   "devDependencies": {
     "@eslint/compat": "^1.3.2",
@@ -48,16 +48,11 @@
     "jsdom": "^25.0.1",
     "lint-staged": "^15.2.9",
     "msw": "^2.6.6",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
     "vitest": "^3.2.4"
   },
   "lint-staged": {
     "{client,server,shared}/**/*.{js,jsx}": [
       "eslint --fix"
     ]
-  },
-  "dependencies": {
-    "vitest": "^3.2.4"
   }
 }

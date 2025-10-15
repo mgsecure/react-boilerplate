@@ -60,7 +60,7 @@ export default [{
             element: <Navigate to='/test' replace/>
         },
         {
-            path: '/test',
+            path: '/tests',
             name: 'test',
             lazy: async () => {
                 const {default: TestRoute} = await import('../test/TestPage.jsx')

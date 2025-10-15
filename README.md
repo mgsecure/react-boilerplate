@@ -116,7 +116,7 @@ assert.equal(API_PREFIX, '/api', 'API prefix should be /api')
 const t0 = Date.now()
 await sleep(50)
 assert.ok(Date.now() - t0 >= 45, 'sleep should wait ~50ms')
-console.log('ok: shared utilities basic test passed')
+console.log('ok: shared utilities basic tests passed')
 ```
 Run it:
 - `node shared/src/example.test.js`

@@ -2563,16 +2563,16 @@ var drawChart = (function (exports) {
 
   	/**
   	 * Test `input` with the given `regex`. This is used by the main
-  	 * `picomatch()` function to test the input string.
+  	 * `picomatch()` function to tests the input string.
   	 *
   	 * ```js
   	 * const picomatch = require('picomatch');
-  	 * // picomatch.test(input, regex[, options]);
+  	 * // picomatch.tests(input, regex[, options]);
   	 *
-  	 * console.log(picomatch.test('foo/bar', /^(?:([^/]*?)\/([^/]*?))$/));
+  	 * console.log(picomatch.tests('foo/bar', /^(?:([^/]*?)\/([^/]*?))$/));
   	 * // { isMatch: true, match: [ 'foo/', 'foo', 'bar' ], output: 'foo/bar' }
   	 * ```
-  	 * @param {String} `input` String to test.
+  	 * @param {String} `input` String to tests.
   	 * @param {RegExp} `regex`
   	 * @return {Object} Returns an object with matching info.
   	 * @api public
@@ -2616,7 +2616,7 @@ var drawChart = (function (exports) {
   	 * // picomatch.matchBase(input, glob[, options]);
   	 * console.log(picomatch.matchBase('foo/bar.js', '*.js'); // true
   	 * ```
-  	 * @param {String} `input` String to test.
+  	 * @param {String} `input` String to tests.
   	 * @param {RegExp|String} `glob` Glob pattern or regex created by [.makeRe](#makeRe).
   	 * @return {Boolean}
   	 * @api public
@@ -2637,7 +2637,7 @@ var drawChart = (function (exports) {
   	 * console.log(picomatch.isMatch('a.a', ['b.*', '*.a'])); //=> true
   	 * console.log(picomatch.isMatch('a.a', 'b.*')); //=> false
   	 * ```
-  	 * @param {String|Array} str The string to test.
+  	 * @param {String|Array} str The string to tests.
   	 * @param {String|Array} patterns One or more glob patterns to use for matching.
   	 * @param {Object} [options] See available [options](#options).
   	 * @return {Boolean} Returns true if any patterns match `str`
@@ -2957,10 +2957,10 @@ var drawChart = (function (exports) {
     let compare1, compare2, delta;
 
     // If an accessor is specified, promote it to a comparator. In this case we
-    // can test whether the search value is (self-) comparable. We can’t do this
+    // can tests whether the search value is (self-) comparable. We can’t do this
     // for a comparator (except for specific, known comparators) because we can’t
     // tell if the comparator is symmetric, and an asymmetric comparator can’t be
-    // used to test whether a single value is comparable.
+    // used to tests whether a single value is comparable.
     if (f.length !== 2) {
       compare1 = ascending;
       compare2 = (d, x) => ascending(f(d), x);
