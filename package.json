@@ -21,9 +21,8 @@
     "build-all": "yarn workspaces foreach -A -v -t --exclude new-project run build",
     "lint": "eslint \"{client,server,shared}/**/*.{js,jsx}\"",
     "test": "yarn workspaces foreach -A -v -t run test",
-    "vitest": "yarn workspaces foreach -A -v -t run test",
-    "vitest:run": "yarn workspaces foreach -A -v -t run test:run",
-    "vitest:ui": "vitest --ui",
+    "test:run": "yarn workspaces foreach -A -v -t run test:run",
+    "test:ui": "vitest --ui",
     "e2e": "yarn workspace @starter/server test && playwright test",
     "e2e:headed": "yarn workspace @starter/server test && playwright test --headed"
   },

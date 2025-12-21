@@ -34,10 +34,12 @@ export default defineConfig({
         },
         {
             name: 'firefox',
+            testIgnore: ['**/suggestionsAPI.spec.js'],
             use: {...devices['Desktop Firefox']}
         },
         {
             name: 'webkit',
+            testIgnore: ['**/suggestionsAPI.spec.js'],
             use: {...devices['Desktop Safari']}
         },
         // Server API Playwright tests under server/tests matching *.e2e.{js,ts}
