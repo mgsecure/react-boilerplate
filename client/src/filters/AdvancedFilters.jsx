@@ -1,0 +1,179 @@
+import React, {useCallback, useContext, useEffect, useMemo, useState} from 'react'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import AdvancedFilterField from './AdvancedFilterField.jsx'
+import useWindowSize from '../util/useWindowSize.jsx'
+import FilterContext from '../context/FilterContext.jsx'
+import Button from '@mui/material/Button'
+import DataContext from '../context/DataContext.jsx'
+import {Collapse} from '@mui/material'
+import ResetFiltersButton from './ResetFiltersButton.jsx'
+import AppContext from '../app/AppContext.jsx'
+import AuthContext from '../app/AuthContext.jsx'
+
+export default function AdvancedFilters({entryType}) {
+    const {
+        advancedFilterGroups,
+        setAdvancedFilterGroups,
+        showAdvancedSearch,
+        setShowAdvancedSearch,
+        hideAdvancedSearch,
+        filterFields,
+        filterCount,
+        clearFilters
+    } = useContext(FilterContext)
+    const {visibleEntries = [], visibleBeltEntries} = useContext(DataContext)
+    const {beta} = useContext(AppContext)
+    const {isLoggedIn} = useContext(AuthContext)
+
+    const visibleFilterGroups = useMemo(() => advancedFilterGroups()
+        .filter(group => {
+            const filterField = filterFields.find(f => f.fieldName === group.fieldName)
+            return (!filterField?.beta || beta) && (!filterField?.userBased || isLoggedIn)
+        })
+    , [advancedFilterGroups, beta, filterFields, isLoggedIn])
+
+    const addFilter = useCallback(() => {
+        const next = [...advancedFilterGroups(), {
+            _id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+            fieldName: '',
+            matchType: 'Is',
+            operator: 'OR',
+            values: []
+        }]
+        setAdvancedFilterGroups(next)
+    }, [advancedFilterGroups, setAdvancedFilterGroups])
+
+    const handleClearAll = useCallback(() => {
+        clearFilters()
+    }, [clearFilters])
+
+    const handleChangeGroup = useCallback((idx, updated) => {
+        const groups = advancedFilterGroups()
+        const next = groups.map((g, i) => (i === idx ? {...g, ...updated} : g))
+        setAdvancedFilterGroups(next)
+    }, [advancedFilterGroups, setAdvancedFilterGroups])
+
+    const handleRemoveGroup = useCallback((idx) => {
+        const groups = advancedFilterGroups()
+        let next = groups.filter((_, i) => i !== idx)
+        if (next.length === 0) next = [{
+            _id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+            fieldName: '',
+            matchType: 'Is',
+            operator: 'OR',
+            values: []
+        }]
+        setAdvancedFilterGroups(next)
+    }, [advancedFilterGroups, setAdvancedFilterGroups])
+
+    useEffect(() => {
+        if (advancedFilterGroups().length === 0 && !hideAdvancedSearch) {
+            setAdvancedFilterGroups([{
+                _id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+                fieldName: '',
+                matchType: 'Is',
+                operator: 'OR',
+                values: []
+            }])
+        }
+        const timeout = setTimeout(() => {
+            if (filterCount > 0) setShowAdvancedSearch(true)
+        }, 300)
+        return () => clearTimeout(timeout)
+
+    }, [advancedFilterGroups, filterCount, hideAdvancedSearch, setAdvancedFilterGroups, setShowAdvancedSearch])
+
+    const {isMobile} = useWindowSize()
+    const style = isMobile
+        ? {maxWidth: 800, borderRadius: 0}
+        : {maxWidth: 800, marginLeft: 'auto', marginRight: 'auto', borderRadius: 0}
+
+    const paddingLeft = isMobile ? 8 : 16
+    const resetMarginTop = isMobile ? 2 : 0
+
+    const [transitionIn, setTransitionIn] = useState(false)
+    useEffect(() => {
+        if (hideAdvancedSearch) setTransitionIn(false)
+        else if (showAdvancedSearch || filterCount > 0) {
+                setTransitionIn(true)
+        }
+    }, [showAdvancedSearch, filterCount, hideAdvancedSearch])
+
+    const [renderContent, setRenderContent] = useState(false)
+    useEffect(() => {
+        if (showAdvancedSearch || filterCount > 0) setRenderContent(true)
+        else {
+            const timeout = setTimeout(() => {
+                setRenderContent(false)
+            }, 300)
+            return () => clearTimeout(timeout)
+        }
+    }, [showAdvancedSearch, filterCount])
+
+    const entryTypeText = entryType ? ` ${entryType}${(visibleBeltEntries || visibleEntries || []).length !== 1 && 's'}` : ''
+
+    return (
+        <Collapse in={transitionIn} unmountOnExit>
+            {renderContent &&
+                <Card style={{...style, paddingBottom: 0, paddingTop: 16}} id='advanced-filters'>
+                    <CardContent style={{
+                        paddingTop: 0,
+                        paddingLeft: paddingLeft,
+                        paddingRight: paddingLeft,
+                        alignItems: 'top'
+                    }}>
+                        <div style={{display: 'flex', alignItems: 'top', marginBottom: 16}}>
+                            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'top'}}>
+                                <div style={{
+                                    display: 'flex',
+                                    marginRight: 36,
+                                    marginBottom: 0,
+                                    alignItems: 'center'
+                                }}>
+                                    <div style={{fontWeight: 600, fontSize: '1.3rem'}}>Filters</div>
+                                    <div style={{
+                                        fontWeight: 400,
+                                        fontSize: '1.0rem',
+                                        marginLeft: 8
+                                    }}>({(visibleBeltEntries || visibleEntries || []).length || 0}{entryTypeText})
+                                    </div>
+                                </div>
+                            </div>
+                            <div style={{
+                                flexGrow: 1,
+                                textAlign: 'right',
+                                alignItems: 'top',
+                                marginTop: resetMarginTop
+                            }}>
+                                <ResetFiltersButton alwaysShow/>
+                            </div>
+                        </div>
+
+                        <div
+                            style={{display: 'flex', flexDirection: 'column'}}>
+                            {visibleFilterGroups.map((group, index) => (
+                                <AdvancedFilterField
+                                    key={group._id || index}
+                                    group={{...group, groupIndex: index, groupId: group._id}}
+                                    groupIndex={index}
+                                    onChange={(updated) => handleChangeGroup(index, updated)}
+                                    onRemove={() => handleRemoveGroup(index)}
+                                />
+                            ))}
+                        </div>
+
+                        <div style={{display: 'flex', justifyContent: 'center', marginTop: 2}}>
+                            <Button onClick={handleClearAll} variant='contained' size='small'
+                                    style={{backgroundColor: '#444', marginRight: 16}}>
+                                Clear</Button>
+                            <Button onClick={addFilter} variant='contained' color='info' size='small'>
+                                Add Filter</Button>
+                        </div>
+
+                    </CardContent>
+                </Card>
+            }
+        </Collapse>
+    )
+}

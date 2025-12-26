@@ -19,6 +19,10 @@ export function ColorModeProvider({children}) {
             },
             aTest: {
                 main: '#ff0000'
+            },
+            "background": {
+                "default": "#291915",
+                "paper": "#3a2018"
             }
         },
         components: {
@@ -42,7 +46,7 @@ export function ColorModeProvider({children}) {
         typography: {fontFamily: 'Roboto, sans-serif'},
     })
 
-    const [mode, setMode] = useState('light')
+    const [mode, setMode] = useState('dark')
     const colorMode = React.useMemo(() => ({
             toggleColorMode: () => {
                 setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'))

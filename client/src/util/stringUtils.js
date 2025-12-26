@@ -12,3 +12,15 @@ export function capitalizeFirstLetter(string) {
     }
     return string.charAt(0).toUpperCase() + string.slice(1)
 }
+
+export function isValidRegex(pattern) {
+    try {
+        new RegExp(pattern)
+        return true
+    } catch (e) {
+        if (e instanceof SyntaxError) {
+            return false
+        }
+        throw e
+    }
+}

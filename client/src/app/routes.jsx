@@ -35,8 +35,8 @@ export default [{
             path: '/',
             name: 'homepage',
             lazy: async () => {
-                const {default: FrontPageRoute} = await import('../front/FrontPageRoute.jsx')
-                return {element: <Suspense fallback={<LoadingDisplay/>}><FrontPageRoute/></Suspense>}
+                const {default: BeansRoute} = await import('../espressoBeans/BeansRoute.jsx')
+                return {element: <Suspense fallback={<LoadingDisplay/>}><BeansRoute/></Suspense>}
             }
         },
         {
@@ -46,12 +46,21 @@ export default [{
                 const {default: SendToDiscordRoute} = await import('../sendToDiscord/SendToDiscordRoute')
                 return {element: <Suspense><SendToDiscordRoute/></Suspense>}
             }
-        }, {
+        },
+        {
             path: '/modbox',
             name: 'modbox',
             lazy: async () => {
                 const {default: SendToDiscordRoute} = await import('../sendToDiscord/SendToDiscordRoute')
                 return {element: <Suspense><SendToDiscordRoute/></Suspense>}
+            }
+        },
+        {
+            path: '/espressoBeans',
+            name: 'espressoBeans',
+            lazy: async () => {
+                const {default: BeansRoute} = await import('../espressoBeans/BeansRoute.jsx')
+                return {element: <Suspense><BeansRoute/></Suspense>}
             }
         },
         {

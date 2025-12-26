@@ -8,7 +8,6 @@ import LightModeIcon from '@mui/icons-material/LightMode'
 function ToggleColorMode() {
 
     const colorMode = React.useContext(ColorModeContext)
-
     const theme = useTheme()
 
     return (

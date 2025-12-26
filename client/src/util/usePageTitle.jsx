@@ -9,6 +9,6 @@ export function getPageTitle(value) {
         ? 'LOCAL'
         : /^dev.*/.test(window.location.host)
             ? 'DEV'
-            : 'LPU Belt Explorer'
-    return value ? `${environment} - ${value}` : 'LPU Belt Explorer'
+            : 'r/espresso'
+    return value ? `${environment} - ${value}` : 'r/espresso'
 }
