@@ -5,6 +5,7 @@ import Nav from '../nav/Nav'
 import DataContext from '../context/DataContext.jsx'
 import {setDeep, setDeepAdd, setDeepPush} from '../util/setDeep'
 import ClickablePie from './ClickablePie.jsx'
+import Footer from '../nav/Footer.jsx'
 
 /**
  * @prop machineBrand
@@ -15,10 +16,9 @@ import ClickablePie from './ClickablePie.jsx'
 
 export default function EspressoStats() {
     const {isMobile} = useWindowSize()
-    const {mappedEntries = []} = useContext(DataContext)
+    const {mappedEntries} = useContext(DataContext)
 
     const statsData = useMemo(() => {
-
         let data = {}
 
         const brandCountsUnique = mappedEntries.reduce((acc, entry) => {
@@ -29,8 +29,7 @@ export default function EspressoStats() {
             return acc
         }, {})
 
-
-        const machineBrandCounts = Object.keys(brandCountsUnique.machines).reduce((acc, brand) => {
+        const machineBrandCounts = Object.keys(brandCountsUnique.machines || {}).reduce((acc, brand) => {
             if (brandCountsUnique.machines[brand] === 1) {
                 setDeepAdd(acc, ['Other'], 1)
             } else {
@@ -39,7 +38,7 @@ export default function EspressoStats() {
             return acc
         }, {})
 
-        const grinderBrandCounts = Object.keys(brandCountsUnique.grinders).reduce((acc, brand) => {
+        const grinderBrandCounts = Object.keys(brandCountsUnique.grinders || {}).reduce((acc, brand) => {
             if (brandCountsUnique.grinders[brand] === 1) {
                 setDeepAdd(acc, ['Other'], 1)
             } else {
@@ -76,7 +75,7 @@ export default function EspressoStats() {
             return acc
         }, {})
 
-        Object.keys(brandModelCounts.machines).reduce((acc, brand) => {
+        Object.keys(brandModelCounts.machines || {}).reduce((acc, brand) => {
             Object.keys(brandModelCounts.machines[brand]).reduce((acc2, model) => {
                 setDeepPush(data, ['machines', brand], {
                     id: model,
@@ -88,7 +87,7 @@ export default function EspressoStats() {
             return acc
         }, {})
 
-        Object.keys(brandModelCounts.grinders).reduce((acc, brand) => {
+        Object.keys(brandModelCounts.grinders || {}).reduce((acc, brand) => {
             Object.keys(brandModelCounts.grinders[brand]).reduce((acc2, model) => {
                 setDeepPush(data, ['grinders', brand], {
                     id: model,
@@ -100,13 +99,22 @@ export default function EspressoStats() {
             return acc
         }, {})
 
+        const originCountsUnique = mappedEntries.reduce((acc, entry) => {
+            const origin = entry.origin || 'Other'
+            setDeepAdd(acc, [origin], 1)
+            return acc
+        }, {})
+        const originData = Object.keys(originCountsUnique).map(origin => {
+            return {id: origin, label: origin, value: originCountsUnique[origin]}
+        }).sort((a, b) => b.value - a.value || a.id.localeCompare(b.id))
+
         const datasets = {
             machines: {
                 brands: {
                     data: machineBrandsData,
                     parent: undefined,
                     description: 'Click chart for details',
-                    colors: {scheme: 'set1'},
+                    colors: {scheme: 'paired'},
                     startAngle: -45
                 }
             },
@@ -115,13 +123,22 @@ export default function EspressoStats() {
                     data: grinderBrandsData,
                     parent: undefined,
                     description: 'Click chart for details',
+                    colors: {scheme: 'set1'},
+                    startAngle: -45
+                }
+            },
+            origins: {
+                default: {
+                    data: originData,
+                    parent: undefined,
+                    description: undefined,
                     colors: {scheme: 'set2'},
                     startAngle: -45
                 }
-
-            }
+            },
         }
-        Object.keys(data.machines).forEach(brand => {
+
+        Object.keys(data.machines || {}).forEach(brand => {
             setDeep(datasets, ['machines', brand], {
                 data: brand !== 'Other'
                     ? data.machines[brand].sort((a, b) => b.value - a.value)
@@ -134,7 +151,7 @@ export default function EspressoStats() {
                     : 0.1
             })
         }, [])
-        Object.keys(data.grinders).forEach(brand => {
+        Object.keys(data.grinders || {}).forEach(brand => {
             setDeep(datasets, ['grinders', brand], {
                 data: brand !== 'Other'
                     ? data.grinders[brand].sort((a, b) => b.value - a.value || a.id.localeCompare(b.id))
@@ -154,6 +171,10 @@ export default function EspressoStats() {
         <React.Fragment>
             {!isMobile && <div style={{flexGrow: 1, minWidth: '10px'}}/>}
         </React.Fragment>
+    )
+
+    const footerBefore = (
+        <div style={{margin:'30px 0px'}}/>
     )
 
     const headerStyle = {
@@ -178,11 +199,19 @@ export default function EspressoStats() {
             <ClickablePie data={statsData.machines} chartId={'machines'} defaultId={'brands'}/>
 
             <div style={headerStyle} role='heading' aria-label='Grinder Stats'>
-                Grinder Stats
+                Grinders
             </div>
             <ClickablePie data={statsData.grinders} chartId={'grinders'} defaultId={'brands'}/>
 
+            <div style={headerStyle} role='heading' aria-label='Origin Stats'>
+                Origins
+            </div>
+            <ClickablePie data={statsData.origins} chartId={'origins'}/>
+
             <Tracker feature='espressoStats'/>
+
+            <Footer before={footerBefore}/>
+
         </React.Fragment>
     )
 }

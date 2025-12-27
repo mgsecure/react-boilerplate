@@ -20,23 +20,22 @@ import DataContext from '../context/DataContext.jsx'
 import LogEntryButton from '../misc/LogEntryButton.jsx'
 import useWindowSize from '../util/useWindowSize.jsx'
 import FilterContext from '../context/FilterContext.jsx'
-import entryName from '../misc/entryName.js'
+import entryName from '../misc/entryName'
 import EntryRating from './EntryRating.jsx'
-import entryImageGallery from '../misc/EntryImageGallery.jsx'
-import isValidUrl from '../util/isValidUrl.js'
+import isValidUrl from '../util/isValidUrl'
 import Link from '@mui/material/Link'
 import AppContext from '../app/AppContext.jsx'
+import EntryImageGallery from '../misc/EntryImageGallery.jsx'
 
 function BeanEntry({entry, expanded, onExpand}) {
     const {beta} = useContext(AppContext)
     const {expandAll} = useContext(DataContext)
-    const {addAdvancedFilterGroup, filters} = useContext(FilterContext)
+    const {filters} = useContext(FilterContext)
     const [scrolled, setScrolled] = useState(false)
     const style = {width: '100%', maxWidth: 800, marginLeft: 'auto', marginRight: 'auto'}
     const ref = useRef(null)
-    const {search} = filters
+    const {search, sort} = filters
     const lockName = entryName(entry, 'short', {includeVersion: true})
-
 
     const handleChange = useCallback((_, isExpanded) => {
         onExpand && onExpand(isExpanded ? entry.id : false)
@@ -67,8 +66,7 @@ function BeanEntry({entry, expanded, onExpand}) {
         } else if (!expanded) {
             setScrolled(false)
         }
-    }, [expanded, entry, scrolled, expandAll])
-
+    }, [expanded, entry, scrolled, expandAll, isMobile])
 
     const linkSx = {
         color: '#aaa', textDecoration: 'none', cursor: 'pointer', '&:hover': {
@@ -76,9 +74,21 @@ function BeanEntry({entry, expanded, onExpand}) {
         }
     }
     const locationSep = (!!entry.roasterCity && entry.roasterCountry) ? ', ' : ''
-    const currencySymbol = entry.priceUnit?.match(/\((.+)\)/)?.[1]
     const beanUrl = isValidUrl(entry.url) ? entry.url : undefined
     const beanLink = beanUrl ? <Link sx={linkSx} onClick={() => openInNewTab(entry.url)}>{entry.url}</Link> : entry.url
+
+    const summaryContent = !['priceLb', 'price100g'].includes(sort)
+        ? <EntryRating entry={entry}/>
+        : sort === 'price100g'
+            ? <div>
+                {entry.price100g && <div><strong>${parseFloat(entry.usd100g).toFixed(2)} USD</strong></div> }
+                {entry.alt100gPrice && <div style={{fontSize:'0.8rem', textAlign:'right'}}>({entry.alt100gPrice})</div>}
+                </div>
+            : <div>
+                {entry.pricePound && <div style={{fontSize:'0.95rem', marginBottom:4}}><strong>${parseFloat(entry.usdPound).toFixed(2)} USD</strong></div> }
+                {entry.altPoundPrice && <div style={{fontSize:'0.8rem', textAlign:'right'}}>({entry.altPoundPrice})</div>}
+            </div>
+
 
     const makeModelWidth = isMobile ? '55%' : '65%'
 
@@ -112,7 +122,7 @@ function BeanEntry({entry, expanded, onExpand}) {
                     justifyContent: 'flex-end',
                     alignItems: 'center'
                 }}>
-                    <EntryRating entry={entry}/>
+                    {summaryContent}
                 </div>
 
             </AccordionSummary>
@@ -161,11 +171,11 @@ function BeanEntry({entry, expanded, onExpand}) {
                         </Stack>
                         <Stack direction='row' spacing={0} style={{flexWrap: 'wrap', marginBottom: 8}}>
                             <FieldValue name='Weight' value={entry.weight} suffix={'g'} style={{marginRight: 24}}/>
-                            <FieldValue name='Price' value={entry.price} prefix={currencySymbol}
+                            <FieldValue name='Price' value={entry.price} prefix={entry.currencySymbol}
                                         style={{marginRight: 24}}/>
-                            <FieldValue name='Price per 100g' value={entry.price100g} prefix={currencySymbol}
+                            <FieldValue name='Price per 100g' value={entry.price100g} prefix={entry.currencySymbol}
                                         suffix={'/100g'} style={{marginRight: 24}}/>
-                            <FieldValue name='Price per Pound' value={entry.pricePound} prefix={currencySymbol}
+                            <FieldValue name='Price per Pound' value={entry.pricePound} prefix={entry.currencySymbol}
                                         suffix={'/lb'} style={{marginRight: 24}}/>
                         </Stack>
                         <Stack direction='row' spacing={0} style={{flexWrap: 'wrap', marginBottom: 8}}>
@@ -198,7 +208,7 @@ function BeanEntry({entry, expanded, onExpand}) {
                         {
                             !!entry.media?.length &&
                             <FieldValue value={
-                                <entryImageGallery entry={entry}/>
+                                <EntryImageGallery entry={entry}/>
                             }/>
                         }
 

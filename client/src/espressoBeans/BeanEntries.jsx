@@ -6,11 +6,12 @@ import FilterContext from '../context/FilterContext'
 import ExportButton from './ExportButton.jsx'
 import Footer from '../nav/Footer.jsx'
 import AdvancedFilters from '../filters/AdvancedFilters.jsx'
+import LoadingDisplay from '../misc/LoadingDisplay.jsx'
 
 function BeanEntries() {
     const {filters} = useContext(FilterContext)
     const [expanded, setExpanded] = useState(filters.id)
-    const {visibleEntries, expandAll} = useContext(DataContext)
+    const {visibleEntries, expandAll, loading} = useContext(DataContext)
 
     const defExpanded = useDeferredValue(expanded)
 
@@ -29,7 +30,8 @@ function BeanEntries() {
 
             <AdvancedFilters entryType={'Bean'}/>
 
-            {visibleEntries.length === 0 && <NoEntriesCard label='Safe Locks'/>}
+            { loading && <LoadingDisplay/>}
+            {!loading && visibleEntries.length === 0 && <NoEntriesCard label='Safe Locks'/>}
 
             {visibleEntries.map(entry =>
                 <BeanEntry

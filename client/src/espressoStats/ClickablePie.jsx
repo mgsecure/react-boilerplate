@@ -9,7 +9,7 @@ import FilterContext from '../context/FilterContext.jsx'
  * @prop msMaxTouchPoints
  */
 
-export default function ClickablePie({data, chartId, defaultId}) {
+export default function ClickablePie({data, chartId, defaultId = 'default'}) {
     const touchTap = isTouchDevice()
 
     const {filters, addFilter, removeFilters} = useContext(FilterContext)
@@ -89,19 +89,20 @@ export default function ClickablePie({data, chartId, defaultId}) {
 
     return (
         <React.Fragment>
-            <div
-                style={{
-                    fontSize: '0.95rem', fontWeight: 500, width: '100%', textAlign: 'center', marginBottom: 4,
-                    opacity: 1,
-                    transitionProperty: 'opacity, left, top, height',
-                    transitionDuration: '0.1s, 0.1s'
-                }}
-                id='chartDescription'
-            >
-                {dataset.description}
-            </div>
-
-            <div key='pickPie'
+            {dataset.description &&
+                <div
+                    style={{
+                        fontSize: '0.95rem', fontWeight: 500, width: '100%', textAlign: 'center', marginBottom: 4,
+                        opacity: 1,
+                        transitionProperty: 'opacity, left, top, height',
+                        transitionDuration: '0.1s, 0.1s'
+                    }}
+                    id='chartDescription'
+                >
+                    {dataset.description}
+                </div>
+            }
+            <div aria-label='Pie Chart'
                  style={{height: chartHeight, margin: '0px 8px 0px 8px', width: '100%', position: 'relative'}}
             >
                 <div style={{

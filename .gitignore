@@ -9,6 +9,7 @@ lerna-debug.log*
 package-lock.json
 
 server/src/keys
+keys
 node_modules
 dist
 client-dist
@@ -36,3 +37,4 @@ client/public/version.json
 client/public/sitemap.txt
 client/public/sitemap.xml
 client/public/data/*
+client/.env.keys

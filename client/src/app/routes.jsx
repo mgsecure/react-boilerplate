@@ -1,4 +1,4 @@
-import React, {Suspense, lazy} from 'react'
+import React, {Suspense} from 'react'
 import {Outlet, Navigate} from 'react-router-dom'
 
 import ErrorBoundary from './ErrorBoundary'

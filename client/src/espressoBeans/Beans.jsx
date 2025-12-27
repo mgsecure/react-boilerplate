@@ -27,7 +27,7 @@ export default function Beans() {
 
             <BeanEntries/>
 
-            <Tracker feature='dials'/>
+            <Tracker feature='espressoBeans'/>
         </React.Fragment>
     )
 }
