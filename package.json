@@ -19,7 +19,7 @@
     "server": "yarn workspace @starter/server dev",
     "build": "yarn workspace @starter/client build",
     "build-all": "yarn workspaces foreach -A -v -t --exclude new-project run build",
-    "lint": "eslint \"{client,server,shared}/**/*.{js,jsx}\"",
+    "lint": "yarn workspaces foreach -A -v -t run lint",
     "test": "yarn workspaces foreach -A -v -t run test",
     "test:run": "yarn workspaces foreach -A -v -t run test:run",
     "test:ui": "vitest --ui",
@@ -55,11 +55,13 @@
     ]
   },
   "dependencies": {
+    "@nivo/pie": "^0.99.0",
     "baseline-browser-mapping": "^2.9.11",
     "fast-levenshtein": "^3.0.0",
     "firebase": "^12.7.0",
     "fuzzysort": "^3.1.0",
     "motion": "^12.23.26",
+    "nivo": "^0.31.0",
     "query-string": "^9.3.1",
     "react-hotkeys-hook": "^5.2.1",
     "react-simple-star-rating": "^5.1.7",

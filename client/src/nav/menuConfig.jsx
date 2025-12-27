@@ -34,6 +34,11 @@ export default [
         }
     },
     {
+        title: 'Stats & Charts',
+        icon: <InsertChartOutlinedIcon fontSize='small'/>,
+        path: '/espressoStats',
+    },
+    {
         title: 'Add A Bean',
         icon: <AddCircleOutlineIcon fontSize='small'/>,
         path: '/info',
@@ -43,12 +48,6 @@ export default [
         title: 'Roaster Database',
         icon: <FeedIcon fontSize='small'/>,
         path: '/rafl',
-        disabled: true,
-    },
-    {
-        title: 'Stats & Charts',
-        icon: <InsertChartOutlinedIcon fontSize='small'/>,
-        path: '/safelocks',
         disabled: true,
     },
     {

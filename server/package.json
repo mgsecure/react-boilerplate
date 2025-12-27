@@ -9,7 +9,8 @@
     "start:dev": "NODE_ENV=development node src/lockpickersUnitedServer.js",
     "start:local": "NODE_ENV=local node src/lockpickersUnitedServer.js",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "lint": "eslint \"src/**/*.{js,jsx}\" --max-warnings 0"
   },
   "dependencies": {
     "@starter/shared": "workspace:*",

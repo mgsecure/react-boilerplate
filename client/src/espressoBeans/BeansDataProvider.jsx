@@ -23,10 +23,10 @@ export function BeansDataProvider({children, allEntries, profile}) {
                 fullName: entry.roaster ? `${entry.roaster} ${entry.name}` : entry.name,
                 machineFullName: (entry.machineBrand && entry.machineModel)
                     ? `${entry.machineBrand} ${entry.machineModel}`
-                    : `${entry.machineBrand}${entry.machineModel}`,
+                    : `${entry.machineBrand || ''}${entry.machineModel || ''}`,
                 grinderFullName: (entry.grinderBrand && entry.grinderModel)
                     ? `${entry.grinderBrand} ${entry.grinderModel}`
-                    : `${entry.grinderBrand}${entry.grinderModel}`,
+                    : `${entry.grinderBrand || ''}${entry.grinderModel || ''}`,
                 fuzzy: removeAccents([
                     entry.name,
                     entry.roaster
@@ -93,10 +93,11 @@ export function BeansDataProvider({children, allEntries, profile}) {
 
     const value = useMemo(() => ({
         allEntries,
+        mappedEntries,
         searchedEntries,
         visibleEntries,
         expandAll
-    }), [allEntries, searchedEntries, visibleEntries, expandAll])
+    }), [allEntries, mappedEntries, searchedEntries, visibleEntries, expandAll])
 
     return (
         <DataContext.Provider value={value}>

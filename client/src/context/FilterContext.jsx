@@ -96,7 +96,9 @@ export function FilterProvider({children, filterFields = []}) {
         'single',
         'expandAll',
         'dataset',
-        'scorecardId'
+        'scorecardId',
+        'cId',
+        'dsId'
     ], [])
 
     const filterCount = useMemo(() => {

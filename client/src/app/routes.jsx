@@ -64,6 +64,14 @@ export default [{
             }
         },
         {
+            path: '/espressoStats',
+            name: 'espressoStats',
+            lazy: async () => {
+                const {default: EspressoStatsRoute} = await import('../espressoStats/EspressoStatsRoute.jsx')
+                return {element: <Suspense><EspressoStatsRoute/></Suspense>}
+            }
+        },
+        {
             path: '/testing',
             name: 'testing (redirect)',
             element: <Navigate to='/test' replace/>
