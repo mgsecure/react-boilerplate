@@ -85,7 +85,7 @@ export default function EnvAppBar() {
                                     }}>
                                 <Toolbar variant='dense' disableGutters>
                                     <Typography sx={{flexGrow: 1, color: '#fff'}}>
-                                        <span style={{fontWeight: 700}}>{envText}</span> - Lockpickers United
+                                        <span style={{fontWeight: 700}}>{envText}</span> - Coffee Tracker
                                     </Typography>
                                     <Stack direction='row' spacing={0}>
                                         <div style={{marginRight: 0}}>

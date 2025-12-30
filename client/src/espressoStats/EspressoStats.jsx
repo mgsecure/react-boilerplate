@@ -6,6 +6,8 @@ import DataContext from '../context/DataContext.jsx'
 import {setDeep, setDeepAdd, setDeepPush} from '../util/setDeep'
 import ClickablePie from './ClickablePie.jsx'
 import Footer from '../nav/Footer.jsx'
+import DataTest from './DataTest.jsx'
+import StatsExportButton from './StatsExportButton.jsx'
 
 /**
  * @prop machineBrand
@@ -17,6 +19,30 @@ import Footer from '../nav/Footer.jsx'
 export default function EspressoStats() {
     const {isMobile} = useWindowSize()
     const {mappedEntries} = useContext(DataContext)
+
+    const exportData = useMemo(() => {
+        const brandCountsUnique = mappedEntries.reduce((acc, entry) => {
+            const machineBrand = entry.machineBrand || 'Other Brand'
+            setDeepAdd(acc, ['machines', machineBrand], 1)
+            const grinderBrand = entry.grinderBrand || 'Other Brand'
+            setDeepAdd(acc, ['grinders', grinderBrand], 1)
+            return acc
+        }, {})
+
+
+        return mappedEntries.reduce((acc, entry) => {
+            const machineBrand = entry.machineBrand
+            const machineModel = entry.machineModel || 'Other Model'
+            setDeepAdd(acc, ['Espresso', machineBrand, machineModel], 1)
+
+            const grinderBrand = entry.grinderBrand
+            const grinderModel = entry.grinderModel || 'Other Model'
+            setDeepAdd(acc, ['Grinder', grinderBrand, grinderModel], 1)
+
+            return acc
+        }, {})
+
+    }, [mappedEntries])
 
     const statsData = useMemo(() => {
         let data = {}
@@ -63,6 +89,7 @@ export default function EspressoStats() {
                 ? entry.machineFullName
                 : entry.machineModel || 'Other Model'
             setDeepAdd(acc, ['machines', machineBrand, machineModel], 1)
+            setDeepAdd(acc, ['Espresso', machineBrand, machineModel], 1)
 
             const grinderBrand = brandCountsUnique.grinders[entry.grinderBrand] === 1
                 ? 'Other'
@@ -71,9 +98,12 @@ export default function EspressoStats() {
                 ? entry.grinderFullName
                 : entry.grinderModel || 'Other Model'
             setDeepAdd(acc, ['grinders', grinderBrand, grinderModel], 1)
+            setDeepAdd(acc, ['Grinder', grinderBrand, grinderModel], 1)
 
             return acc
         }, {})
+
+        console.log('brandModelCounts', brandModelCounts)
 
         Object.keys(brandModelCounts.machines || {}).reduce((acc, brand) => {
             Object.keys(brandModelCounts.machines[brand]).reduce((acc2, model) => {
@@ -135,7 +165,7 @@ export default function EspressoStats() {
                     colors: {scheme: 'set2'},
                     startAngle: -45
                 }
-            },
+            }
         }
 
         Object.keys(data.machines || {}).forEach(brand => {
@@ -167,6 +197,7 @@ export default function EspressoStats() {
         return datasets
     }, [mappedEntries])
 
+
     const extras = (
         <React.Fragment>
             {!isMobile && <div style={{flexGrow: 1, minWidth: '10px'}}/>}
@@ -174,7 +205,7 @@ export default function EspressoStats() {
     )
 
     const footerBefore = (
-        <div style={{margin:'30px 0px'}}/>
+        <div style={{margin: '30px 0px'}}/>
     )
 
     const headerStyle = {
@@ -189,9 +220,13 @@ export default function EspressoStats() {
         fontWeight: 600
     }
 
+    console.log('statsData', statsData)
+
     return (
         <React.Fragment>
             <Nav title='r/espresso stats' titleMobile='stats' extras={extras}/>
+
+            <DataTest/>
 
             <div style={firstHeaderStyle} role='heading' aria-label='Machine Stats'>
                 Machine Stats
@@ -207,6 +242,8 @@ export default function EspressoStats() {
                 Origins
             </div>
             <ClickablePie data={statsData.origins} chartId={'origins'}/>
+
+            <StatsExportButton entries={exportData}/>
 
             <Tracker feature='espressoStats'/>
 

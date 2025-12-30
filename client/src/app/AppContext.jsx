@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useMemo} from 'react'
+import React, {useCallback, useMemo} from 'react'
 import {useLocalStorage} from 'usehooks-ts'
 const AppContext = React.createContext({})
 
@@ -9,7 +9,7 @@ export function AppProvider({children}) {
 
     const handleSetAdmin = useCallback(value => {
         setAdmin(value)
-    }, [setBeta])
+    }, [setAdmin])
 
     const handleSetBeta = useCallback(value => {
         setBeta(value)
@@ -23,7 +23,7 @@ export function AppProvider({children}) {
         beta,
         setBeta: handleSetBeta,
         verbose
-    }), [admin, setAdmin, beta, handleSetBeta, verbose])
+    }), [admin, handleSetAdmin, beta, handleSetBeta, verbose])
 
     return (
         <AppContext.Provider value={value}>

@@ -25,12 +25,17 @@ export function AuthProvider({children}) {
                 })
         })
         return () => unregisterAuthObserver()
-    }, [])
+    }, [authLoaded])
 
-    const login = useCallback(() => {
+    const login = useCallback(async () => {
         const provider = new GoogleAuthProvider()
         provider.setCustomParameters({prompt: 'select_account'})
-        return signInWithPopup(auth, provider)
+        //return signInWithPopup(auth, provider)
+        try {
+            return signInWithPopup(auth, provider)
+        } catch (err) {
+            console.error(err.code, err.message)
+        }
     }, [])
 
     useEffect(() => {

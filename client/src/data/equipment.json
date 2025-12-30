@@ -1,0 +1,345 @@
+{
+  "Espresso": {
+    "Profitec": {
+      "Pro 600": 1,
+      "Go": 2,
+      "Drive": 3,
+      "Pro 500": 1
+    },
+    "Rancilio": {
+      "Silvia Pro X": 4,
+      "Silvia X": 1,
+      "Silvia": 1,
+      "RS1": 1
+    },
+    "Breville": {
+      "Barista Express Impress": 2,
+      "Bambino Plus": 6,
+      "Bambino": 9,
+      "Barista Pro": 4,
+      "Oracle": 1,
+      "Barista Express": 8,
+      "Barista Express (modified)": 1,
+      "Sunbeam": 1,
+      "Duo-Temp Pro": 2,
+      "Oracle Jet": 1,
+      "Infuser": 1,
+      "Dual Boiler": 1
+    },
+    "Dedica": {
+      "685": 1
+    },
+    "Izzo": {
+      "Alex Duetto": 2
+    },
+    "La Marzocco": {
+      "Linea Micra": 14,
+      "KB90": 1,
+      "Leva X": 11,
+      "GS3": 1,
+      "Linea 2gr": 1,
+      "Linea Mini": 1
+    },
+    "Flair": {
+      "58": 1,
+      "Neo Flex": 1,
+      "Pro 2": 2,
+      "Go": 1,
+      "58 Plus 2": 2
+    },
+    "Cafelat": {
+      "Robot": 4
+    },
+    "Tuni": {
+      "E2": 1
+    },
+    "Lelit": {
+      "Bianca": 5,
+      "Anna PL41TEM": 1,
+      "Elizabeth": 3,
+      "Kate": 1,
+      "Mara X v2": 1,
+      "Anita": 1,
+      "Bianca v3": 2,
+      "Kate PL82T": 1,
+      "Anna": 1
+    },
+    "Eureka": {
+      "Pura": 1
+    },
+    "Sage": {
+      "Duo-Temp Pro": 1,
+      "Bambino Plus": 2,
+      "Bambino": 1,
+      "Oracle": 1
+    },
+    "Faema": {
+      "Faemina Satin Copper": 2
+    },
+    "ECM": {
+      "Synchronika": 4,
+      "CasaV": 3
+    },
+    "Sage/Breville": {
+      "Dual Boiler": 1
+    },
+    "De'longhi": {
+      "ECP 35.31": 2,
+      "Dedica": 3,
+      "ECP 33.21": 1,
+      "ECP 31.21": 1,
+      "Dedica EC685": 1
+    },
+    "Gaggia": {
+      "Classic": 2,
+      "Classic Pro E24": 1,
+      "Classic Pro": 5,
+      "Classic Pro Evo (PID)": 1,
+      "Classic Pro V2": 1,
+      "Classic E24 with shades kit": 1,
+      "Classic with spring mod to 9 bar": 1,
+      "Classic E24": 2,
+      "Classic PID @ 9 bar": 1,
+      "Classic Pro (NOT Evo)": 1
+    },
+    "Belezza": {
+      "Bellona": 1
+    },
+    "Ninja": {
+      "Luxe Cafe SE701": 1
+    },
+    "Rocket": {
+      "Mozzafiato": 1,
+      "Appartamento": 1
+    },
+    "Bialetti": {
+      "Moka Pot": 1
+    },
+    "Casabrews": {
+      "Ultra": 1
+    },
+    "Simonelli": {
+      "Appia II": 1,
+      "Oscar": 1
+    },
+    "Cafabrews": {
+      "CM5418": 1
+    },
+    "Soli": {
+      "Barista Perfetta Plus": 1
+    },
+    "Bezzera": {
+      "Duo MN": 1
+    },
+    "E-61": {
+      "DB": 1
+    },
+    "Turin": {
+      "Legato V2": 3
+    },
+    "Lucca": {
+      "A53 Mini": 1
+    },
+    "Elektra": {
+      "Microcasa Manual Leva": 1
+    },
+    "Decent": {
+      "XL": 1
+    },
+    "Wacaco": {
+      "Picopresso": 2
+    },
+    "Ascaso": {
+      "Dream PID": 1
+    },
+    "Diletta": {
+      "Mio": 1
+    },
+    "VBM": {
+      "Domo Jr Hx": 1
+    },
+    "9Barista": {
+      "Mk.1": 0,
+      "Mk.2": 1
+    },
+    "Krups": {
+      "Model 964 Espresso Novo": 1
+    }
+  },
+  "Pourover": {
+    "Hario": {
+      "Switch": 1
+    }
+  },
+    "Grinder": {
+    "Mazzer": {
+      "Philos": 1,
+      "Philos with i200D": 1,
+      "Mini A": 1
+    },
+    "Rancilio": {
+      "Rocky": 1
+    },
+    "Breville": {
+      "Barista Express Impress, internal burr set of 3": 1,
+      "Barista Pro": 3,
+      "Barista Express": 8,
+      "Smart Grinder": 1,
+      "Sunbeam": 1,
+      "Smart Grinder Pro": 3,
+      "Oracle Jet": 1,
+      "Barista Express Impress": 1
+    },
+    "DF": {
+      "54": 10,
+      "64": 3,
+      "64V": 4,
+      "64 Gen 2": 8,
+      "83V": 2
+    },
+    "Eureka": {
+      "Mignon Zero": 1,
+      "Atom W 65": 2,
+      "Libra": 2,
+      "Mignon Specialita": 3,
+      "Zero": 1,
+      "Mignon Notte": 2,
+      "Firenze 75": 1,
+      "Silenzio 55": 1
+    },
+    "Turin": {
+      "H40": 1,
+      "DF54": 1,
+      "SK40": 1
+    },
+    "Niche": {
+      "Zero": 2,
+      "Other Model": 5
+    },
+    "1Zpresso": {
+      "J-Ultra": 20,
+      "J-Max": 3,
+      "J manual": 1,
+      "X-Pro": 1
+    },
+    "Kingrinder": {
+      "K6": 4,
+      "K1": 1,
+      "K4": 1,
+      "K2": 1
+    },
+    "Tuni": {
+      "G1": 1
+    },
+    "Pico": {
+      "Other Model": 1
+    },
+    "Bodum": {
+      "C-Mill Electric Coffee Grinder": 1,
+      "Bistro": 1
+    },
+    "Graef": {
+      "800": 1
+    },
+    "Ceado": {
+      "E37S": 1,
+      "E5SD": 1,
+      "E37S (2015)": 1
+    },
+    "Baratza": {
+      "Encore ESP": 6,
+      "Encore": 1,
+      "Sette 270Wi": 2,
+      "Vario": 1,
+      "Encore ESP Pro": 1
+    },
+    "Sette": {
+      "270": 1
+    },
+    "Varia": {
+      "VS3": 3,
+      "VS3 (Gen 2)": 1
+    },
+    "Sage": {
+      "Dose Control Pro (modded)": 1,
+      "Other Model": 1,
+      "The Smart Grinder": 1
+    },
+    "Option-O": {
+      "Lagom Mini": 1,
+      "Lagom Casa 65": 1
+    },
+    "Lagom": {
+      "Casa": 3,
+      "01": 1
+    },
+    "Monolith": {
+      "MAX Gen 1": 3
+    },
+    "SPTK38": {
+      "Other Model": 1
+    },
+    "Mahlkönig": {
+      "E80GBW": 1,
+      "E65s GBW": 1,
+      "EK43": 1
+    },
+    "Timemore": {
+      "C2 S Black": 1,
+      "Sculptor 078S": 1,
+      "078s": 1,
+      "C3 esp": 1
+    },
+    "Ninja": {
+      "Luxe Cafe SE701": 1
+    },
+    "EK65": {
+      "GBW": 8
+    },
+    "EK43": {
+      "HU": 3
+    },
+    "OXO": {
+      "Other Model": 2,
+      "Brew Conical": 1
+    },
+    "Zerno": {
+      "Z1": 1
+    },
+    "Lelit": {
+      "Kate": 1,
+      "Anita (Built-in)": 1,
+      "Kate PL82T": 1
+    },
+    "Philos": {
+      "Mazzer I200D": 1
+    },
+    "Forte": {
+      "270": 1
+    },
+    "Amzchef": {
+      "Other Model": 1
+    },
+    "Zespresso": {
+      "hand grinder": 1
+    },
+    "Comandante": {
+      "Other Model": 1
+    },
+    "Fiorenzatta": {
+      "F64 EVO": 1
+    },
+    "Kin": {
+      "6": 1
+    },
+    "Kinu": {
+      "Phoenix": 1
+    },
+    "Hario": {
+      "Ceramic Coffee Mill": 1
+    },
+    "Fellow": {
+      "Opus": 1
+    }
+  }
+}

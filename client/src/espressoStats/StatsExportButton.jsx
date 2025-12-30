@@ -15,7 +15,7 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import download from '../util/download'
 import Button from '@mui/material/Button'
 
-function ExportButton({text, entries}) {
+function StatsExportButton({text, entries}) {
     const [anchorEl, setAnchorEl] = useState(null)
     const open = Boolean(anchorEl)
     const handleOpen = useCallback(event => setAnchorEl(event.currentTarget), [])
@@ -130,4 +130,4 @@ function ExportButton({text, entries}) {
     )
 }
 
-export default ExportButton
+export default StatsExportButton

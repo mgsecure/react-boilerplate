@@ -2,7 +2,19 @@ import React, {useCallback, useState} from 'react'
 import {FormControl, InputLabel, Select} from '@mui/material'
 import MenuItem from '@mui/material/MenuItem'
 
-export default function SelectBox({form, name, optionsList, label=null, variant='outlined', size='small', width=350, changeHandler, multiple=false, defaultValue, placeholder='Please Choose'}) {
+export default function SelectBox({
+                                      form,
+                                      name,
+                                      optionsList,
+                                      label = null,
+                                      variant = 'outlined',
+                                      size = 'small',
+                                      width = 350,
+                                      changeHandler,
+                                      multiple = false,
+                                      defaultValue,
+                                      placeholder = 'Please Choose'
+                                  }) {
     const [open, setOpen] = useState(false)
     const handleClose = useCallback(() => setOpen(false), [])
     const handleOpen = useCallback(() => setOpen(true), [])
@@ -12,7 +24,8 @@ export default function SelectBox({form, name, optionsList, label=null, variant=
     }, [changeHandler, handleClose, multiple])
 
     return (
-        <FormControl id={`${name}FormControl`} size={size} color='info' variant={variant} style={{marginBottom: 0, width: width || 'auto' }}>
+        <FormControl id={`${name}FormControl`} size={size} color='info'
+                     style={{marginBottom: 0, width: width || 'auto'}}>
             {label && <InputLabel style={{color: '#bbb'}}>{label}</InputLabel>}
             <Select
                 id={`${name}Select`}
@@ -25,11 +38,7 @@ export default function SelectBox({form, name, optionsList, label=null, variant=
                 onOpen={handleOpen}
                 onChange={handleChange}
                 placeholder={placeholder}
-                style={{
-                    fontWeight: 400,
-                    color: '#eee',
-                    fontSize: '1.1rem'
-                }}
+                variant={variant}
             >
                 {optionsList.map((option, index) =>
                     <MenuItem key={index}

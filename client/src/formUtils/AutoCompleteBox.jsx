@@ -7,12 +7,12 @@ import TextField from '@mui/material/TextField'
 import useWindowSize from '../util/useWindowSize.jsx'
 import Button from '@mui/material/Button'
 
-function AutoCompleteBox({name, changeHandler, options, value = null, style, disabled = false, reset, placeholder = 'Search...', noOptionsMessage, noOptionsHandler, inputValueHandler}) {
+function AutoCompleteBox({name, changeHandler, options, style, disabled = false, reset, placeholder = 'Search...', noOptionsMessage, noOptionsHandler, inputValue='', inputValueHandler, size='small'}) {
     const inputEl = useRef()
     const [open, setOpen] = useState(false)
     const handleBlur = useCallback(() => setOpen(false), [])
     const {isMobile} = useWindowSize()
-    const [inputValue, setInputValue] = useState('')
+    //const [inputValue, setInputValue] = useState('')
 
     const noOptionsText = noOptionsMessage && !!noOptionsHandler
         ? <Button onClick={noOptionsHandler}  variant='contained' color='success'>
@@ -20,7 +20,7 @@ function AutoCompleteBox({name, changeHandler, options, value = null, style, dis
         </Button>
         : null
 
-    const handleChange = useCallback((event, value) => {
+    const handleChange = useCallback((_event, value) => {
         if (options.includes(value)) {
             changeHandler({target: {name: name, value: value}})
         } else {
@@ -28,9 +28,9 @@ function AutoCompleteBox({name, changeHandler, options, value = null, style, dis
         }
     }, [options, changeHandler, name])
 
-    const handleInputChange = (event, newInputValue) => {
+    const handleInputChange = (_event, newInputValue) => {
         !!inputValueHandler && inputValueHandler(newInputValue)
-        setInputValue(newInputValue) // Update input value
+        //setInputValue(newInputValue) // Update input value
     }
 
     return (
@@ -38,17 +38,18 @@ function AutoCompleteBox({name, changeHandler, options, value = null, style, dis
             <Autocomplete
                 disabled={disabled}
                 key={reset || disabled}
-                value={value}
                 selectOnFocus
                 clearOnEscape
+                clearOnBlur={false}
                 handleHomeEndKeys
                 autoHighlight
                 fullWidth
                 style={style}
+                size={size}
                 options={options}
                 name={name}
                 onChange={handleChange}
-                inputValue={inputValue}
+                inputValue={inputValue || ''}
                 onInputChange={handleInputChange}
                 renderInput={(params) =>
                     <TextField
@@ -57,16 +58,14 @@ function AutoCompleteBox({name, changeHandler, options, value = null, style, dis
                         variant='outlined'
                         color='info'
                         inputRef={inputEl}
-                        slotProps={{
-                            input: {
-                                ...params.InputProps,
-                                startAdornment: (
-                                    <InputAdornment position='start'>
-                                        <SearchIcon/>
-                                    </InputAdornment>
-                                )
-                            }
-                        }}
+                        slotprops={{input: {
+                            ...params.InputProps,
+                            startAdornment: (
+                                <InputAdornment position='start'>
+                                    <SearchIcon/>
+                                </InputAdornment>
+                            )
+                        }}}
                     />
                 }
                 noOptionsText={noOptionsText}

@@ -1,7 +1,7 @@
 import React, {createContext, useMemo, useState} from 'react'
 import {ThemeProvider, createTheme} from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
-import {lightOverrides} from './themeOverride.js'
+import {lightOverrides} from './themeOverride'
 
 const ColorModeContext = createContext({
     toggleColorMode: () => {
@@ -20,9 +20,9 @@ export function ColorModeProvider({children}) {
             aTest: {
                 main: '#ff0000'
             },
-            "background": {
-                "default": "#291915",
-                "paper": "#3a2018"
+            'background': {
+                'default': '#291915',
+                'paper': '#3a2018'
             }
         },
         components: {
@@ -35,6 +35,13 @@ export function ColorModeProvider({children}) {
                         cursor: 'pointer'
                     }
                 }
+            },
+            MuiDrawer: { // Or MuiPaper if you want to apply it globally to all Paper components
+                styleOverrides: {
+                    paper: {
+                        backgroundImage: 'none', // Fixes potential elevation styling conflict
+                    },
+                },
             }
         }
     })

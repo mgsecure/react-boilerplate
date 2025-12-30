@@ -1,0 +1,258 @@
+import React, {useCallback, useContext, useEffect, useState} from 'react'
+import Tracker from '../app/Tracker'
+import useWindowSize from '../util/useWindowSize'
+import Nav from '../nav/Nav'
+import DataTest from '../espressoStats/DataTest.jsx'
+import Footer from '../nav/Footer.jsx'
+import DBContext from '../app/DBContext.jsx'
+import {Button, TextField} from '@mui/material'
+import {useNavigate, useSearchParams} from 'react-router-dom'
+import AuthContext from '../app/AuthContext.jsx'
+import {enqueueSnackbar} from 'notistack'
+import Menu from '@mui/material/Menu'
+import Machines from './Machines.jsx'
+
+export default function EditProfile() {
+    const {isMobile, flexStyle} = useWindowSize()
+    const {
+        userProfile = {},
+        updateProfileField,
+        deleteAllUserData
+    } = useContext(DBContext)
+
+    const [form, setForm] = useState({...userProfile || {}})
+    useEffect(() => {
+        setForm({...userProfile})
+    }, [userProfile])
+
+    const handleFormChange = useCallback((event) => {
+        const {name, value} = event.target
+        setForm({...form, [name]: value})
+    }, [form])
+
+
+    const [searchParams] = useSearchParams()
+    const debug = searchParams.get('debug')
+
+    const [anchorEl, setAnchorEl] = useState(null)
+    const [deletingData, setDeletingData] = useState(false)
+    const navigate = useNavigate()
+    const {user} = useContext(AuthContext)
+
+    const handleFocus = useCallback(event => event.target.select(), [])
+
+    const handleSaveUsername = useCallback(async () => {
+        try {
+            await updateProfileField('username', form.username)
+            enqueueSnackbar('Profile updated')
+        } catch (ex) {
+            console.error('Error while updating profile', ex)
+            enqueueSnackbar('Error while updating profile')
+        }
+    }, [form.username, updateProfileField])
+
+    const handleClear = useCallback(async () => {
+        try {
+            await updateProfileField('username', null)
+            enqueueSnackbar('Username cleared')
+        } catch (ex) {
+            console.error('Error while updating profile', ex)
+            enqueueSnackbar('Error while updating profile')
+        }
+    }, [updateProfileField])
+
+    const handleViewProfile = useCallback(() => {
+        navigate(`/profile/${user.uid}`)
+    }, [navigate, user.uid])
+
+    const handleDeleteAllData = useCallback(async () => {
+        setDeletingData(true)
+        await deleteAllUserData(user.uid)
+        setAnchorEl(null)
+        setDeletingData(false)
+        enqueueSnackbar('All data has been deleted')
+    }, [deleteAllUserData, user])
+
+    const handleDeleteConfirm = useCallback((ev) => {
+        ev.preventDefault()
+        ev.stopPropagation()
+        setAnchorEl(ev.currentTarget)
+    }, [])
+
+    const error = form.username && !pattern.test(form.username.toString())
+    const noSave = !form.username || form.username === userProfile.username
+    const helperText = error
+        ? 'Username must only include A-Z, 0-9, _ and -.'
+        : ''
+
+    const introNameText = form.username
+        ? ` (${form.username}) `
+        : ''
+
+    const extras = (
+        <React.Fragment>
+            {!isMobile && <div style={{flexGrow: 1, minWidth: '10px'}}/>}
+        </React.Fragment>
+    )
+    const footerBefore = (
+        <div style={{margin: '30px 0px'}}/>
+    )
+
+    return (
+        <React.Fragment>
+            <Nav title='My Profile' titleMobile='Profile' extras={extras}/>
+
+            <div style={{display: flexStyle, padding: 16, width: '100%'}}>
+                {form.username ?
+                    <div style={{marginBottom: 10, marginRight: 20}}>
+                        <span style={{fontSize: '1.2rem', fontWeight: 500}}>Username<br/></span>
+                        Your username {introNameText} shows up on the leaderboard and
+                        your profile can be shared with others.
+                        <br/><br/>
+                        Your Google login information will never be displayed to other users.
+                    </div>
+                    :
+                    <div style={{marginBottom: 10, marginRight: 20, maxWidth: 325}}>
+                        <span style={{fontSize: '1.2rem', fontWeight: 500}}>Username<br/></span>
+                        Your username will show up on the leaderboard and
+                        your profile can be shared with others.
+                        <br/><br/>
+                        Your Google login information will never be displayed to other users.
+                    </div>
+                }
+
+                <div style={{width: '100%', marginTop: 40}}>
+                    <TextField
+                        error={!!error}
+                        name={'username'}
+                        variant='outlined'
+                        color='secondary'
+                        label='Username'
+                        helperText={helperText}
+                        value={form.username || ''}
+                        onChange={handleFormChange}
+                        onFocus={handleFocus}
+                        slotProps={{htmlInput: {maxLength: 32}}}
+                        size='small'
+                        style={{width: 220}}
+
+                    />
+                    <Button variant='outlined'
+                            color={error ? undefined : 'success'}
+                            onClick={handleSaveUsername}
+                            disabled={!!error || noSave}
+                            style={{marginLeft: 16, marginRight: 0, marginBottom: 10, height: 40}}
+                    >
+                        Save
+                    </Button>
+
+                    <div style={{width: '100%', textAlign: 'left', margin: '10px 0px 28px 0px'}}>
+                        {userProfile.username &&
+                            <Button variant='outlined'
+                                    color='info'
+                                    onClick={handleClear}
+                                    disabled={!!error}
+                                    style={{marginBottom: 10, color: '#4972ab', padding: '5px 10px'}}
+                            >
+                                Clear Display Name
+                            </Button>
+                        }
+                        <Button variant='outlined'
+                                color='info'
+                                onClick={handleViewProfile}
+                                style={{
+                                    marginLeft: 15,
+                                    marginBottom: 10,
+                                    padding: '5px 10px'
+                                }}
+                        >
+                            View Profile
+                        </Button>
+                    </div>
+                </div>
+            </div>
+
+
+            <div style={{padding: 16, width: '100%'}}>
+                <div style={{width: '100%', fontSize: '1.2rem', fontWeight: 500}}>Equipment</div>
+                <Machines machines={userProfile.equipment}/>
+            </div>
+
+
+            <div style={{width: '100%', textAlign: 'center', margin: '60px 0px 10px 0px'}}>
+                <Button variant='outlined'
+                        color='error'
+                        onClick={handleDeleteConfirm}
+                        style={{color: '#d31f1f', padding: '5px 10px'}}
+                >
+                    Delete All Profile Data
+                </Button>
+                <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={() => setAnchorEl(null)}>
+                    <div style={{padding: 20, textAlign: 'center'}}>
+                        This will permanently delete all of your data.<br/>
+                        Are you sure?
+                    </div>
+                    <div style={{textAlign: 'center'}}>
+                        <Button style={{marginBottom: 10, color: '#000'}}
+                                variant='contained'
+                                onClick={handleDeleteAllData}
+                                edge='start'
+                                color='error'
+                        >
+                            Delete Profile
+                        </Button>
+                    </div>
+                </Menu>
+            </div>
+
+            <Tracker feature='editProfile'/>
+            <Footer before={footerBefore}/>
+
+        </React.Fragment>
+    )
+}
+
+const pattern = /^[\sa-zA-Z0-9_-]{1,32}$/
+
+const machinesTestData = [
+    {
+        id: 'machine0',
+        type: 'Espresso',
+        fullName: '9Barista Mk.2',
+        brand: '9Barista',
+        model: 'Mk.2',
+        year: '2025',
+        notes: '93 deg. C',
+        link: 'https://www.9barista.com',
+    },
+    {
+        id: 'machine1',
+        fullName: 'La Marzocco Linea Mini',
+        type: 'Espresso',
+        brand: 'La Marzocco',
+        model: 'Linea Mini',
+        year: '2025',
+        notes: 'The La Marzocco Linea Mini is a compact version of the iconic Linea Classic, designed for home use. It features dual boilers, a saturated group head, and commercial-grade components to deliver café-quality espresso at home.',
+        link: 'https://www.lamarzoccousa.com/linea-mini',
+    },
+    {
+        id: 'machine2',
+        fullName: 'Breville Barista Express',
+        type: 'Espresso',
+        brand: 'Breville',
+        model: 'Barista Express',
+        year: '2025',
+        description: 'The Breville Barista Express is an all-in-one espresso machine that combines a grinder and espresso maker. It offers precise temperature control and customizable settings for a personalized coffee experience.',
+        link: 'https://www.breville.com/us/en/products/espresso/bes870.html',
+    },
+    {
+        id: 'machine3',
+        fullName: 'Hario Switch',
+        type: 'Pour Over',
+        brand: 'Hario',
+        model: 'Switch',
+        year: '2025',
+        description: 'The Breville Barista Express is an all-in-one espresso machine that combines a grinder and espresso maker. It offers precise temperature control and customizable settings for a personalized coffee experience.',
+        link: 'https://www.breville.com/us/en/products/espresso/bes870.html',
+    },
+]

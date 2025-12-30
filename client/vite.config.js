@@ -9,6 +9,8 @@ dotenv.config({ path: '.env.keys' })
 export default defineConfig({
     server: {
         port: 3000,
+        host: 'localhost',
+        //strictPort: true,
         proxy: {
             '/api': 'http://localhost:4000'
         }

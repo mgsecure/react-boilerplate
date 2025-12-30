@@ -2425,6 +2425,7 @@ __metadata:
     eslint-plugin-import: "npm:^2.32.0"
     eslint-plugin-react: "npm:^7.37.5"
     eslint-plugin-react-hooks: "npm:^5.2.0"
+    firebase: "npm:^12.7.0"
     notistack: "npm:^3.0.2"
     obscenity: "npm:^0.4.5"
     react: "npm:^19.1.1"

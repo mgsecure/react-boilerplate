@@ -1,9 +1,11 @@
 import {initializeApp} from 'firebase/app'
-import {getAuth} from 'firebase/auth'
+import {getAuth, initializeAuth, browserPopupRedirectResolver} from 'firebase/auth'
 import {getFirestore} from 'firebase/firestore'
 
 export const {VITE_DEV_FIRESTORE: devFirestore} = import.meta.env
 const apiKey = import.meta.env.VITE_FIREBASE_API_KEY
+
+console.log('devFirestore', devFirestore)
 
 // Firebase configuration
 
@@ -19,4 +21,5 @@ const firebaseConfig = {
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig)
 export const auth = getAuth(app)
-export const db = devFirestore==='true' ? getFirestore(app, 'lpubelts-dev') : getFirestore(app)
+//export const auth = initializeAuth(app, { popupRedirectResolver: browserPopupRedirectResolver })
+export const db = devFirestore==='true' ? getFirestore(app, 'ct-dev') : getFirestore(app)

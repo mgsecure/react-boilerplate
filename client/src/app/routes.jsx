@@ -72,6 +72,23 @@ export default [{
             }
         },
         {
+            path: '/profile',
+            name: 'profile',
+            lazy: async () => {
+                const {default: ProfileParentRoute} = await import('../profile/ProfileParentRoute.jsx')
+                return {element: <Suspense><ProfileParentRoute/></Suspense>}
+            },
+            children: [
+                {
+                    path: '/profile',
+                    lazy: async () => {
+                        const {default: ViewProfileRoute} = await import('../profile/ViewProfileRoute.jsx')
+                        return {element: <Suspense><ViewProfileRoute/></Suspense>}
+                    }
+                },
+                ]
+        },
+        {
             path: '/testing',
             name: 'testing (redirect)',
             element: <Navigate to='/test' replace/>
