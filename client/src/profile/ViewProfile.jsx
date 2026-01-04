@@ -10,9 +10,10 @@ import {useNavigate, useSearchParams} from 'react-router-dom'
 import AuthContext from '../app/AuthContext.jsx'
 import {enqueueSnackbar} from 'notistack'
 import Menu from '@mui/material/Menu'
-import Machines from './Machines.jsx'
+import Equipment from './Equipment.jsx'
+import Beans from './Beans.jsx'
 
-export default function EditProfile() {
+export default function ViewProfile() {
     const {isMobile, flexStyle} = useWindowSize()
     const {
         userProfile = {},
@@ -61,10 +62,6 @@ export default function EditProfile() {
         }
     }, [updateProfileField])
 
-    const handleViewProfile = useCallback(() => {
-        navigate(`/profile/${user.uid}`)
-    }, [navigate, user.uid])
-
     const handleDeleteAllData = useCallback(async () => {
         setDeletingData(true)
         await deleteAllUserData(user.uid)
@@ -84,7 +81,6 @@ export default function EditProfile() {
     const helperText = error
         ? 'Username must only include A-Z, 0-9, _ and -.'
         : ''
-
     const introNameText = form.username
         ? ` (${form.username}) `
         : ''
@@ -134,19 +130,9 @@ export default function EditProfile() {
                         onFocus={handleFocus}
                         slotProps={{htmlInput: {maxLength: 32}}}
                         size='small'
-                        style={{width: 220}}
-
+                        style={{width: '100%', maxWidth: 300}}
                     />
-                    <Button variant='outlined'
-                            color={error ? undefined : 'success'}
-                            onClick={handleSaveUsername}
-                            disabled={!!error || noSave}
-                            style={{marginLeft: 16, marginRight: 0, marginBottom: 10, height: 40}}
-                    >
-                        Save
-                    </Button>
-
-                    <div style={{width: '100%', textAlign: 'left', margin: '10px 0px 28px 0px'}}>
+                    <div style={{width: '100%', maxWidth: 300, textAlign: 'right', margin: '10px 0px 28px 0px'}}>
                         {userProfile.username &&
                             <Button variant='outlined'
                                     color='info'
@@ -158,15 +144,12 @@ export default function EditProfile() {
                             </Button>
                         }
                         <Button variant='outlined'
-                                color='info'
-                                onClick={handleViewProfile}
-                                style={{
-                                    marginLeft: 15,
-                                    marginBottom: 10,
-                                    padding: '5px 10px'
-                                }}
+                                color={error ? undefined : 'success'}
+                                onClick={handleSaveUsername}
+                                disabled={!!error || noSave}
+                                style={{marginLeft: 16, marginRight: 0, marginBottom: 10, height: 40}}
                         >
-                            View Profile
+                            Save
                         </Button>
                     </div>
                 </div>
@@ -174,8 +157,13 @@ export default function EditProfile() {
 
 
             <div style={{padding: 16, width: '100%'}}>
-                <div style={{width: '100%', fontSize: '1.2rem', fontWeight: 500}}>Equipment</div>
-                <Machines machines={userProfile.equipment}/>
+                <div style={{width: '100%', fontSize: '1.2rem', fontWeight: 500, marginBottom: 10}}>Equipment</div>
+                <Equipment machines={userProfile.equipment}/>
+            </div>
+
+            <div style={{padding: 16, width: '100%'}}>
+                <div style={{width: '100%', fontSize: '1.2rem', fontWeight: 500, marginBottom: 10}}>Beans</div>
+                <Beans beans={userProfile.beans}/>
             </div>
 
 
@@ -214,6 +202,30 @@ export default function EditProfile() {
 
 const pattern = /^[\sa-zA-Z0-9_-]{1,32}$/
 
+const beansTestData = [
+    {
+        id: 'bean01',
+        roaster: 'The Boy and the Bear',
+        name: 'Dynamic Espresso',
+        roasterCity: 'Los Angeles',
+        roasterCountry: 'United States',
+        origin: 'Blend',
+        caffeine: 'Full caffeine',
+        roastLevel: 'Medium/Dark',
+        roastDate: '11/11/2025',
+        weight: 454,
+        priceUnit: 'USD ($)',
+        price: 18.00,
+        price100g: 3.96,
+        pricePound: 18.00,
+        roasterNotes: 'Dark Chocolate, Caramel, Red Appples',
+        tastingNotes: 'Rich, fruity, chocolate, slightly sour',
+        description: 'description goes here.',
+        ratings: {rating: 9},
+        url: 'https://beans.mgsecure.com'
+    }
+]
+
 const machinesTestData = [
     {
         id: 'machine0',
@@ -223,7 +235,7 @@ const machinesTestData = [
         model: 'Mk.2',
         year: '2025',
         notes: '93 deg. C',
-        link: 'https://www.9barista.com',
+        link: 'https://www.9barista.com'
     },
     {
         id: 'machine1',
@@ -233,7 +245,7 @@ const machinesTestData = [
         model: 'Linea Mini',
         year: '2025',
         notes: 'The La Marzocco Linea Mini is a compact version of the iconic Linea Classic, designed for home use. It features dual boilers, a saturated group head, and commercial-grade components to deliver café-quality espresso at home.',
-        link: 'https://www.lamarzoccousa.com/linea-mini',
+        link: 'https://www.lamarzoccousa.com/linea-mini'
     },
     {
         id: 'machine2',
@@ -243,7 +255,7 @@ const machinesTestData = [
         model: 'Barista Express',
         year: '2025',
         description: 'The Breville Barista Express is an all-in-one espresso machine that combines a grinder and espresso maker. It offers precise temperature control and customizable settings for a personalized coffee experience.',
-        link: 'https://www.breville.com/us/en/products/espresso/bes870.html',
+        link: 'https://www.breville.com/us/en/products/espresso/bes870.html'
     },
     {
         id: 'machine3',
@@ -253,6 +265,6 @@ const machinesTestData = [
         model: 'Switch',
         year: '2025',
         description: 'The Breville Barista Express is an all-in-one espresso machine that combines a grinder and espresso maker. It offers precise temperature control and customizable settings for a personalized coffee experience.',
-        link: 'https://www.breville.com/us/en/products/espresso/bes870.html',
-    },
+        link: 'https://www.breville.com/us/en/products/espresso/bes870.html'
+    }
 ]

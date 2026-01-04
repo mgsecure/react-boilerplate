@@ -5,15 +5,10 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import PersonIcon from '@mui/icons-material/Person'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
-import ListAltIcon from '@mui/icons-material/ListAlt'
-import LockIcon from '@mui/icons-material/Lock'
-import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined'
-import SavingsOutlinedIcon from '@mui/icons-material/SavingsOutlined'
 import LogoutIcon from '@mui/icons-material/Logout'
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks'
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings'
 import BiotechIcon from '@mui/icons-material/Biotech'
-import AvTimerIcon from '@mui/icons-material/AvTimer'
 import EditIcon from '@mui/icons-material/Edit'
 import IconButton from '@mui/material/IconButton'
 import Menu from '@mui/material/Menu'
@@ -29,18 +24,18 @@ import CoffeeIcon from '@mui/icons-material/Coffee'
 function UserMenu() {
     const navigate = useNavigate()
     const {isLoggedIn, user, logout} = useContext(AuthContext)
-    const {adminRole, lockCollection = {}, qaUserRole} = useContext(DBContext)
+    const {adminRole, userProfile = {}, qaUserRole} = useContext(DBContext)
     const {admin, setAdmin, qaUser, setQaUser} = useContext(AppContext)
     const [anchorEl, setAnchorEl] = useState(null)
     const open = Boolean(anchorEl)
     const handleOpen = useCallback(event => setAnchorEl(event.currentTarget), [])
     const handleClose = useCallback(() => setAnchorEl(null), [])
-    const safeName = lockCollection.displayName && !lockCollection.privacyAnonymous
-        ? lockCollection.displayName.replace(/\s/g, '_')
+    const safeName = userProfile.username
+        ? userProfile.username.replace(/\s/g, '_')
         : 'anonymous'
 
-    const displayName = lockCollection.displayName
-        ? lockCollection.displayName
+    const displayName = userProfile.username
+        ? userProfile.username
         : 'Your Account'
 
     const handleClick = useCallback(url => () => {
@@ -97,11 +92,11 @@ function UserMenu() {
                             </ListItemIcon>
                             <ListItemText>{safeName}</ListItemText>
                         </MenuItem>
-                        <MenuItem onClick={handleClick('/profile/edit')}>
+                        <MenuItem onClick={handleClick('/profile')}>
                             <ListItemIcon>
                                 <EditIcon/>
                             </ListItemIcon>
-                            <ListItemText>Edit Profile</ListItemText>
+                            <ListItemText>My Profile</ListItemText>
                         </MenuItem>
                         {adminRole &&
                             <MenuItem onClick={handleToggleAdmin}>
@@ -128,49 +123,6 @@ function UserMenu() {
                         }
                         <Divider/>
 
-                        <MenuItem onClick={handleClick(`/profile/${user.uid}?name=${safeName}`)}>
-                            <ListItemIcon>
-                                <LibraryBooksIcon fontSize='small'/>
-                            </ListItemIcon>
-                            <ListItemText>Lock Collection</ListItemText>
-                        </MenuItem>
-                        <MenuItem onClick={handleClick(`/profile/${user.uid}/safelocks?name=${safeName}`)}>
-                            <ListItemIcon>
-                                <AvTimerIcon/>
-                            </ListItemIcon>
-                            <ListItemText>Safe Locks</ListItemText>
-                        </MenuItem>
-                        <MenuItem onClick={handleClick(`/profile/${user.uid}/scorecard?name=${safeName}`)}>
-                            <ListItemIcon>
-                                <ListAltIcon/>
-                            </ListItemIcon>
-                            <ListItemText>Scorecard</ListItemText>
-                        </MenuItem>
-                        <Divider/>
-
-                        <MenuItem disabled>
-                            <ListItemText>Lock Collection</ListItemText>
-                        </MenuItem>
-                        <MenuItem onClick={handleClick(`/profile/${user.uid}?name=${safeName}&collection=Own`)}>
-                            <ListItemIcon>
-                                <LockIcon fontSize='small'/>
-                            </ListItemIcon>
-                            <ListItemText>Own ({lockCollection.own?.length || 0})</ListItemText>
-                        </MenuItem>
-                        <MenuItem onClick={handleClick(`/profile/${user.uid}?name=${safeName}&collection=Picked`)}>
-                            <ListItemIcon>
-                                <LockOpenOutlinedIcon fontSize='small'/>
-                            </ListItemIcon>
-                            <ListItemText>Picked ({lockCollection.picked?.length || 0})</ListItemText>
-                        </MenuItem>
-                        <MenuItem onClick={handleClick(`/profile/${user.uid}?name=${safeName}&collection=Wishlist`)}>
-                            <ListItemIcon>
-                                <SavingsOutlinedIcon fontSize='small'/>
-                            </ListItemIcon>
-                            <ListItemText>Wishlist ({lockCollection.wishlist?.length || 0})</ListItemText>
-                        </MenuItem>
-
-                        <Divider/>
 
                         <MenuItem onClick={handleLogout}>
                             <ListItemIcon>

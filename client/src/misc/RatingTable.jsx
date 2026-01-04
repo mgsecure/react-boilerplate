@@ -10,14 +10,18 @@ export default function RatingTable({
                                         size,
                                         allowFraction = false,
                                         readonly = false,
+                                        showLabel = true,
                                         fontSize = '1.0rem',
                                         paddingData = 5,
                                         backgroundColor,
                                         fillColor,
                                         emptyColor = '#777',
-                                        fontWeight = 500
+                                        fontWeight = 500,
+                                        iconsCount=5
                                     }) {
 
+console.log('rating table', {ratingDimensions,
+    ratings})
 
     const columns = [
         {id: 'ratingArea', name: 'Area', align: 'right'},
@@ -26,7 +30,7 @@ export default function RatingTable({
     const rows = Object.keys(ratingDimensions).map(key => {
         return {
             ratingArea: ratingDimensions[key] || key,
-            rating: <StarRating ratings={ratings} onChange={onRatingChange} dimension={key}
+            rating: <StarRating ratings={ratings} onChange={onRatingChange} dimension={key} iconsCount={iconsCount}
                                 readonly={readonly} size={size} fontSize={fontSize} allowFraction={allowFraction}
                                 fillColor={fillColor} emptyColor={emptyColor} style={{marginLeft: 5, marginTop: 4}}
             />
@@ -50,13 +54,15 @@ export default function RatingTable({
                             alignItems: 'center',
                             padding: `${paddingData}px`,
                             backgroundColor: index % 2 === 0 ? backgroundColor : 'transparent',
-                            marginRight: index < rows.length-1 ? 15 : 0
+                            marginRight: index < rows.length - 1 ? 15 : 0
                         }}>
-                            <div style={{
-                                fontSize: fontSize,
-                                fontWeight: fontWeight,
-                                color: '#ddd'
-                            }}>{row.ratingArea}</div>
+                            {showLabel &&
+                                <div style={{
+                                    fontSize: fontSize,
+                                    fontWeight: fontWeight,
+                                    color: '#ddd'
+                                }}>{row.ratingArea}</div>
+                            }
                             <div>{row.rating}</div>
                         </div>
                     ))

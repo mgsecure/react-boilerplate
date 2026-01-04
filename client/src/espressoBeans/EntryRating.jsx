@@ -1,26 +1,35 @@
 import React, {useCallback, useState} from 'react'
-import StarRating from '../misc/StarRating.jsx'
 import {useTheme} from '@mui/material/styles'
 import {alpha} from '@mui/material'
+import RatingTable from '../misc/RatingTable.jsx'
 
-export default function EntryRating({entry}) {
+export default function EntryRating({
+                                        entry={},
+                                        iconsCount = 10,
+                                        handleFormChange,
+                                        setRatingsChanged = () => {
+                                        }
+                                    }) {
 
-    if (!entry.rating) return null
+    console.log('EntryRating', entry)
 
-    const [ratings, setRatings] = useState(entry.rating ? {rating: parseInt(entry.rating)} : {})
+    const [ratings, setRatings] = useState(entry.ratings || {})
     const ratingDimensions = {rating: 'rating'}
     const handleRatingChange = useCallback(({dimension, rating}) => {
         setRatings({...ratings, [dimension]: rating})
+        handleFormChange && handleFormChange({target: {name: 'ratings', value: {...ratings, [dimension]: rating}}})
         setRatingsChanged(true)
-    }, [ratings])
+    }, [handleFormChange, ratings, setRatingsChanged])
 
     const theme = useTheme()
     const emptyColor = alpha(theme.palette.text.secondary, 0.2)
 
     return (
-        <StarRating ratings={ratings} dimension={'rating'}
-                    readonly={true} size={16} fontSize={'0.85rem'} allowFraction={true} paddingData={0}
-                    emptyColor={emptyColor} style={{marginLeft: 5, marginTop: 4}} iconsCount={10}
-        />
+        <div style={{display: 'flex'}}>
+            <div style={{fontWeight: 500, fontSize: '1.1rem', marginTop: 2, marginRight: 5}}>Rating</div>
+            <RatingTable ratingDimensions={ratingDimensions} onRatingChange={handleRatingChange}
+                         ratings={ratings} readonly={false} emptyColor={emptyColor}
+                         fontSize={'0.85rem'} size={19} paddingData={0} showLabel={false} iconsCount={iconsCount}/>
+        </div>
     )
 }

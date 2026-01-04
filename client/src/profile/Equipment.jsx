@@ -1,10 +1,11 @@
 import React, {useDeferredValue, useState} from 'react'
-import MachineCard from './MachineCard'
-import AddMachineCard from './AddMachineCard.jsx'
+import EquipmentCard from './EquipmentCard.jsx'
+import AddNewItemCard from './AddNewItemCard.jsx'
 import {useTheme, ThemeProvider, createTheme} from '@mui/material/styles'
 import Grid from '@mui/material/Grid'
+import {typeSort} from '../data/equipmentBeans'
 
-export default function Machines({machines = []}) {
+export default function Equipment({machines = []}) {
 
     const [expanded, setExpanded] = useState(undefined)
     const defExpanded = useDeferredValue(expanded)
@@ -34,13 +35,16 @@ export default function Machines({machines = []}) {
 
                 <ThemeProvider theme={theme}>
                     {machines?.length > 0 &&
-                        <Grid container spacing={{xs: 1, sm: 2, md: 2}} columns={{xs: 4, sm: 8, md: 12}}
+                        <Grid container spacing={{xs: 1, sm: 1, md: 1}} columns={{xs: 4, sm: 8, md: 12}}
                               style={{marginTop: 0, marginLeft: 0}}>
                             {machines
+                                .sort((a, b) => typeSort(a.type, b.type)
+                                    || (a.brand || '').localeCompare(b.brand || '')
+                                    || (a.model || '').localeCompare(b.model || ''))
                                 .filter(x => x)
                                 .map((machine) =>
                                     <Grid size={{xs: 4, sm: 4, md: 4}} key={machine.id}>
-                                        <MachineCard
+                                        <EquipmentCard
                                             machine={machine}
                                             expanded={machine.id === defExpanded}
                                             onExpand={setExpanded}
@@ -48,7 +52,7 @@ export default function Machines({machines = []}) {
                                     </Grid>
                                 )}
                             <Grid size={{xs: 4, sm: 4, md: 4}} key={'add-machine-card'}>
-                                <AddMachineCard/>
+                                <AddNewItemCard type={'Equipment'} count={machines.length}/>
                             </Grid>
                         </Grid>
                     }

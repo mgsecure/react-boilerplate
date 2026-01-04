@@ -4,9 +4,7 @@ import DataContext from '../context/DataContext.jsx'
 import {setDeepAdd, setDeepUnique} from '../util/setDeep'
 import {Link} from '@mui/material'
 
-
 export default function DataTest() {
-
     const {equipment, updateProfileField} = useContext(DBContext)
     const {mappedEntries} = useContext(DataContext)
 

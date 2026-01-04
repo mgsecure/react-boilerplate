@@ -1,11 +1,9 @@
 import {initializeApp} from 'firebase/app'
-import {getAuth, initializeAuth, browserPopupRedirectResolver} from 'firebase/auth'
+import {getAuth} from 'firebase/auth'
 import {getFirestore} from 'firebase/firestore'
 
 export const {VITE_DEV_FIRESTORE: devFirestore} = import.meta.env
 const apiKey = import.meta.env.VITE_FIREBASE_API_KEY
-
-console.log('devFirestore', devFirestore)
 
 // Firebase configuration
 

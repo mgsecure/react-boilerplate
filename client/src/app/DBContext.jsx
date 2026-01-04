@@ -3,7 +3,6 @@ import React, {useCallback, useContext, useEffect, useMemo, useState} from 'reac
 import {db} from '../auth/firebase'
 import {
     doc,
-    arrayUnion,
     arrayRemove,
     onSnapshot,
     runTransaction,
@@ -15,7 +14,6 @@ import {
 import AuthContext from './AuthContext'
 import {enqueueSnackbar} from 'notistack'
 import dayjs from 'dayjs'
-import {setDeepPush} from '../util/setDeep'
 
 /**
  * @typedef {object} award
@@ -26,7 +24,7 @@ import {setDeepPush} from '../util/setDeep'
 const DBContext = React.createContext({})
 
 export function DBProvider({children}) {
-    const {authLoaded, isLoggedIn, user, userClaims} = useContext(AuthContext)
+    const {authLoaded, isLoggedIn, user ={}, userClaims} = useContext(AuthContext)
     const [userProfile, setUserProfile] = useState({})
     const [profileLoaded, setProfileLoaded] = useState(false)
     const [dbError, setDbError] = useState(null)
@@ -35,10 +33,10 @@ export function DBProvider({children}) {
     const adminRole = isLoggedIn && userProfile && userProfile.admin
     const qaUserRole = isLoggedIn && user && (['qaUser', 'admin'].some(claim => userClaims.includes(claim)) || adminRole)
 
-    // EditProfile Subscription
+    // Profile Subscription
     useEffect(() => {
         if (isLoggedIn) {
-            const ref = doc(db, 'user-profiles', user.uid)
+            const ref = doc(db, 'user-profiles', user?.uid)
             return onSnapshot(ref, async doc => {
                 const data = doc.data()
                 if (data) {
@@ -80,12 +78,12 @@ export function DBProvider({children}) {
             } else {
                 transaction.update(ref, {
                     [key]: value,
-                    modifiedAt: timestamp,
+                    modifiedAt: timestamp
                 })
                 transaction.update(ref, {deletedAt: deleteField()})
             }
         })
-    }, [dbError, user.uid])
+    }, [dbError, user])
 
     const deleteAllUserData = useCallback(async (userId) => {
         if (dbError) return false
@@ -103,27 +101,40 @@ export function DBProvider({children}) {
         await setDoc(ref, cleanProfile)
     }, [dbError])
 
-
-    const addEquipment = useCallback(async (equipment) => {
+    const updateCollection = useCallback(async ({collection, item, flags = {}}) => {
         if (dbError) return false
+        const cleanItem = Object.fromEntries(
+            Object.entries(item).filter(([_key, value]) => {
+                return value !== null && typeof value !== 'undefined'
+            })
+        )
+
         const timestamp = dayjs().format('YYYY-MM-DD HH:mm:ss')
-        equipment.addedAt = timestamp
+        cleanItem.addedAt = timestamp
         const ref = doc(db, 'user-profiles', user.uid)
-        const newEquipment = [...userProfile.equipment || [], equipment]
+        let newItems
+        if (flags.delete) {
+            newItems = userProfile[collection]?.filter(e => e.id !== cleanItem.id)
+        } else if (flags.update && userProfile[collection]) {
+            newItems = userProfile[collection]?.map(e => e.id === cleanItem.id ? cleanItem : e)
+        } else {
+            newItems = [...userProfile[collection] || [], cleanItem]
+        }
+
         await runTransaction(db, async transaction => {
             const sfDoc = await transaction.get(ref)
             if (sfDoc.exists()) {
-                transaction.update(ref, {equipment: newEquipment})
+                transaction.update(ref, {[collection]: newItems})
                 transaction.update(ref, {modifiedAt: timestamp})
             } else {
-                transaction.set(ref, {equipment: newEquipment})
+                transaction.set(ref, {[collection]: newItems})
                 transaction.update(ref, {createdAt: timestamp})
             }
         })
-    },[dbError, user.uid, userProfile.equipment])
+    }, [dbError, user.uid, userProfile])
 
 
-        // Equipment DB
+    // Equipment DB
 
     const addToEquipment = useCallback(async (equipment) => {
         if (dbError) return false
@@ -217,7 +228,7 @@ export function DBProvider({children}) {
         profileLoaded,
         updateProfileField,
         deleteAllUserData,
-        addEquipment,
+        updateCollection,
         addToEquipment,
         getEquipment,
         adminRole,
@@ -230,7 +241,7 @@ export function DBProvider({children}) {
         profileLoaded,
         updateProfileField,
         deleteAllUserData,
-        addEquipment,
+        updateCollection,
         addToEquipment,
         getEquipment,
         adminRole,

@@ -39,10 +39,15 @@ export default function EspressoStats() {
             const grinderModel = entry.grinderModel || 'Other Model'
             setDeepAdd(acc, ['Grinder', grinderBrand, grinderModel], 1)
 
+            setDeepAdd(acc, ['Bean', entry.roaster, entry.name], 1)
+
+
             return acc
         }, {})
 
     }, [mappedEntries])
+
+    console.log('exportData', exportData)
 
     const statsData = useMemo(() => {
         let data = {}
@@ -102,8 +107,6 @@ export default function EspressoStats() {
 
             return acc
         }, {})
-
-        console.log('brandModelCounts', brandModelCounts)
 
         Object.keys(brandModelCounts.machines || {}).reduce((acc, brand) => {
             Object.keys(brandModelCounts.machines[brand]).reduce((acc2, model) => {

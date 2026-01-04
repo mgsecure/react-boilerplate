@@ -57,9 +57,11 @@
   "dependencies": {
     "@nivo/pie": "^0.99.0",
     "baseline-browser-mapping": "^2.9.11",
+    "csv-parse": "^6.1.0",
     "fast-levenshtein": "^3.0.0",
     "firebase": "^12.7.0",
     "fuzzysort": "^3.1.0",
+    "joi": "^18.0.2",
     "motion": "^12.23.26",
     "nivo": "^0.31.0",
     "query-string": "^9.3.1",

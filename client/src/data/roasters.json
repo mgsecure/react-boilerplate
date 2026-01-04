@@ -1,0 +1,2717 @@
+[
+  {
+    "id": "ca022ccd",
+    "name": "1998",
+    "city": "Malmö",
+    "country": "Sweden",
+    "link": "https://1998coffee.shop/",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "5ae1651d",
+    "name": "3fe",
+    "city": "Dublin",
+    "country": "Ireland",
+    "link": "https://3fe.com/",
+    "pouroverVotes": "3",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "11b79003",
+    "name": "94 Celcius",
+    "city": "Montreal",
+    "stateRegion": "Quebec",
+    "country": "Canada",
+    "link": "https://94celcius.com/",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "c2058d81",
+    "name": "A Matter of Concrete",
+    "city": "Rotterdam",
+    "country": "Netherlands",
+    "link": "https://amatterofconcrete.com/",
+    "pouroverVotes": "14",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "93684295",
+    "name": "Absolutely Love Process coffee",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "70e1ffa4",
+    "name": "AILA",
+    "city": "Zürich",
+    "country": "Switzerland",
+    "link": "https://www.ailacoffee.com",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "93d64367",
+    "name": "Airship",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "0c275098",
+    "name": "Alma",
+    "city": "Canton",
+    "stateRegion": "Georgia",
+    "country": "USA",
+    "link": "https://myalmacoffee.com/",
+    "pouroverVotes": "3",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "34de84a3",
+    "name": "Amavida",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "5f6745d9",
+    "name": "April",
+    "city": "Copenhagen",
+    "country": "Denmark",
+    "link": "https://www.aprilcoffeeroasters.com/",
+    "pouroverVotes": "23",
+    "roastfulRanking": "3",
+    "source": [
+      "pourover",
+      "roastful"
+    ]
+  },
+  {
+    "id": "36657f97",
+    "name": "Arcade",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "2af2f51d",
+    "name": "Arcane Estate Coffee",
+    "city": "New York City",
+    "stateRegion": "New York",
+    "country": "USA",
+    "link": "https://arcaneestatecoffee.com",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "773c5973",
+    "name": "Archers",
+    "city": "Sharjah",
+    "country": "UAE",
+    "link": "https://archerscoffee.com/",
+    "pouroverVotes": "1",
+    "roastfulRanking": "15",
+    "source": [
+      "pourover",
+      "roastful"
+    ]
+  },
+  {
+    "id": "3f25d173",
+    "name": "Assembly",
+    "city": "London",
+    "country": "UK",
+    "link": "https://assemblycoffee.co.uk/",
+    "roastfulRanking": "28",
+    "source": [
+      "roastful"
+    ]
+  },
+  {
+    "id": "96a2daf4",
+    "name": "Aviary",
+    "city": "Cleveland",
+    "stateRegion": "Ohio",
+    "country": "USA",
+    "link": "https://aviary.coffee/",
+    "pouroverVotes": "33",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "aa023945",
+    "name": "Barrington Coffee",
+    "city": "Lee",
+    "stateRegion": "Massachusetts",
+    "country": "USA",
+    "link": "https://barringtoncoffee.com/",
+    "pouroverVotes": "0",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "c40c70c2",
+    "name": "Berry & Bean",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "2824dfc0",
+    "name": "Big Sur",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "d5e45396",
+    "name": "Birdy",
+    "pouroverVotes": "0",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "8550fe08",
+    "name": "Black",
+    "city": "Bratislava",
+    "country": "Slovakia",
+    "link": "https://Black.sk",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "b47e60b5",
+    "name": "Black & White Coffee Roasters",
+    "city": "Raleigh",
+    "stateRegion": "North Carolina",
+    "country": "USA",
+    "link": "https://www.blackwhiteroasters.com/",
+    "pouroverVotes": "79",
+    "roastfulRanking": "45",
+    "source": [
+      "pourover",
+      "roastful"
+    ]
+  },
+  {
+    "id": "d7c618cd",
+    "name": "Blanchards",
+    "city": "Richmond",
+    "stateRegion": "Virgina",
+    "country": "USA",
+    "link": "https://blanchardscoffee.com/",
+    "pouroverVotes": "2",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "9b26b304",
+    "name": "Blommers",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "ec774250",
+    "name": "Blue Bottle",
+    "city": "Oakland",
+    "stateRegion": "California",
+    "country": "USA",
+    "link": "https://bluebottlecoffee.com/",
+    "pouroverVotes": "-24",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "8e7464ec",
+    "name": "Botz",
+    "city": "Whiting",
+    "stateRegion": "Indiana",
+    "country": "USA",
+    "link": "https://botz-coffee.com/",
+    "pouroverVotes": "3",
+    "roastfulRanking": "49",
+    "source": [
+      "pourover",
+      "roastful"
+    ]
+  },
+  {
+    "id": "3fcdc2b6",
+    "name": "Brainwave",
+    "pouroverVotes": "4",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "68f53f24",
+    "name": "Brandywine",
+    "city": "Irvine",
+    "stateRegion": "California",
+    "country": "USA",
+    "link": "https://www.brandywinecoffeeroasters.com/",
+    "pouroverVotes": "36",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "8c37d5e5",
+    "name": "Brewbuds",
+    "city": "Perth",
+    "country": "Australia",
+    "link": "https://brewbuds.club/",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "a7fbe790",
+    "name": "Broadsheet",
+    "pouroverVotes": "4",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "07f57779",
+    "name": "Cabrera Coffee",
+    "city": "Panama City",
+    "country": "Panama",
+    "link": "https://www.cabreracoffee.isdigitaltime.com/",
+    "pouroverVotes": "-1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "6d60f209",
+    "name": "Cafe 18",
+    "link": "https://www.cafe18.com.co",
+    "pouroverVotes": "0",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "e906f3bd",
+    "name": "Calendar",
+    "city": "Galway",
+    "country": "Ireland",
+    "link": "https://calendarcoffee.ie/",
+    "roastfulRanking": "34",
+    "source": [
+      "roastful"
+    ]
+  },
+  {
+    "id": "1436d3d6",
+    "name": "Camber",
+    "pouroverVotes": "4",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "1a02c91d",
+    "name": "Casino Mocca",
+    "city": "Budapest",
+    "country": "Hungary",
+    "link": "https://casinomocca.com/",
+    "pouroverVotes": "5",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "bbd4e28a",
+    "name": "Central Coffee Roasters",
+    "city": "Sperryville",
+    "stateRegion": "Virginia",
+    "country": "USA",
+    "pouroverVotes": "0",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "78a2cbc0",
+    "name": "Ceremony Coffee",
+    "city": "Annapolis",
+    "stateRegion": "Maryland",
+    "country": "USA",
+    "pouroverVotes": "0",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "2dd7dc8a",
+    "name": "Chesapeake Coffee Roasters",
+    "pouroverVotes": "-1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "ace2479f",
+    "name": "Chromatic Coffee",
+    "pouroverVotes": "0",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "9b0df9de",
+    "name": "City League",
+    "city": "Brooklyn",
+    "stateRegion": "New York",
+    "country": "USA",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "0bae908e",
+    "name": "Clandestine",
+    "city": "Nashville",
+    "stateRegion": "Tennessee",
+    "country": "USA",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "5748833b",
+    "name": "Coava",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "5f0f32b8",
+    "name": "Code Black",
+    "city": "Brunswick",
+    "country": "Australia",
+    "link": "https://codeblackcoffee.com.au/",
+    "roastfulRanking": "22",
+    "source": [
+      "roastful"
+    ]
+  },
+  {
+    "id": "8d1fec4a",
+    "name": "Coffea Circulor",
+    "city": "Tyholmen",
+    "country": "Norway",
+    "link": "https://coffeacirculor.com/",
+    "pouroverVotes": "27",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "f8fb1eac",
+    "name": "Coffee Collective",
+    "city": "Frederiksberg",
+    "country": "Denmark",
+    "link": "https://coffeecollective.dk/",
+    "pouroverVotes": "71",
+    "roastfulRanking": "2",
+    "source": [
+      "pourover",
+      "roastful"
+    ]
+  },
+  {
+    "id": "f08a3daa",
+    "name": "Coffee Cycle",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "78f1a2d7",
+    "name": "Coffee Pirate",
+    "city": "Berlin",
+    "country": "Germany",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "b7b6f851",
+    "name": "Coffee Project NY",
+    "city": "New York City",
+    "stateRegion": "New York",
+    "country": "USA",
+    "link": "https://coffeeprojectny.com/",
+    "pouroverVotes": "2",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "8c1b4d26",
+    "name": "Coffee Supreme",
+    "city": "Sydney",
+    "country": "Australia",
+    "link": "https://shopau.coffeesupreme.com/",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "9dfa2eac",
+    "name": "Colonna Coffee",
+    "city": "Bristol",
+    "country": "UK",
+    "link": "https://colonnacoffee.com/",
+    "roastfulRanking": "21",
+    "source": [
+      "roastful"
+    ]
+  },
+  {
+    "id": "ba1df416",
+    "name": "Colorfull",
+    "pouroverVotes": "2",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "1d11be85",
+    "name": "Concept Coffee",
+    "city": "Piešťany",
+    "country": "Slovakia",
+    "link": "https://www.conceptcoffee.sk/",
+    "pouroverVotes": "2",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "083700ff",
+    "name": "Corvus",
+    "city": "Denver",
+    "stateRegion": "Colorado",
+    "country": "USA",
+    "link": "https://www.corvuscoffee.com/",
+    "pouroverVotes": "8",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "24e67793",
+    "name": "Counter Culture",
+    "city": "Los Angeles",
+    "stateRegion": "California",
+    "country": "USA",
+    "link": "https://counterculturecoffee.com/",
+    "pouroverVotes": "9",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "75205eb6",
+    "name": "Craft Coffee",
+    "city": "Topeka",
+    "stateRegion": "Kansas",
+    "country": "USA",
+    "link": "https://www.craftcoffee.com/",
+    "pouroverVotes": "0",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "fea1fc50",
+    "name": "Crankhouse Coffee",
+    "city": "Exeter",
+    "country": "UK",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "45995d21",
+    "name": "Crema Coffee",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "7ba423d9",
+    "name": "Curious Coffee",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "8b535e46",
+    "name": "Cxffeeblack",
+    "city": "Memphis",
+    "stateRegion": "Tennessee",
+    "country": "USA",
+    "link": "https://cxffeeblack.com/",
+    "pouroverVotes": "6",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "e93cb6fc",
+    "name": "Cypher",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "9b83410e",
+    "name": "Dak Coffee Roasters",
+    "city": "Amsterdam",
+    "country": "The Netherlands",
+    "link": "https://www.dakcoffeeroasters.com/",
+    "pouroverVotes": "145",
+    "roastfulRanking": "13",
+    "source": [
+      "pourover",
+      "roastful"
+    ]
+  },
+  {
+    "id": "3d1089e0",
+    "name": "Datura",
+    "city": "Paris",
+    "country": "France",
+    "link": "https://daturacoffee.com/",
+    "pouroverVotes": "30",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "454c6bfd",
+    "name": "Dayglow",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "6da686a9",
+    "name": "Deeper Roots",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "ce1ba8b0",
+    "name": "Devoción",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "7bb5c792",
+    "name": "Diggy Doos",
+    "city": "Sydney",
+    "country": "Australia",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "1aee741c",
+    "name": "Disciple",
+    "city": "Melbourne",
+    "country": "Australia",
+    "link": "https://disciplescoffee.com/",
+    "pouroverVotes": "2",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "08bd0c60",
+    "name": "Driftaway",
+    "pouroverVotes": "3",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "4ba8b6d5",
+    "name": "Drop",
+    "city": "Stockholm",
+    "country": "Sweden",
+    "link": "https://www.dropcoffee.com/",
+    "pouroverVotes": "1",
+    "roastfulRanking": "29",
+    "source": [
+      "pourover",
+      "roastful"
+    ]
+  },
+  {
+    "id": "7c44d2b4",
+    "name": "Dune",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "5216b3e9",
+    "name": "Dynamite Roasting",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "89a42e77",
+    "name": "Elixr",
+    "city": "Philadelphia",
+    "stateRegion": "Pennsylvania",
+    "country": "USA",
+    "pouroverVotes": "0",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "57ee9b0c",
+    "name": "Elysian",
+    "pouroverVotes": "0",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "246d8c12",
+    "name": "Enjoy Coffee Roasters",
+    "city": "Providence",
+    "stateRegion": "Rhode Island",
+    "country": "USA",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "9f552c28",
+    "name": "Epoch",
+    "city": "Moncton",
+    "stateRegion": "New Brunswick",
+    "country": "Canada",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "b5dcb55f",
+    "name": "Escape",
+    "city": "Montreal",
+    "stateRegion": "Quebec",
+    "country": "Canada",
+    "pouroverVotes": "0",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "8aa1a258",
+    "name": "Ethica",
+    "city": "Toronto",
+    "stateRegion": "Ontario",
+    "country": "Canada",
+    "link": "https://ethicaroasters.com/",
+    "pouroverVotes": "2",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "e2a1947f",
+    "name": "Exposure Therapy",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "4d96e017",
+    "name": "Five Elephant",
+    "city": "Berlin",
+    "country": "Germany",
+    "link": "https://www.fiveelephant.com/",
+    "roastfulRanking": "33",
+    "source": [
+      "roastful"
+    ]
+  },
+  {
+    "id": "1a14850c",
+    "name": "Flower Child",
+    "city": "Oakland",
+    "stateRegion": "California",
+    "country": "USA",
+    "link": "https://flowerchildcoffee.com/",
+    "pouroverVotes": "81",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "baed163f",
+    "name": "Flux Coffee Roasters",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "a573931f",
+    "name": "Fractured Coffee",
+    "pouroverVotes": "4",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "7a3874b5",
+    "name": "Friedhats ",
+    "city": "Amsterdam",
+    "country": "The Netherlands",
+    "link": "https://friedhats.com/",
+    "pouroverVotes": "58",
+    "roastfulRanking": "11",
+    "source": [
+      "pourover",
+      "roastful"
+    ]
+  },
+  {
+    "id": "e0400dd7",
+    "name": "Fritz",
+    "city": "Seoul",
+    "country": "South Korea",
+    "link": "https://fritz.co.kr",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "9c03fac6",
+    "name": "Gardelli",
+    "city": "Forli",
+    "country": "Italy",
+    "link": "https://shop.gardellicoffee.com/",
+    "pouroverVotes": "6",
+    "roastfulRanking": "35",
+    "source": [
+      "pourover",
+      "roastful"
+    ]
+  },
+  {
+    "id": "06b4b954",
+    "name": "Genre",
+    "city": "St. Augustine",
+    "stateRegion": "Florida",
+    "country": "USA",
+    "pouroverVotes": "0",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "d472383a",
+    "name": "George Howell",
+    "city": "Acton",
+    "stateRegion": "Massachusetts",
+    "country": "USA",
+    "link": "https://georgehowellcoffee.com/",
+    "pouroverVotes": "11",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "26fcf61f",
+    "name": "Glitch",
+    "city": "Tokyo",
+    "country": "Japan",
+    "link": "https://glitchcoffee.com/",
+    "pouroverVotes": "17",
+    "roastfulRanking": "26",
+    "source": [
+      "pourover",
+      "roastful"
+    ]
+  },
+  {
+    "id": "0253226d",
+    "name": "Good Brothers",
+    "pouroverVotes": "2",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "62d68ff4",
+    "name": "Gracenote",
+    "city": "Boston",
+    "stateRegion": "Massachusetts",
+    "country": "USA",
+    "link": "https://gracenotecoffee.com/",
+    "pouroverVotes": "11",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "8bca4e57",
+    "name": "Graph",
+    "city": "Chiang Mai",
+    "country": "Thailand",
+    "link": "https://www.graphcoffeeco.com/",
+    "pouroverVotes": "0",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "c3df5892",
+    "name": "Gringo",
+    "pouroverVotes": "0",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "b08c696b",
+    "name": "H&S",
+    "city": "Laramie",
+    "stateRegion": "Wyoming",
+    "country": "USA",
+    "link": "https://hscoffeeroasters.com/",
+    "pouroverVotes": "24",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "7490b9ff",
+    "name": "Haan",
+    "pouroverVotes": "0",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "e9991511",
+    "name": "Hatch",
+    "city": "Markham",
+    "stateRegion": "Ontario",
+    "country": "Canada",
+    "link": "https://www.hatchcrafted.com/",
+    "pouroverVotes": "34",
+    "roastfulRanking": "44",
+    "source": [
+      "pourover",
+      "roastful"
+    ]
+  },
+  {
+    "id": "9ffbd0df",
+    "name": "Heart",
+    "city": "Portland",
+    "stateRegion": "Oregon",
+    "country": "USA",
+    "link": "https://www.heartroasters.com/",
+    "pouroverVotes": "19",
+    "roastfulRanking": "16",
+    "source": [
+      "pourover",
+      "roastful"
+    ]
+  },
+  {
+    "id": "059bcd5a",
+    "name": "Helm",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "7bc82e1a",
+    "name": "Hex Coffee Roasters",
+    "city": "Charlotte",
+    "stateRegion": "North Carolina",
+    "country": "USA",
+    "link": "https://hex.coffee/",
+    "pouroverVotes": "6",
+    "roastfulRanking": "29",
+    "source": [
+      "pourover",
+      "roastful"
+    ]
+  },
+  {
+    "id": "2fc3faa6",
+    "name": "High Bank",
+    "pouroverVotes": "3",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "9541d34f",
+    "name": "Huckleberry",
+    "pouroverVotes": "0",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "a28bdde8",
+    "name": "Hydrangea",
+    "city": "Berkeley",
+    "stateRegion": "California",
+    "country": "USA",
+    "link": "https://hydrangea.coffee/",
+    "pouroverVotes": "100",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "6fb9d1bf",
+    "name": "Idle Hands",
+    "city": "Salt Lake City",
+    "stateRegion": "Utah",
+    "country": "USA",
+    "link": "https://idlehandsroasting.com/",
+    "pouroverVotes": "5",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "5b6bb860",
+    "name": "Ilse",
+    "city": "North Canaan",
+    "stateRegion": "Connecticut",
+    "country": "USA",
+    "link": "https://ilsecoffee.com/",
+    "pouroverVotes": "48",
+    "roastfulRanking": "27",
+    "source": [
+      "pourover",
+      "roastful"
+    ]
+  },
+  {
+    "id": "be75b425",
+    "name": "Imbibe",
+    "pouroverVotes": "0",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "fd806ff2",
+    "name": "Intelligentsia",
+    "city": "Chicago",
+    "stateRegion": "Illinois",
+    "country": "USA",
+    "link": "https://www.intelligentsia.com/",
+    "pouroverVotes": "4",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "31ca8c75",
+    "name": "Just Coffee",
+    "pouroverVotes": "0",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "8d1d824d",
+    "name": "Kaffa",
+    "city": "Tvrdošín",
+    "country": "Slovakia",
+    "link": "https://www.kaffa.sk/",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "36bfeaec",
+    "name": "Kaffeelix",
+    "city": "St.Pölten",
+    "country": "Austria",
+    "link": "https://kaffeelix.at",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "bcd0cf82",
+    "name": "Kafiex",
+    "pouroverVotes": "-2",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "d0bbf69b",
+    "name": "Kahiwa",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "b25f875a",
+    "name": "KB Roasters",
+    "city": "Paris",
+    "country": "France",
+    "link": "https://kbcoffeeroasters.com/",
+    "pouroverVotes": "3",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "1e2fc529",
+    "name": "Kings Arms",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "7bde6fcb",
+    "name": "Klatch",
+    "city": "Rancho Cucamonga",
+    "stateRegion": "California",
+    "country": "USA",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "68665f90",
+    "name": "Koppi",
+    "city": "Helsingborg",
+    "country": "Sweden",
+    "link": "https://koppi.se/",
+    "pouroverVotes": "1",
+    "roastfulRanking": "6",
+    "source": [
+      "pourover",
+      "roastful"
+    ]
+  },
+  {
+    "id": "876ef612",
+    "name": "Kurasu",
+    "city": "Kyoto",
+    "country": "Japan",
+    "link": "https://kurasu.kyoto/",
+    "roastfulRanking": "47",
+    "source": [
+      "roastful"
+    ]
+  },
+  {
+    "id": "f6afc214",
+    "name": "La Cabra",
+    "city": "Copenhagen",
+    "country": "Denmark",
+    "link": "https://lacabra.com/",
+    "pouroverVotes": "57",
+    "roastfulRanking": "5",
+    "source": [
+      "pourover",
+      "roastful"
+    ]
+  },
+  {
+    "id": "28522969",
+    "name": "Lariat",
+    "pouroverVotes": "0",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "5ed9d104",
+    "name": "Latitude",
+    "city": "Queensland",
+    "country": "Australia",
+    "link": "https://www.latitudecoffee.com.au",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "ff5524d5",
+    "name": "Leaves",
+    "city": "Tokyo",
+    "country": "Japan",
+    "link": "https://leavescoffee.jp",
+    "pouroverVotes": "16",
+    "roastfulRanking": "18",
+    "source": [
+      "pourover",
+      "roastful"
+    ]
+  },
+  {
+    "id": "a2b3161e",
+    "name": "Leuchtfeuer",
+    "city": "Hamburg",
+    "country": "Germany",
+    "link": "https://www.lf.coffee/",
+    "pouroverVotes": "2",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "8a7ad1b8",
+    "name": "Lightroast",
+    "city": "Düsseldorf",
+    "country": "Germany",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "74d6b621",
+    "name": "Lilo Coffee",
+    "city": "Osaka",
+    "country": "Japan",
+    "link": "https://coffee.liloinveve.com/",
+    "pouroverVotes": "10",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "57fae42e",
+    "name": "Little Waves",
+    "city": "Durham",
+    "stateRegion": "North Carolina",
+    "country": "USA",
+    "link": "https://littlewaves.coffee",
+    "pouroverVotes": "10",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "edafa574",
+    "name": "Little Wolf",
+    "city": "Ipswich",
+    "stateRegion": "Massachusetts",
+    "country": "USA",
+    "link": "https://littlewolf.coffee/",
+    "pouroverVotes": "36",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "6610a32f",
+    "name": "Loveless",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "7225c66a",
+    "name": "Luminous",
+    "city": "Las Vegas",
+    "stateRegion": "Nevada",
+    "country": "USA",
+    "link": "https://www.loveluminous.coffee/",
+    "pouroverVotes": "31",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "ea37cb20",
+    "name": "Luna",
+    "city": "Vancouver",
+    "stateRegion": "British Columbia",
+    "country": "Canada",
+    "link": "https://enjoylunacoffee.com/",
+    "pouroverVotes": "45",
+    "roastfulRanking": "37",
+    "source": [
+      "pourover",
+      "roastful"
+    ]
+  },
+  {
+    "id": "c77381b0",
+    "name": "Mad Heads",
+    "city": "Kyiv",
+    "country": "Ukraine",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "7cd01064",
+    "name": "Magnolia",
+    "city": "Matthews",
+    "stateRegion": "North Carolina",
+    "country": "USA",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "ce45ee86",
+    "name": "Makeworth",
+    "pouroverVotes": "4",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "60b1af0d",
+    "name": "Mame",
+    "city": "Zurich",
+    "country": "Switzerland",
+    "link": "https://mame.coffee/",
+    "pouroverVotes": "2",
+    "roastfulRanking": "22",
+    "source": [
+      "pourover",
+      "roastful"
+    ]
+  },
+  {
+    "id": "94727689",
+    "name": "ManCoCo",
+    "city": "Manchester",
+    "country": "UK",
+    "link": "https://mancoco.co.uk/",
+    "pouroverVotes": "0",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "4a80d02c",
+    "name": "Manhattan",
+    "city": "Rotterdam",
+    "country": "Netherlands",
+    "link": "https://manhattancoffeeroasters.com/",
+    "pouroverVotes": "27",
+    "roastfulRanking": "10",
+    "source": [
+      "pourover",
+      "roastful"
+    ]
+  },
+  {
+    "id": "cca3dc82",
+    "name": "Market Lane",
+    "city": "Melbourne",
+    "country": "Australia",
+    "link": "https://marketlane.com.au/",
+    "roastfulRanking": "20",
+    "source": [
+      "roastful"
+    ]
+  },
+  {
+    "id": "7751a0ad",
+    "name": "Maruyama Coffee",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "6e1e6d7f",
+    "name": "Maven",
+    "link": "https://mavencoffee.com",
+    "pouroverVotes": "0",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "7c59de7d",
+    "name": "Mazelab",
+    "city": "Prague",
+    "country": "Poland",
+    "link": "https://mazelabcoffee.com/",
+    "pouroverVotes": "0",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "b3d12da6",
+    "name": "Memli",
+    "pouroverVotes": "0",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "0b067f1a",
+    "name": "Metric",
+    "city": "Chicago",
+    "stateRegion": "Illinois",
+    "country": "USA",
+    "link": "https://metriccoffee.com/",
+    "pouroverVotes": "15",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "00804d7e",
+    "name": "Mirra Coffee",
+    "pouroverVotes": "0",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "764efd3c",
+    "name": "Mok",
+    "city": "Brussels",
+    "country": "Belgium",
+    "link": "https://mokcoffee.be/",
+    "pouroverVotes": "13",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "f8499a06",
+    "name": "Momos",
+    "city": "Busan",
+    "country": "South Korea",
+    "link": "https://en.momos.co.kr/",
+    "roastfulRanking": "14",
+    "source": [
+      "roastful"
+    ]
+  },
+  {
+    "id": "6fd5cad0",
+    "name": "Monogram",
+    "city": "Calgary",
+    "country": "Canada",
+    "link": "https://monogramcoffee.com/",
+    "roastfulRanking": "43",
+    "source": [
+      "roastful"
+    ]
+  },
+  {
+    "id": "e7fb7331",
+    "name": "Moonwake Coffee Roasters",
+    "city": "Jan Jose",
+    "stateRegion": "California",
+    "country": "USA",
+    "link": "https://moonwakecoffeeroasters.com/",
+    "pouroverVotes": "21",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "111f58bc",
+    "name": "Morgon Coffee Roasters",
+    "city": "Gothenburg",
+    "country": "Sweden",
+    "link": "https://www.morgoncoffeeroasters.com/",
+    "pouroverVotes": "6",
+    "roastfulRanking": "17",
+    "source": [
+      "pourover",
+      "roastful"
+    ]
+  },
+  {
+    "id": "c995f82d",
+    "name": "Morning Song",
+    "pouroverVotes": "2",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "e4030493",
+    "name": "Mountain Air Roasting",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "da6eb510",
+    "name": "Moxie",
+    "city": "Phoenix",
+    "stateRegion": "Arizona",
+    "country": "USA",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "6d297aed",
+    "name": "Mutante Tostadores",
+    "city": "Mexico City",
+    "country": "Mexico",
+    "pouroverVotes": "2",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "a4e51b6c",
+    "name": "Mythical",
+    "city": "Gilbert",
+    "stateRegion": "Arizona",
+    "country": "USA",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "e567bc4b",
+    "name": "Naomi Joe Coffee Roasters",
+    "city": "Tacoma",
+    "stateRegion": "Washington",
+    "country": "USA",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "b85aeff7",
+    "name": "Native (Diego Bermudez)",
+    "city": "Dallas",
+    "stateRegion": "Texas",
+    "country": "USA",
+    "link": "https://www.thenativecoffeecompany.com/",
+    "pouroverVotes": "18",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "fcdcc9bf",
+    "name": "New Math Coffee",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "3c840d0b",
+    "name": "Newbery St.",
+    "city": "Boston",
+    "stateRegion": "Massachusetts",
+    "country": "USA",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "4ee4670c",
+    "name": "Nine One",
+    "city": "Chiang Mai",
+    "country": "Thailand",
+    "link": "https://www.nineonecoffee.co/",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "0ca6e4e3",
+    "name": "Nomad",
+    "city": "Barcelona",
+    "country": "Spain",
+    "link": "https://nomadcoffee.es/",
+    "pouroverVotes": "49",
+    "roastfulRanking": "7",
+    "source": [
+      "pourover",
+      "roastful"
+    ]
+  },
+  {
+    "id": "a14011ea",
+    "name": "Nordic Roasting",
+    "city": "Copenhagen",
+    "country": "Denmark",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "125ac137",
+    "name": "Nubra",
+    "pouroverVotes": "0",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "53d188ea",
+    "name": "Oasis Coffee Roaster",
+    "city": "Taipei",
+    "country": "Taiwan",
+    "link": "https://www.oasiscoffeeroasters.com/",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "3da1c8d2",
+    "name": "Obadiah",
+    "city": "Edinburgh",
+    "country": "UK",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "007ffcd6",
+    "name": "Old City Roasters",
+    "city": "Philadelphia",
+    "stateRegion": "Pennsylvania",
+    "country": "USA",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "9d48e04a",
+    "name": "Oma",
+    "city": "Hong Kong",
+    "country": "China",
+    "link": "https://omacoffeeroaster.com/",
+    "roastfulRanking": "37",
+    "source": [
+      "roastful"
+    ]
+  },
+  {
+    "id": "bbf1603f",
+    "name": "ONA",
+    "city": "Canberra",
+    "country": "Australia",
+    "link": "https://onacoffee.com.au/",
+    "roastfulRanking": "9",
+    "source": [
+      "roastful"
+    ]
+  },
+  {
+    "id": "9ff19704",
+    "name": "Ondo",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "3a0f2cd3",
+    "name": "One Half",
+    "city": "Petaling Jaya",
+    "country": "Malaysia",
+    "link": "https://www.onehalfcoffee.com/",
+    "roastfulRanking": "49",
+    "source": [
+      "roastful"
+    ]
+  },
+  {
+    "id": "c18fbfdd",
+    "name": "Onoma",
+    "pouroverVotes": "2",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "992f876e",
+    "name": "Onyx Coffee Lab",
+    "city": "Rogers",
+    "stateRegion": "Arkansas",
+    "country": "USA",
+    "link": "https://onyxcoffeelab.com/",
+    "pouroverVotes": "26",
+    "roastfulRanking": "8",
+    "source": [
+      "pourover",
+      "roastful"
+    ]
+  },
+  {
+    "id": "c10b5541",
+    "name": "Outkast",
+    "pouroverVotes": "3",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "e9e72d3d",
+    "name": "Pair Cupworks",
+    "city": "Mesa",
+    "stateRegion": "Arizona",
+    "country": "USA",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "e3a4662d",
+    "name": "Passenger",
+    "city": "Lancaster",
+    "stateRegion": "Pennsylvania",
+    "country": "USA",
+    "link": "https://drinkpassenger.com/",
+    "pouroverVotes": "49",
+    "roastfulRanking": "24",
+    "source": [
+      "pourover",
+      "roastful"
+    ]
+  },
+  {
+    "id": "130f9e0a",
+    "name": "Passport Coffee",
+    "city": "Brisbane",
+    "country": "Australia",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "3dbe3245",
+    "name": "Path",
+    "city": "Melbourne",
+    "country": "Australia",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "1e50d32f",
+    "name": "People Possession",
+    "city": "Los Angeles",
+    "stateRegion": "California",
+    "country": "USA",
+    "link": "https://peoplepossession.com/",
+    "pouroverVotes": "16",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "9eeba9b9",
+    "name": "Perc",
+    "city": "Atlanta",
+    "stateRegion": "Georgia",
+    "country": "USA",
+    "link": "https://perccoffee.com/",
+    "pouroverVotes": "52",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "5b4e10e2",
+    "name": "Philocoffea",
+    "city": "Funabashi",
+    "country": "Japan",
+    "link": "https://philocoffea.com/",
+    "roastfulRanking": "42",
+    "source": [
+      "roastful"
+    ]
+  },
+  {
+    "id": "a9c7ad92",
+    "name": "Pilgrim Roasters",
+    "city": "Philadelphia",
+    "stateRegion": "Pennsylvania",
+    "country": "USA",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "44cdda2a",
+    "name": "Pirates of Coffee",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "4e69f824",
+    "name": "Poem",
+    "city": "Philadelphia",
+    "stateRegion": "Pennsylvania",
+    "country": "USA",
+    "link": "https://poemroasting.com/",
+    "pouroverVotes": "8",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "1a63c300",
+    "name": "Port 2050",
+    "pouroverVotes": "0",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "0077a840",
+    "name": "Presta",
+    "pouroverVotes": "2",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "76aef99d",
+    "name": "Prodigal",
+    "city": "Boulder",
+    "stateRegion": "Colorado",
+    "country": "USA",
+    "link": "https://getprodigal.com/",
+    "pouroverVotes": "63",
+    "roastfulRanking": "19",
+    "source": [
+      "pourover",
+      "roastful"
+    ]
+  },
+  {
+    "id": "36a7bb9b",
+    "name": "Prolog",
+    "city": "Copenhagen",
+    "country": "Denmark",
+    "link": "https://www.prologcoffee.com/",
+    "pouroverVotes": "3",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "a01dcc92",
+    "name": "Promethium",
+    "pouroverVotes": "3",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "e1abff25",
+    "name": "Prototype",
+    "city": "Vancouver",
+    "stateRegion": "British Columbia",
+    "country": "Canada",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "93e216ef",
+    "name": "Proud Mary",
+    "city": "Melbourne",
+    "country": "Australia",
+    "link": "https://proudmarycoffee.com/",
+    "pouroverVotes": "1",
+    "roastfulRanking": "36",
+    "source": [
+      "pourover",
+      "roastful"
+    ]
+  },
+  {
+    "id": "8f20aba6",
+    "name": "Pulpa",
+    "city": "Panama City",
+    "country": "Panama",
+    "link": "https://pulpa.coffee/",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "220b3513",
+    "name": "Push X Pull",
+    "city": "Portland",
+    "stateRegion": "Oregon",
+    "country": "USA",
+    "link": "https://pushxpullcoffee.com/",
+    "pouroverVotes": "14",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "5211ad87",
+    "name": "Quo",
+    "pouroverVotes": "0",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "0e95cc35",
+    "name": "R Ki",
+    "city": "Richmond",
+    "stateRegion": "British Columbia",
+    "country": "Canada",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "0d623853",
+    "name": "Rabbit Hole Roasters",
+    "pouroverVotes": "2",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "7b777b6c",
+    "name": "Rave",
+    "city": "Cirencester",
+    "country": "UK",
+    "pouroverVotes": "0",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "22387333",
+    "name": "Reanimator",
+    "city": "Philadelphia",
+    "stateRegion": "Pennsylvania",
+    "country": "USA",
+    "pouroverVotes": "-2",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "018e6dcb",
+    "name": "Red Rooster",
+    "city": "Floyd",
+    "stateRegion": "Virginia",
+    "country": "USA",
+    "link": "https://www.redroostercoffee.com/",
+    "pouroverVotes": "8",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "10c77749",
+    "name": "Regalia",
+    "city": "Long Island City",
+    "stateRegion": "New York",
+    "country": "USA",
+    "link": "https://regaliacoffee.com/",
+    "pouroverVotes": "16",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "7aedb461",
+    "name": "Resident",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "a7ceed2b",
+    "name": "Ripsnorter",
+    "pouroverVotes": "3",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "bc40e52a",
+    "name": "Roast House Coffee",
+    "city": "Spokane",
+    "stateRegion": "Washington",
+    "country": "USA",
+    "link": "https://roasthousecoffee.com/",
+    "pouroverVotes": "2",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "ad23fdf1",
+    "name": "RoastAroma",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "54f225f3",
+    "name": "Rocket",
+    "city": "Hamilton",
+    "country": "New Zealand",
+    "link": "https://rocketcoffee.co.nz/",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "a2d914bd",
+    "name": "Rogue Wave",
+    "city": "Edmonton",
+    "stateRegion": "Alberta",
+    "country": "Canada",
+    "link": "https://roguewavecoffee.ca/",
+    "pouroverVotes": "79",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "0f584422",
+    "name": "Rose",
+    "city": "Zurich",
+    "country": "Switzerland",
+    "link": "https://rose-coffee.com/",
+    "roastfulRanking": "37",
+    "source": [
+      "roastful"
+    ]
+  },
+  {
+    "id": "0832b078",
+    "name": "Rosso",
+    "city": "Calgary",
+    "stateRegion": "Alberta",
+    "country": "Canada",
+    "link": "https://www.rossocoffeeroasters.com",
+    "pouroverVotes": "0",
+    "roastfulRanking": "32",
+    "source": [
+      "pourover",
+      "roastful"
+    ]
+  },
+  {
+    "id": "a826ed16",
+    "name": "Royal Flamingo",
+    "pouroverVotes": "2",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "aa732d80",
+    "name": "Royal Mile",
+    "pouroverVotes": "2",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "3c8048d4",
+    "name": "Ruby",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "851d8e9e",
+    "name": "S & W",
+    "city": "Coatesville",
+    "stateRegion": "Indiana",
+    "country": "USA",
+    "link": "https://www.swroasting.coffee/",
+    "pouroverVotes": "70",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "801d0d4f",
+    "name": "Scenery",
+    "city": "London",
+    "country": "UK",
+    "link": "https://scenery.coffee/",
+    "pouroverVotes": "16",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "3d21ffbb",
+    "name": "Schamong",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "ffad6baf",
+    "name": "Second Spin",
+    "city": "Ladera Ranch",
+    "stateRegion": "California",
+    "country": "USA",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "890a60d9",
+    "name": "September",
+    "city": "Westminster",
+    "stateRegion": "California",
+    "country": "USA",
+    "link": "https://september.coffee/",
+    "pouroverVotes": "121",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "0fce5e02",
+    "name": "Sextant Roasters",
+    "city": "San Francisco",
+    "stateRegion": "California",
+    "country": "USA",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "72d11337",
+    "name": "Sey",
+    "city": "Brooklyn",
+    "stateRegion": "New York",
+    "country": "USA",
+    "link": "https://www.seycoffee.com/",
+    "pouroverVotes": "127",
+    "roastfulRanking": "4",
+    "source": [
+      "pourover",
+      "roastful"
+    ]
+  },
+  {
+    "id": "718b0ce3",
+    "name": "Shoebox",
+    "city": "Chicago",
+    "stateRegion": "Illinois",
+    "country": "USA",
+    "link": "https://shoebox.coffee/",
+    "pouroverVotes": "34",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "778d457b",
+    "name": "Shokunin",
+    "pouroverVotes": "2",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "045c47d2",
+    "name": "Signal",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "05173777",
+    "name": "Simple Kaffa",
+    "city": "Taipei",
+    "country": "Taiwan",
+    "link": "https://simplekaffa.com/",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "be17f4a3",
+    "name": "Single V",
+    "city": "Vancouver",
+    "stateRegion": "British Columbia",
+    "country": "Canada",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "2ef34bac",
+    "name": "Skylark",
+    "pouroverVotes": "4",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "26ad0100",
+    "name": "Small Planes",
+    "pouroverVotes": "0",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "2f76752b",
+    "name": "SoRoast",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "f720da1c",
+    "name": "SOT Coffee",
+    "city": "Osaka",
+    "country": "Japan",
+    "link": "https://www.sotcoffee.com/",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "c2156c8b",
+    "name": "Sprout",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "af90454b",
+    "name": "Square Mile",
+    "city": "London",
+    "country": "UK",
+    "link": "https://shop.squaremilecoffee.com/",
+    "pouroverVotes": "2",
+    "roastfulRanking": "24",
+    "source": [
+      "pourover",
+      "roastful"
+    ]
+  },
+  {
+    "id": "58fedd78",
+    "name": "Standout Coffee",
+    "city": "Stockholm ",
+    "country": "Sweden",
+    "link": "https://www.standoutcoffee.com/",
+    "pouroverVotes": "0",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "30e30343",
+    "name": "Steady State Coffee Roasters",
+    "pouroverVotes": "4",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "9755bf87",
+    "name": "Stiller’s Coffee",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "0d224b68",
+    "name": "Substance",
+    "city": "Paris",
+    "country": "France",
+    "link": "https://www.substancecafe.com/",
+    "pouroverVotes": "41",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "abceca8d",
+    "name": "Subtext",
+    "city": "Toronto",
+    "stateRegion": "Ontario",
+    "country": "Canada",
+    "link": "https://www.subtext.coffee/",
+    "pouroverVotes": "74",
+    "roastfulRanking": "46",
+    "source": [
+      "pourover",
+      "roastful"
+    ]
+  },
+  {
+    "id": "64472512",
+    "name": "Sump",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "ebad68be",
+    "name": "Superlost",
+    "city": "Brooklyn",
+    "stateRegion": "New York",
+    "country": "USA",
+    "link": "https://www.superlost.com/",
+    "pouroverVotes": "12",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "ee4f741f",
+    "name": "Sustain",
+    "city": "Hatfield",
+    "country": "UK",
+    "pouroverVotes": "0",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "9c07d2a2",
+    "name": "Svit Kavy",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "2c193936",
+    "name": "Sweet Bloom",
+    "city": "Lakewood",
+    "stateRegion": "Colorado",
+    "country": "USA",
+    "link": "https://sweetbloomcoffee.com/",
+    "pouroverVotes": "22",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "6a5551f8",
+    "name": "Swerl",
+    "city": "Falkenberg",
+    "country": "Sweden",
+    "link": "https://swerl.se/",
+    "pouroverVotes": "3",
+    "roastfulRanking": "47",
+    "source": [
+      "pourover",
+      "roastful"
+    ]
+  },
+  {
+    "id": "1432b116",
+    "name": "Sweven",
+    "city": "Bristol",
+    "country": "UK",
+    "link": "https://www.swevencoffee.co.uk/",
+    "pouroverVotes": "4",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "92bd364a",
+    "name": "Taith",
+    "city": "Lewes",
+    "country": "UK",
+    "link": "https://taithcoffee.com/",
+    "pouroverVotes": "5",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "9b876184",
+    "name": "Tanat (formerly Kawa)",
+    "city": "Paris",
+    "country": "France",
+    "link": "https://tanat.coffee/",
+    "pouroverVotes": "59",
+    "roastfulRanking": "13",
+    "source": [
+      "pourover",
+      "roastful"
+    ]
+  },
+  {
+    "id": "6f80e73c",
+    "name": "Tandem",
+    "city": "Portland",
+    "stateRegion": "Maine",
+    "country": "USA",
+    "link": "https://www.tandemcoffee.com/",
+    "pouroverVotes": "9",
+    "roastfulRanking": "37",
+    "source": [
+      "pourover",
+      "roastful"
+    ]
+  },
+  {
+    "id": "cdd0c95f",
+    "name": "Thankfully",
+    "city": "Waverly",
+    "stateRegion": "Alabama",
+    "country": "USA",
+    "link": "https://www.thankfullycoffee.com/",
+    "pouroverVotes": "13",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "e96d2f92",
+    "name": "The Barn",
+    "city": "Berlin",
+    "country": "Germany",
+    "link": "https://thebarn.de/",
+    "pouroverVotes": "4",
+    "roastfulRanking": "37",
+    "source": [
+      "pourover",
+      "roastful"
+    ]
+  },
+  {
+    "id": "9f564b89",
+    "name": "The Boy & The Bear",
+    "city": "Los Angeles",
+    "stateRegion": "California",
+    "country": "USA",
+    "link": "https://theboyandthebear.com/",
+    "pouroverVotes": "4",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "6e3e607f",
+    "name": "The Picky Chemist",
+    "city": "Beaufays",
+    "country": "Belguim",
+    "link": "https://en.thepickychemist.com/",
+    "pouroverVotes": "37",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "7a317656",
+    "name": "The Source",
+    "city": "Endinburgh",
+    "country": "UK",
+    "link": "https://thesourcecoffee.co.uk/",
+    "pouroverVotes": "15",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "fb00b2ba",
+    "name": "Third Coast Coffee Roasting",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "32985c67",
+    "name": "Three Marks",
+    "city": "Barcelona",
+    "country": "Spain",
+    "link": "https://threemarkscoffee.com/",
+    "pouroverVotes": "2",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "a816f5a9",
+    "name": "Thunderkiss",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "860599bf",
+    "name": "Tim Wendleboe",
+    "city": "Oslo",
+    "country": "Norway",
+    "link": "https://timwendelboe.no/",
+    "pouroverVotes": "106",
+    "roastfulRanking": "1",
+    "source": [
+      "pourover",
+      "roastful"
+    ]
+  },
+  {
+    "id": "ecadf535",
+    "name": "Timbertrain",
+    "city": "Vancouver",
+    "stateRegion": "British Columbia",
+    "country": "Canada",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "eb953761",
+    "name": "Touchy",
+    "pouroverVotes": "2",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "0a669884",
+    "name": "Traffic",
+    "city": "Montreal",
+    "stateRegion": "Quebec",
+    "country": "Canada",
+    "link": "https://www.trafficcoffee.com/",
+    "pouroverVotes": "13",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "265ce8c0",
+    "name": "Uncommon ",
+    "city": "Amsterdam",
+    "country": "The Netherlands",
+    "link": "https://uncommonams.com/",
+    "pouroverVotes": "4",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "1011dbd4",
+    "name": "Unity",
+    "pouroverVotes": "0",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "2c1eeb44",
+    "name": "Upshot",
+    "pouroverVotes": "0",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "739c9703",
+    "name": "Verve",
+    "pouroverVotes": "2",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "4908da63",
+    "name": "Vesta",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "726bf5c1",
+    "name": "Vibrant",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "400dbfda",
+    "name": "WAY",
+    "city": "Gent",
+    "country": "Belgium",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "0c76fd4a",
+    "name": "Weekenders",
+    "city": "Kyoto",
+    "country": "Japan",
+    "link": "https://www.weekenderscoffee.com/",
+    "roastfulRanking": "31",
+    "source": [
+      "roastful"
+    ]
+  },
+  {
+    "id": "ebe69048",
+    "name": "Wildkaffee",
+    "city": "Vienna",
+    "country": "Austria",
+    "link": "https://wild-kaffee.at/",
+    "pouroverVotes": "1",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "3b0b97cf",
+    "name": "Wonderstate Coffee",
+    "pouroverVotes": "4",
+    "source": [
+      "pourover"
+    ]
+  },
+  {
+    "id": "48b575cd",
+    "name": "Yes Plz",
+    "city": "Vernon",
+    "stateRegion": "California",
+    "country": "USA",
+    "pouroverVotes": "0",
+    "source": [
+      "pourover"
+    ]
+  }
+]

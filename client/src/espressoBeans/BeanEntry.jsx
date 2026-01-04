@@ -21,7 +21,7 @@ import LogEntryButton from '../misc/LogEntryButton.jsx'
 import useWindowSize from '../util/useWindowSize.jsx'
 import FilterContext from '../context/FilterContext.jsx'
 import entryName from '../misc/entryName'
-import EntryRating from './EntryRating.jsx'
+import EntryRatingDisplay from './EntryRatingDisplay.jsx'
 import isValidUrl from '../util/isValidUrl'
 import Link from '@mui/material/Link'
 import AppContext from '../app/AppContext.jsx'
@@ -69,24 +69,26 @@ function BeanEntry({entry, expanded, onExpand}) {
     }, [expanded, entry, scrolled, expandAll, isMobile])
 
     const linkSx = {
-        color: '#aaa', textDecoration: 'none', cursor: 'pointer', '&:hover': {
-            color: '#fff'
-        }
+        color: '#aaa', textDecoration: 'none', cursor: 'pointer',
+        '&:hover': {color: '#fff'}
     }
     const locationSep = (!!entry.roasterCity && entry.roasterCountry) ? ', ' : ''
     const beanUrl = isValidUrl(entry.url) ? entry.url : undefined
     const beanLink = beanUrl ? <Link sx={linkSx} onClick={() => openInNewTab(entry.url)}>{entry.url}</Link> : entry.url
 
     const summaryContent = !['priceLb', 'price100g'].includes(sort)
-        ? <EntryRating entry={entry}/>
+        ? <EntryRatingDisplay entry={entry}/>
         : sort === 'price100g'
             ? <div>
-                {entry.price100g && <div><strong>${parseFloat(entry.usd100g).toFixed(2)} USD</strong></div> }
-                {entry.alt100gPrice && <div style={{fontSize:'0.8rem', textAlign:'right'}}>({entry.alt100gPrice})</div>}
-                </div>
+                {entry.price100g && <div><strong>${parseFloat(entry.usd100g).toFixed(2)} USD</strong></div>}
+                {entry.alt100gPrice &&
+                    <div style={{fontSize: '0.8rem', textAlign: 'right'}}>({entry.alt100gPrice})</div>}
+            </div>
             : <div>
-                {entry.pricePound && <div style={{fontSize:'0.95rem', marginBottom:4}}><strong>${parseFloat(entry.usdPound).toFixed(2)} USD</strong></div> }
-                {entry.altPoundPrice && <div style={{fontSize:'0.8rem', textAlign:'right'}}>({entry.altPoundPrice})</div>}
+                {entry.pricePound && <div style={{fontSize: '0.95rem', marginBottom: 4}}>
+                    <strong>${parseFloat(entry.usdPound).toFixed(2)} USD</strong></div>}
+                {entry.altPoundPrice &&
+                    <div style={{fontSize: '0.8rem', textAlign: 'right'}}>({entry.altPoundPrice})</div>}
             </div>
 
 
@@ -135,7 +137,6 @@ function BeanEntry({entry, expanded, onExpand}) {
                             <FieldValue name='Rating' value={entry.rating} suffix={'/10'} style={{marginRight: 24}}/>
                             <FieldValue name='Tasting Notes' value={entry.tastingNotes} style={{marginRight: 24}}/>
                             <FieldValue name='Reddit Username' value={entry.usernameReddit} style={{marginRight: 24}}/>
-
                         </Stack>
                         <Stack direction='row' spacing={0} style={{flexWrap: 'wrap', marginBottom: 8}}>
                             <FieldValue name='Origin' value={entry.origin} style={{marginRight: 24}}/>
