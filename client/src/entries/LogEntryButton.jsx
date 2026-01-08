@@ -6,21 +6,21 @@ import entryName from './entryName'
 import {jsonIt} from '../util/jsonIt'
 import DBContext from '../app/DBContext.jsx'
 
-export default function LogEntryButton({entry}) {
+export default function LogEntryButton({entry, size='medium', entryType}) {
 
     const {adminRole} = useContext(DBContext)
 
     const handleClick = useCallback(async () => {
-        const name =  entryName(entry)
+        const name =  entryName({entry, entryType})
         jsonIt(name, entry)
-    }, [entry])
+    }, [entry, entryType])
 
     //if (!adminRole) return null
 
     return (
         <Tooltip title='Log Entry Details' arrow disableFocusListener>
             <IconButton onClick={handleClick}>
-                <WysiwygIcon color='primary'/>
+                <WysiwygIcon fontSize={size} color='primary'/>
             </IconButton>
         </Tooltip>
     )

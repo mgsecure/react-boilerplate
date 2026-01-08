@@ -48,7 +48,7 @@ function SortTextButton({sortValues, compactMode, expandAll}) {
                         invisible={!sort}
                         anchorOrigin={badgeAnchor}
                     >
-                        {!smallWidth ? 'VIEW' : <SortIcon/>}
+                        {!smallWidth ? 'SORT' : <SortIcon/>}
                     </Badge>
                 </Button>
             </Tooltip>

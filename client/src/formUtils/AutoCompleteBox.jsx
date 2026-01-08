@@ -23,7 +23,7 @@ function AutoCompleteBox({
                              inputValueOverride,
                              size = 'small'
                          }) {
-    const inputEl = useRef()
+    const inputEl = useRef(null)
     const [open, setOpen] = useState(false)
     const handleBlur = useCallback(() => setOpen(false), [])
     const {isMobile} = useWindowSize()
@@ -49,9 +49,8 @@ function AutoCompleteBox({
     }
 
     useEffect(() => {
-        console.log('inputValueOverride', inputValueOverride)
-        if (inputValue.length > 0) setInputValue('')
-    }, [inputValueOverride])
+        if (inputValue && inputValue.length > 0) setInputValue('')
+    }, [inputValueOverride, setInputValue])
 
     return (
         <React.Fragment>

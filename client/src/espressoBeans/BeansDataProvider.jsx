@@ -69,8 +69,9 @@ export function BeansDataProvider({children, allEntries}) {
         })
         const searched = searchEntriesForText(search, filtered)
 
-        return sort
-            ? searched.sort((a, b) => {
+        const sorted = [...searched]
+        if (sort) {
+            sorted.sort((a, b) => {
                 if (sort === 'alphaAscending') {
                     return a.fullName.localeCompare(b.fullName)
                 } else if (sort === 'alphaDescending') {
@@ -92,9 +93,12 @@ export function BeansDataProvider({children, allEntries}) {
                     return a.fuzzy.localeCompare(b.fuzzy)
                 }
             })
-            : searched.sort((a, b) => {
+        } else {
+            sorted.sort((a, b) => {
                 return a.fullName.localeCompare(b.fullName)
             })
+        }
+        return sorted
     }, [advancedFilterGroups, mappedEntries, search, sort])
 
     const value = useMemo(() => ({

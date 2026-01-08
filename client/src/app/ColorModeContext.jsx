@@ -10,25 +10,21 @@ const ColorModeContext = createContext({
 
 export function ColorModeProvider({children}) {
 
-    const darkTheme = createTheme({
+    const baseTheme = createTheme({
         typography: {fontFamily: 'Roboto, sans-serif'},
-        palette: {
-            mode: 'dark',
-            secondary: {
-                main: '#2d49bc'
-            },
-            aTest: {
-                main: '#ff0000'
-            },
-            'background': {
-                'default': '#291915',
-                'paper': '#3a2018'
+        breakpoints: {
+            values: {
+                xs: 0,
+                sm: 600,
+                md: 800,
+                lg: 1200,
+                xl: 1536
             }
         },
         components: {
             MuiLink: {
                 defaultProps: {
-                    underline: 'none',
+                    underline: 'none'
                 },
                 styleOverrides: {
                     root: {
@@ -36,21 +32,43 @@ export function ColorModeProvider({children}) {
                     }
                 }
             },
-            MuiDrawer: { // Or MuiPaper if you want to apply it globally to all Paper components
+            MuiDrawer: {
                 styleOverrides: {
                     paper: {
-                        backgroundImage: 'none', // Fixes potential elevation styling conflict
-                    },
-                },
+                        backgroundImage: 'none'
+                    }
+                }
+            }
+        }
+    })
+
+    const darkTheme = createTheme({
+        ...baseTheme,
+        palette: {
+            mode: 'dark',
+            secondary: {
+                main: '#2d49bc'
+            },
+            card: {
+                main: '#563028',
+                add: '#805046'
+            },
+            'background': {
+                'default': '#291915',
+                'paper': '#3a2018'
             }
         }
     })
 
     const lightTheme = createTheme({
+        ...baseTheme,
         palette: {
-            mode: 'light'
-        },
-        typography: {fontFamily: 'Roboto, sans-serif'},
+            mode: 'light',
+            card: {
+                main: '#563028',
+                add: '#805046'
+            }
+        }
     })
 
     const [mode, setMode] = useState('dark')

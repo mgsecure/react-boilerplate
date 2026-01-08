@@ -8,20 +8,20 @@ import rehypeExternalLinks from 'rehype-external-links'
 import FieldValue from '../misc/FieldValue'
 import ReactMarkdown from 'react-markdown'
 import FilterChip from '../filters/FilterChip'
-import CopyLinkToEntryButton from './CopyLinkToEntryButton'
+import CopyLinkToEntryButton from '../entries/CopyLinkToEntryButton'
 import AccordionActions from '@mui/material/AccordionActions'
 import Button from '@mui/material/Button'
-import CopyEntryTextButton from './CopyEntryTextButton'
+import CopyEntryTextButton from '../entries/CopyEntryTextButton.jsx'
 import Tracker from '../app/Tracker'
 import queryString from 'query-string'
-import CopyEntryIdButton from './CopyEntryIdButton.jsx'
-import OpenLinkToEntryButton from './OpenLinkToEntryButton.jsx'
+import CopyEntryIdButton from '../entries/CopyEntryIdButton.jsx'
+import OpenLinkToEntryButton from '../entries/OpenLinkToEntryButton.jsx'
 import DataContext from '../context/DataContext.jsx'
-import LogEntryButton from '../misc/LogEntryButton.jsx'
+import LogEntryButton from '../entries/LogEntryButton.jsx'
 import useWindowSize from '../util/useWindowSize.jsx'
 import FilterContext from '../context/FilterContext.jsx'
 import entryName from '../misc/entryName'
-import EntryRatingDisplay from './EntryRatingDisplay.jsx'
+import EntryRatingDisplay from '../entries/EntryRatingDisplay.jsx'
 import isValidUrl from '../util/isValidUrl'
 import Link from '@mui/material/Link'
 import AppContext from '../app/AppContext.jsx'
@@ -255,7 +255,7 @@ function BeanEntry({entry, expanded, onExpand}) {
                                 }
                             </div>
                             <div style={{display: 'flex'}}>
-                                <CopyEntryTextButton entry={entry}/>
+                                <CopyEntryTextButton entryName={entry.fullName}/>
                                 <CopyLinkToEntryButton entry={entry}/>
                             </div>
                         </div>

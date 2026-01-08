@@ -19,13 +19,28 @@ import TurnSharpRightIcon from '@mui/icons-material/TurnSharpRight'
 import CoffeeIcon from '@mui/icons-material/Coffee'
 import RedditIcon from '@mui/icons-material/Reddit'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
-
-const {VITE_RAFL_STATE: raflState} = import.meta.env
+import TableChartIcon from '@mui/icons-material/TableChart'
+import PersonIcon from '@mui/icons-material/Person'
 
 export default [
     {
-        title: 'Espresso Bean Database',
+        title: 'My Profile',
+        icon: <PersonIcon fontSize='small'/>,
+        path: '/profile',
+    },
+    {
+        title: 'My Brews',
         icon: <CoffeeIcon fontSize='small'/>,
+        path: '/brews',
+    },
+    {
+        title: 'Roaster Database',
+        icon: <FeedIcon fontSize='small'/>,
+        path: '/roasters',
+    },
+    {
+        title: 'Espresso Bean Database',
+        icon: <TableChartIcon fontSize='small'/>,
         path: '/espressoBeans',
         params: {
             search: undefined,
@@ -39,15 +54,15 @@ export default [
         path: '/espressoStats',
     },
     {
-        title: 'Add A Bean',
+        title: 'Add A Roaster',
         icon: <AddCircleOutlineIcon fontSize='small'/>,
         path: '/info',
         disabled: true,
     },
     {
-        title: 'Roaster Database',
-        icon: <FeedIcon fontSize='small'/>,
-        path: '/rafl',
+        title: 'Add A Bean',
+        icon: <AddCircleOutlineIcon fontSize='small'/>,
+        path: '/info',
         disabled: true,
     },
     {

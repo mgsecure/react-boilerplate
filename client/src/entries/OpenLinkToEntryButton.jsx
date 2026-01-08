@@ -10,7 +10,7 @@ function OpenLinkToEntryButton({entry}) {
         const link = `${window.location.origin}${window.location.pathname}?id=${entry.id}&search=${entry.id}&name=${safeName}`
         const newWindow = window.open(link, '_blank', 'noopener,noreferrer')
         if (newWindow) newWindow.opener = null
-    }, [])
+    }, [entry.fullName, entry.id])
 
 
     return (

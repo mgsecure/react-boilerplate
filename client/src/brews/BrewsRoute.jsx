@@ -1,20 +1,23 @@
 import React, {useContext} from 'react'
+import {brewFilterFields} from '../data/filterFields'
 import {FilterProvider} from '../context/FilterContext.jsx'
 import usePageTitle from '../util/usePageTitle'
-import DataProvider from '../brews/BrewsDataProvider.jsx'
+import DataProvider from './BrewsDataProvider.jsx'
 import espressoBeans from '../data/espressoBeansDatabase.json'
-import ViewProfile from './ViewProfile.jsx'
+import BrewsPage from './BrewsPage.jsx'
 import DBContext from '../app/DBContext.jsx'
 
-export default function ViewProfileRoute() {
+function BrewsRoute() {
+    usePageTitle('Brews')
     const {userProfile = {}} = useContext(DBContext)
 
-    usePageTitle('My Setup')
     return (
-        <FilterProvider filterFields={[]}>
+        <FilterProvider filterFields={brewFilterFields}>
             <DataProvider allEntries={espressoBeans} profile={userProfile}>
-                <ViewProfile/>
+                <BrewsPage/>
             </DataProvider>
         </FilterProvider>
     )
 }
+
+export default BrewsRoute

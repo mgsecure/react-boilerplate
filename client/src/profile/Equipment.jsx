@@ -1,7 +1,6 @@
 import React, {useDeferredValue, useState} from 'react'
 import EquipmentCard from './EquipmentCard.jsx'
 import AddNewItemCard from './AddNewItemCard.jsx'
-import {useTheme, ThemeProvider, createTheme} from '@mui/material/styles'
 import Grid from '@mui/material/Grid'
 import {typeSort} from '../data/equipmentBeans'
 
@@ -9,20 +8,6 @@ export default function Equipment({machines = []}) {
 
     const [expanded, setExpanded] = useState(undefined)
     const defExpanded = useDeferredValue(expanded)
-
-    const outerTheme = useTheme()
-
-    const theme = createTheme(outerTheme, {
-        breakpoints: {
-            values: {
-                xs: 0,
-                sm: 600,
-                md: 800,
-                lg: 1200,
-                xl: 1536
-            }
-        }
-    })
 
     return (
 
@@ -33,11 +18,10 @@ export default function Equipment({machines = []}) {
         }}>
             <div style={{maxWidth: 1200, marginLeft: 'auto', marginRight: 'auto'}}>
 
-                <ThemeProvider theme={theme}>
                     {machines?.length > 0 &&
                         <Grid container spacing={{xs: 1, sm: 1, md: 1}} columns={{xs: 4, sm: 8, md: 12}}
                               style={{marginTop: 0, marginLeft: 0}}>
-                            {machines
+                            {[...machines]
                                 .sort((a, b) => typeSort(a.type, b.type)
                                     || (a.brand || '').localeCompare(b.brand || '')
                                     || (a.model || '').localeCompare(b.model || ''))
@@ -45,7 +29,7 @@ export default function Equipment({machines = []}) {
                                 .map((machine) =>
                                     <Grid size={{xs: 4, sm: 4, md: 4}} key={machine.id}>
                                         <EquipmentCard
-                                            machine={machine}
+                                            entry={machine}
                                             expanded={machine.id === defExpanded}
                                             onExpand={setExpanded}
                                         />
@@ -56,7 +40,6 @@ export default function Equipment({machines = []}) {
                             </Grid>
                         </Grid>
                     }
-                </ThemeProvider>
 
                 <div style={{display: 'block', clear: 'both'}}/>
 

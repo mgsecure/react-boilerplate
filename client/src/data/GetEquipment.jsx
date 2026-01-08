@@ -2,7 +2,7 @@ import {useCallback, useContext} from 'react'
 import AuthContext from '../app/AuthContext.jsx'
 import DBContext from '../app/DBContext.jsx'
 import useData from '../util/useData.jsx'
-import equipment from './equipment.json'
+import equipment from './equipmentCounts.json'
 
 export default function GetEquipment() {
     const {authLoaded} = useContext(AuthContext)

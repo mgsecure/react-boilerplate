@@ -110,7 +110,9 @@ export function DBProvider({children}) {
         )
 
         const timestamp = dayjs().format('YYYY-MM-DD HH:mm:ss')
-        cleanItem.addedAt = timestamp
+        cleanItem.addedAt = cleanItem.addedAt || timestamp
+        cleanItem.modifiedAt = timestamp
+
         const ref = doc(db, 'user-profiles', user.uid)
         let newItems
         if (flags.delete) {

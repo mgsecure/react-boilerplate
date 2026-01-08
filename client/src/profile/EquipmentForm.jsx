@@ -1,6 +1,5 @@
 import React, {useCallback, useContext, useEffect, useMemo, useState} from 'react'
 import GetEquipment from '../data/GetEquipment.jsx'
-import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
 import Collapse from '@mui/material/Collapse'
@@ -20,18 +19,20 @@ export default function EquipmentForm({machine, open, setOpen, type = 'Equipment
     const {equipment = {}} = GetEquipment()
     const [form, setForm] = useState({...machine || {id: `e_${genHexString(8)}`}})
 
-    useEffect(() => {
-        if (open) {
-            setForm({...machine || {id: `e_${genHexString(8)}`}})
-        }
-    }, [open, machine])
 
     const [brandReset, setBrandReset] = useState(false)
     const [modelReset, setModelReset] = useState(false)
-    const [inputValue, setInputValue] = useState('')
-    const [inputModelValue, setInputModelValue] = useState('')
+    const [inputValue, setInputValue] = useState(machine.brand || '')
+    const [inputModelValue, setInputModelValue] = useState(machine.model || '')
     const [uploading, setUploading] = useState(false)
     const theme = useTheme()
+    useEffect(() => {
+        if (open) {
+            setForm({...machine || {id: `e_${genHexString(8)}`}})
+            setInputValue(machine.brand || '')
+            setInputModelValue(machine.model || '')
+        }
+    }, [open, machine])
 
     const machineBrands = useMemo(() => {
         return machineTypes.reduce((acc, type) => {
@@ -86,7 +87,7 @@ export default function EquipmentForm({machine, open, setOpen, type = 'Equipment
         const formCopy = {...form}
         formCopy.altModel = !formCopy.altModel
         if (formCopy.altModel) {
-            formCopy.newModel = inputValue?.target?.value
+            formCopy.newModel = inputModelValue?.target?.value
             delete formCopy['model']
         } else {
             delete formCopy.newModel
@@ -100,15 +101,22 @@ export default function EquipmentForm({machine, open, setOpen, type = 'Equipment
                 document.getElementById('newModel').select()
             }
         }, 100)
-    }, [form, inputValue, modelReset])
+    }, [form, inputModelValue, modelReset])
 
     const handleSubmit = useCallback(async (event) => {
         event.preventDefault()
         setUploading(true)
+        const brand = form.brand || form.newBrand
+        const model = form.model || form.newModel
+        const fullName = (machine.brand && machine.model)
+            ? `${machine.brand} ${machine.model}`
+            : `${machine.brand || ''}${machine.model || ''}`
+
         const formCopy = {
             ...form,
-            brand: form.brand || form.newBrand,
-            model: form.model || form.newModel
+            brand,
+            model,
+            fullName
         }
         delete formCopy.newBrand
         delete formCopy.newModel
@@ -118,17 +126,20 @@ export default function EquipmentForm({machine, open, setOpen, type = 'Equipment
             })
         )
         const flags = machine ? {update: true} : {}
+        const message = machine
+                ? 'Changes saved!'
+                : 'New item saved!'
 
         try {
             await updateCollection({collection: 'equipment', item: cleanForm, flags})
-            enqueueSnackbar('New equipment saved!', {variant: 'success'})
+            enqueueSnackbar(message, {variant: 'success'})
+            setOpen(false)
         } catch (error) {
-            enqueueSnackbar(`Error saving equipment: ${error}`, {variant: 'error', autoHideDuration: 3000})
+            enqueueSnackbar(`Error saving item: ${error}`, {variant: 'error', autoHideDuration: 3000})
         } finally {
             setUploading(false)
-            setForm(formCopy)
         }
-    }, [form, machine, updateCollection])
+    }, [form, machine, setOpen, updateCollection])
 
     const handleReload = useCallback(() => {
         setBrandReset(!brandReset)
@@ -143,11 +154,6 @@ export default function EquipmentForm({machine, open, setOpen, type = 'Equipment
             })
         }, 100)
     }, [brandReset, modelReset])
-
-    const handleOverlayClose = useCallback(() => {
-        handleReload()
-        setOpen(false)
-    }, [handleReload, setOpen])
 
     const detailsStyle = form.type ? {opacity: 1} : {opacity: 0.3, pointerEvents: 'none'}
     const brandBoxOpacity = form.altBrand > 0 ? 0.5 : 1
@@ -196,6 +202,7 @@ export default function EquipmentForm({machine, open, setOpen, type = 'Equipment
                                                                  minWidth: isMobile ? 150 : 200
                                                              }}
                                                              reset={brandReset} disabled={form.altBrand}
+                                                             setInputValue={setInputValue}
                                                              inputValue={form.brand}
                                                              inputValueHandler={setInputValue}
                                                              noOptionsMessage={'Add a brand'}
@@ -331,11 +338,11 @@ export default function EquipmentForm({machine, open, setOpen, type = 'Equipment
     )
 }
 
-    function genHexString(len) {
-        const hex = '0123456789ABCDEF'
-        let output = ''
-        for (let i = 0; i < len; ++i) {
-            output += hex.charAt(Math.floor(Math.random() * hex.length))
-        }
-        return output.toLowerCase()
+function genHexString(len) {
+    const hex = '0123456789ABCDEF'
+    let output = ''
+    for (let i = 0; i < len; ++i) {
+        output += hex.charAt(Math.floor(Math.random() * hex.length))
     }
+    return output.toLowerCase()
+}

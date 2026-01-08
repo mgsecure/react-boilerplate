@@ -10,6 +10,7 @@ import FilterContext from '../context/FilterContext.jsx'
 import menuConfig from '../nav/menuConfig.jsx'
 import {useLocation, useNavigate} from 'react-router-dom'
 import Link from '@mui/material/Link'
+import YieldCalculatorButton from '../brews/YieldCalculatorButton.jsx'
 
 function Nav({extras, extrasTwo, title, titleMobile}) {
     const {isFiltered} = useContext(FilterContext)
@@ -70,7 +71,7 @@ function Nav({extras, extrasTwo, title, titleMobile}) {
                             {!isMobile && extrasTwo &&
                                 extrasTwo
                             }
-
+                            <YieldCalculatorButton/>
                             <UserMenu/>
                         </div>
                         {isMobile && extrasTwo &&

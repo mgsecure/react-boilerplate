@@ -4,11 +4,11 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import Tooltip from '@mui/material/Tooltip'
 import {enqueueSnackbar} from 'notistack'
 
-function CopyEntryTextButton({entry}) {
+function CopyEntryTextButton({entryName}) {
     const handleClick = useCallback(async () => {
-        await navigator.clipboard.writeText(entry.fullName)
+        await navigator.clipboard.writeText(entryName)
         enqueueSnackbar('Name copied to clipboard.')
-    }, [])
+    }, [entryName])
 
     return (
         <Tooltip title='Copy Name' arrow disableFocusListener>

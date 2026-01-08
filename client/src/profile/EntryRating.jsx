@@ -4,8 +4,9 @@ import {alpha} from '@mui/material'
 import RatingTable from '../misc/RatingTable.jsx'
 
 export default function EntryRating({
-                                        entry={},
+                                        entry = {},
                                         iconsCount = 10,
+                                        labelSize = '1.1rem',
                                         handleFormChange,
                                         setRatingsChanged = () => {
                                         }
@@ -26,7 +27,7 @@ export default function EntryRating({
 
     return (
         <div style={{display: 'flex'}}>
-            <div style={{fontWeight: 500, fontSize: '1.1rem', marginTop: 2, marginRight: 5}}>Rating</div>
+            <div style={{fontWeight: 500, fontSize: labelSize, marginTop: 2, marginRight: 5}}>Rating</div>
             <RatingTable ratingDimensions={ratingDimensions} onRatingChange={handleRatingChange}
                          ratings={ratings} readonly={false} emptyColor={emptyColor}
                          fontSize={'0.85rem'} size={19} paddingData={0} showLabel={false} iconsCount={iconsCount}/>

@@ -5,8 +5,9 @@ import {useTheme} from '@mui/material/styles'
 import EquipmentForm from './EquipmentForm.jsx'
 import BeanForm from './BeanForm.jsx'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
+import BrewForm from './BrewForm.jsx'
 
-export default function ItemDrawer({item, open, setOpen, type='Item'}) {
+export default function ItemDrawer({item, open, setOpen, type = 'Item', action = 'edit'}) {
     const {isMobile} = useWindowSize()
     const theme = useTheme()
 
@@ -34,7 +35,7 @@ export default function ItemDrawer({item, open, setOpen, type='Item'}) {
                     padding: '15px 15px',
                     height: 64,
                     backgroundColor: theme.palette.background.default
-                }} onClick={()=>setOpen(false)}>
+                }} onClick={() => setOpen(false)}>
 
                     <div
                         style={{
@@ -43,19 +44,28 @@ export default function ItemDrawer({item, open, setOpen, type='Item'}) {
                             fontWeight: 500,
                             color: theme.palette.text.primary
                         }}>
-                        {`${item ? 'Edit' : 'Add'} ${type}`}
+                        {`${item
+                            ? action === 'clone'
+                                ? 'Clone'
+                                : 'Edit'
+                            : 'Add'} ${type}`}
                     </div>
-                    <div onClick={()=>setOpen(false)}>
+                    <div onClick={() => setOpen(false)}>
                         <HighlightOffIcon sx={{cursor: 'pointer', color: theme.palette.text.primary}}/>
                     </div>
                 </div>
 
                 {type === 'Equipment' &&
-                <EquipmentForm machine={item} open={open} setOpen={setOpen} type={type}/>
+                    <EquipmentForm machine={item} open={open} setOpen={setOpen} type={type}/>
                 }
                 {type === 'Bean' &&
-                <BeanForm bean={item} open={open} setOpen={setOpen} type={type}/>
+                    <BeanForm bean={item} open={open} setOpen={setOpen} type={type}/>
                 }
+
+                {type === 'Brew' &&
+                    <BrewForm entry={item} action={action} open={open} setOpen={setOpen} type={type}/>
+                }
+
             </Drawer>
 
         </React.Fragment>

@@ -11,6 +11,7 @@ export default function RatingTable({
                                         allowFraction = false,
                                         readonly = false,
                                         showLabel = true,
+                                        useTable=false,
                                         fontSize = '1.0rem',
                                         paddingData = 5,
                                         backgroundColor,
@@ -19,9 +20,6 @@ export default function RatingTable({
                                         fontWeight = 500,
                                         iconsCount=5
                                     }) {
-
-console.log('rating table', {ratingDimensions,
-    ratings})
 
     const columns = [
         {id: 'ratingArea', name: 'Area', align: 'right'},
@@ -39,14 +37,13 @@ console.log('rating table', {ratingDimensions,
     const defaultSort = 'ratingArea'
     const tableData = {columns, rows, defaultSort, sortable: false}
 
-    const useTable = false
     return (
         <React.Fragment>
             {useTable
                 ? <DisplayTable tableData={tableData} showHeader={false} alternateRows={false}
                                 colorData={'#ddd'} fontSize={fontSize} fontWeightData={fontWeight}
                                 paddingData={paddingData} backgroundColor={backgroundColor}/>
-                : <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                : <div style={{display: 'flex', justifyContent: 'center', flexGrow: 1}}>
                     {rows.map((row, index) => (
                         <div key={index} style={{
                             display: 'flex',

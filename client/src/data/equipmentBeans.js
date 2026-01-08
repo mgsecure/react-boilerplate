@@ -1,4 +1,4 @@
-export const machineTypes = ['Grinder', 'Espresso', 'Pourover', 'Stovetop', 'Drip', 'Other']
+export const machineTypes = ['Grinder', 'Espresso', 'Pour-over', 'Stovetop', 'Drip', 'Other']
 
 export const typeSort = (a, b) => {
     return machineTypes.indexOf(a) - machineTypes.indexOf(b)

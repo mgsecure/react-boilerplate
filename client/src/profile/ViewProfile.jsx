@@ -2,7 +2,6 @@ import React, {useCallback, useContext, useEffect, useState} from 'react'
 import Tracker from '../app/Tracker'
 import useWindowSize from '../util/useWindowSize'
 import Nav from '../nav/Nav'
-import DataTest from '../espressoStats/DataTest.jsx'
 import Footer from '../nav/Footer.jsx'
 import DBContext from '../app/DBContext.jsx'
 import {Button, TextField} from '@mui/material'
@@ -12,6 +11,9 @@ import {enqueueSnackbar} from 'notistack'
 import Menu from '@mui/material/Menu'
 import Equipment from './Equipment.jsx'
 import Beans from './Beans.jsx'
+import Brews from './Brews.jsx'
+import DataContext from '../context/DataContext.jsx'
+import dayjs from 'dayjs'
 
 export default function ViewProfile() {
     const {isMobile, flexStyle} = useWindowSize()
@@ -20,6 +22,7 @@ export default function ViewProfile() {
         updateProfileField,
         deleteAllUserData
     } = useContext(DBContext)
+    const {visibleEntries = []} = useContext(DataContext)
 
     const [form, setForm] = useState({...userProfile || {}})
     useEffect(() => {
@@ -33,7 +36,6 @@ export default function ViewProfile() {
 
 
     const [searchParams] = useSearchParams()
-    const debug = searchParams.get('debug')
 
     const [anchorEl, setAnchorEl] = useState(null)
     const [deletingData, setDeletingData] = useState(false)
@@ -85,6 +87,38 @@ export default function ViewProfile() {
         ? ` (${form.username}) `
         : ''
 
+    const brewsSection = (
+        <div style={{padding: 16, width: '100%'}} key={'brews'}>
+            <div style={{display: 'flex', alignItems: 'center', marginBottom: 0}}>
+                <div style={{flexGrow: 1, fontSize: '1.3rem', fontWeight: 500}}>Recent Brews</div>
+                <div style={{marginBottom:8}}>
+                    <Button variant='contained' size='small' onClick={() => navigate('/brews')}>
+                        View All</Button>
+                </div>
+            </div>
+            <Brews entries={visibleEntries}/>
+        </div>
+    )
+
+    const equipmentSection = (
+        <div style={{padding: 16, width: '100%'}} key={'equipment'}>
+            <div style={{width: '100%', fontSize: '1.2rem', fontWeight: 500, marginBottom: 10}}>Equipment</div>
+            <Equipment machines={userProfile.equipment}/>
+        </div>
+    )
+
+    const beansSection = (
+        <div style={{padding: 16, width: '100%'}} key={'beans'}>
+            <div style={{width: '100%', fontSize: '1.2rem', fontWeight: 500, marginBottom: 10}}>Recent Beans</div>
+            <Beans beans={userProfile.beans?.sort((a, b) => dayjs(b.modifiedAt).valueOf() - dayjs(a.modifiedAt).valueOf())}/>
+        </div>
+    )
+
+    let sections = [equipmentSection, beansSection, brewsSection]
+    if (userProfile?.equipment?.length > 0 && userProfile?.beans?.length > 0) {
+        sections = [brewsSection, beansSection, equipmentSection]
+    }
+
     const extras = (
         <React.Fragment>
             {!isMobile && <div style={{flexGrow: 1, minWidth: '10px'}}/>}
@@ -99,23 +133,11 @@ export default function ViewProfile() {
             <Nav title='My Profile' titleMobile='Profile' extras={extras}/>
 
             <div style={{display: flexStyle, padding: 16, width: '100%'}}>
-                {form.username ?
                     <div style={{marginBottom: 10, marginRight: 20}}>
                         <span style={{fontSize: '1.2rem', fontWeight: 500}}>Username<br/></span>
-                        Your username {introNameText} shows up on the leaderboard and
-                        your profile can be shared with others.
-                        <br/><br/>
+                        Your username {introNameText} shows up if you share your profile with others.
                         Your Google login information will never be displayed to other users.
                     </div>
-                    :
-                    <div style={{marginBottom: 10, marginRight: 20, maxWidth: 325}}>
-                        <span style={{fontSize: '1.2rem', fontWeight: 500}}>Username<br/></span>
-                        Your username will show up on the leaderboard and
-                        your profile can be shared with others.
-                        <br/><br/>
-                        Your Google login information will never be displayed to other users.
-                    </div>
-                }
 
                 <div style={{width: '100%', marginTop: 40}}>
                     <TextField
@@ -155,16 +177,7 @@ export default function ViewProfile() {
                 </div>
             </div>
 
-
-            <div style={{padding: 16, width: '100%'}}>
-                <div style={{width: '100%', fontSize: '1.2rem', fontWeight: 500, marginBottom: 10}}>Equipment</div>
-                <Equipment machines={userProfile.equipment}/>
-            </div>
-
-            <div style={{padding: 16, width: '100%'}}>
-                <div style={{width: '100%', fontSize: '1.2rem', fontWeight: 500, marginBottom: 10}}>Beans</div>
-                <Beans beans={userProfile.beans}/>
-            </div>
+            {sections}
 
 
             <div style={{width: '100%', textAlign: 'center', margin: '60px 0px 10px 0px'}}>
@@ -201,70 +214,3 @@ export default function ViewProfile() {
 }
 
 const pattern = /^[\sa-zA-Z0-9_-]{1,32}$/
-
-const beansTestData = [
-    {
-        id: 'bean01',
-        roaster: 'The Boy and the Bear',
-        name: 'Dynamic Espresso',
-        roasterCity: 'Los Angeles',
-        roasterCountry: 'United States',
-        origin: 'Blend',
-        caffeine: 'Full caffeine',
-        roastLevel: 'Medium/Dark',
-        roastDate: '11/11/2025',
-        weight: 454,
-        priceUnit: 'USD ($)',
-        price: 18.00,
-        price100g: 3.96,
-        pricePound: 18.00,
-        roasterNotes: 'Dark Chocolate, Caramel, Red Appples',
-        tastingNotes: 'Rich, fruity, chocolate, slightly sour',
-        description: 'description goes here.',
-        ratings: {rating: 9},
-        url: 'https://beans.mgsecure.com'
-    }
-]
-
-const machinesTestData = [
-    {
-        id: 'machine0',
-        type: 'Espresso',
-        fullName: '9Barista Mk.2',
-        brand: '9Barista',
-        model: 'Mk.2',
-        year: '2025',
-        notes: '93 deg. C',
-        link: 'https://www.9barista.com'
-    },
-    {
-        id: 'machine1',
-        fullName: 'La Marzocco Linea Mini',
-        type: 'Espresso',
-        brand: 'La Marzocco',
-        model: 'Linea Mini',
-        year: '2025',
-        notes: 'The La Marzocco Linea Mini is a compact version of the iconic Linea Classic, designed for home use. It features dual boilers, a saturated group head, and commercial-grade components to deliver café-quality espresso at home.',
-        link: 'https://www.lamarzoccousa.com/linea-mini'
-    },
-    {
-        id: 'machine2',
-        fullName: 'Breville Barista Express',
-        type: 'Espresso',
-        brand: 'Breville',
-        model: 'Barista Express',
-        year: '2025',
-        description: 'The Breville Barista Express is an all-in-one espresso machine that combines a grinder and espresso maker. It offers precise temperature control and customizable settings for a personalized coffee experience.',
-        link: 'https://www.breville.com/us/en/products/espresso/bes870.html'
-    },
-    {
-        id: 'machine3',
-        fullName: 'Hario Switch',
-        type: 'Pour Over',
-        brand: 'Hario',
-        model: 'Switch',
-        year: '2025',
-        description: 'The Breville Barista Express is an all-in-one espresso machine that combines a grinder and espresso maker. It offers precise temperature control and customizable settings for a personalized coffee experience.',
-        link: 'https://www.breville.com/us/en/products/espresso/bes870.html'
-    }
-]

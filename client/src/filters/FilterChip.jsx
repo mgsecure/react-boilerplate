@@ -9,7 +9,7 @@ import glossary from '../data/glossary.json'
 import Link from '@mui/material/Link'
 import Box from '@mui/material/Box'
 
-function FilterChip({field, value, label = value, mode, clickable = true, ...props}) {
+function FilterChip({field, value, label = value, mode, clickable = true, linkColor='#fff', ...props}) {
     const navigate = useNavigate()
     const [open, setOpen] = useState(false)
     const {addAdvancedFilterGroup} = useContext(FilterContext)
@@ -42,7 +42,7 @@ function FilterChip({field, value, label = value, mode, clickable = true, ...pro
     }, [navigate, value])
 
     const termFound = useMemo(() => {
-        return !!glossary.find(entry => entry.term.toLowerCase() === value.toLowerCase())
+        return !!glossary.find(entry => entry?.term?.toLowerCase() === value?.toLowerCase())
     }, [value])
 
     return (
@@ -111,7 +111,7 @@ function FilterChip({field, value, label = value, mode, clickable = true, ...pro
             }
             {(mode === 'text') &&
                 <Link
-                    style={{color: '#fff'}}
+                    style={{color: linkColor}}
                     onClick={handleFilter}
                     {...props}
                 >

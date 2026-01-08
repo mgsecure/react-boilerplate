@@ -1,8 +1,8 @@
-import React, {useCallback, useContext, useEffect, useRef, useState} from 'react'
+import React, {useCallback, useContext, useEffect, useMemo, useRef, useState} from 'react'
 import queryString from 'query-string'
 import Tracker from '../app/Tracker.jsx'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import {styled} from '@mui/material/styles'
+import {styled, useTheme} from '@mui/material/styles'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Collapse from '@mui/material/Collapse'
@@ -15,14 +15,15 @@ import Menu from '@mui/material/Menu'
 import {Button} from '@mui/material'
 import {beanFields} from '../data/equipmentBeans'
 import useWindowSize from '../util/useWindowSize.jsx'
-import EquipmentForm from './EquipmentForm.jsx'
 import Stack from '@mui/material/Stack'
 import FieldValue from '../misc/FieldValue.jsx'
-import EntryRatingDisplay from '../espressoBeans/EntryRatingDisplay.jsx'
 import isValidUrl from '../util/isValidUrl'
 import Link from '@mui/material/Link'
 import {openInNewTab} from '../util/openInNewTab'
 import ItemDrawer from './ItemDrawer.jsx'
+import LogEntryButton from '../entries/LogEntryButton.jsx'
+import Tooltip from '@mui/material/Tooltip'
+import RatingTable from '../misc/RatingTable.jsx'
 
 const ExpandMore = styled((props) => {
     const {expand, ...other} = props
@@ -36,18 +37,18 @@ const ExpandMore = styled((props) => {
 }))
 
 export default function BeanCard({entry = {}, expanded, onExpand}) {
-    const {updateEquipment} = useContext(DBContext)
+    const {updateCollection} = useContext(DBContext)
     const [scrolled, setScrolled] = useState(false)
     const ref = useRef(null)
 
     const handleDelete = useCallback(async () => {
         try {
-            await updateEquipment(entry, {delete: true})
-            enqueueSnackbar('Equipment deleted.', {variant: 'success'})
+            await updateCollection({collection: 'beans', item: entry, flags: {delete: true}})
+            enqueueSnackbar('Item deleted.', {variant: 'success'})
         } catch (error) {
-            enqueueSnackbar(`Error deleting equipment: ${error}`, {variant: 'error', autoHideDuration: 3000})
+            enqueueSnackbar(`Error deleting item: ${error}`, {variant: 'error', autoHideDuration: 3000})
         }
-    }, [entry, updateEquipment])
+    }, [entry, updateCollection])
 
     const handleChange = useCallback(() => {
         onExpand(!expanded ? entry.id : false)
@@ -74,6 +75,32 @@ export default function BeanCard({entry = {}, expanded, onExpand}) {
         }
     }, [expanded, scrolled, entry.id])
 
+    const ratings = useMemo(() => entry.ratings || {}, [entry])
+    const ratingDimensions = {rating: 'rating'}
+
+    const handleUpdate = useCallback(async (entry) => {
+        const cleanEntry = Object.fromEntries(
+            Object.entries(entry).filter(([_key, value]) => {
+                return value !== null && typeof value !== 'undefined'
+            })
+        )
+        const flags = entry ? {update: true} : {}
+        try {
+            await updateCollection({collection: 'beans', item: cleanEntry, flags})
+        } catch (error) {
+            enqueueSnackbar(`Error saving ratings: ${error}`, {variant: 'error', autoHideDuration: 3000})
+        }
+    }, [updateCollection])
+
+    const handleRatingChange = useCallback(async ({dimension, rating}) => {
+        console.log('handleRatingChange', {dimension, rating})
+        const entryCopy = {
+            ...entry,
+            ratings: {...ratings, [dimension]: rating}
+        }
+        await handleUpdate(entryCopy)
+    }, [entry, handleUpdate, ratings])
+
     const beanFieldsOther = beanFields.filter(field => !['id', 'roaster', 'name'].includes(field))
     const moreDetails = Object.keys(entry).some(key => beanFieldsOther.includes(key))
     const notesLines = entry.notes?.split('\n')
@@ -97,6 +124,8 @@ export default function BeanCard({entry = {}, expanded, onExpand}) {
         setAnchorEl(ev.currentTarget)
     }, [])
 
+    const theme = useTheme()
+
     const {isMobile, flexStyle} = useWindowSize()
     const detailsDivWidth = isMobile ? 36 : 74
     const flexDirection = isMobile ? 'column' : 'row'
@@ -104,7 +133,7 @@ export default function BeanCard({entry = {}, expanded, onExpand}) {
     return (
         <Card
             style={{
-                backgroundColor: '#563028',
+                backgroundColor: theme.palette.card.main,
                 color: '#fff',
                 alignContent: 'center',
                 boxShadow: 'unset',
@@ -114,12 +143,11 @@ export default function BeanCard({entry = {}, expanded, onExpand}) {
             <CardContent style={{display: 'flex', placeItems: 'center', padding: 10}}>
                 <div
                     style={{display: 'flex', flexDirection: flexDirection, placeItems: 'center start', marginRight: 5}}>
-                    <IconButton onClick={handleDrawerClick} style={{marginRight: 2}}>
-                        <EditIcon fontSize='small' style={{color: '#eee'}}/>
-                    </IconButton>
-                    <IconButton onClick={handleDeleteConfirm}>
-                        <DeleteIcon fontSize='small' style={{color: '#e3aba0'}}/>
-                    </IconButton>
+                    <Tooltip title='Edit' arrow disableFocusListener>
+                        <IconButton onClick={handleDrawerClick} style={{marginRight: 2}}>
+                            <EditIcon fontSize='small' style={{color: '#eee'}}/>
+                        </IconButton>
+                    </Tooltip>
                     <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={() => setAnchorEl(null)}
                           slotProps={{paper: {sx: {backgroundColor: '#333'}}}}>
                         <div style={{padding: 20, textAlign: 'center'}}>
@@ -139,31 +167,34 @@ export default function BeanCard({entry = {}, expanded, onExpand}) {
                     </Menu>
                 </div>
                 <div style={{marginBottom: 5, flexGrow: 1, placeContent: 'center', textAlign: 'center'}}>
-                    <div style={{fontSize: '0.85rem', marginBottom: 1, fontWeight: 500}}>{entry.roaster}</div>
+                    <div style={{fontSize: '0.85rem', marginBottom: 1, fontWeight: 500, opacity: 0.6}}>
+                        {entry.roaster}
+                    </div>
                     <div style={{
                         fontSize: '1.1rem',
                         lineHeight: '1.4rem',
                         fontWeight: 600,
                         textAlign: 'center',
-                        flexGrow: 1
+                        flexGrow: 1,
+                        marginBottom: 5
                     }}>
                         <Link style={{color: '#fff'}} onClick={() => handleDrawerClick()}>
                             {entry.name}
                         </Link>
                     </div>
                     {entry.ratings?.rating &&
-                        <div style={{display:'flex', placeContent: 'center', width:'100%'}}>
-                            <EntryRatingDisplay entry={entry}/>
-                        </div>
+                        <RatingTable ratingDimensions={ratingDimensions} onRatingChange={handleRatingChange}
+                                     ratings={ratings} emptyColor={'#555'} showLabel={false}
+                                     fontSize={'0.85rem'} size={19} paddingData={0} iconsCount={10}/>
                     }
                 </div>
 
                 <div style={{width: detailsDivWidth, display: 'flex', placeItems: 'center end', marginLeft: 5}}>
-                    {moreDetails &&
+                    <Tooltip title='Details' arrow disableFocusListener>
                         <ExpandMore style={{height: 36, width: 36}} onClick={handleChange} expand={expanded}>
                             <ExpandMoreIcon/>
                         </ExpandMore>
-                    }
+                    </Tooltip>
                 </div>
             </CardContent>
 
@@ -172,7 +203,8 @@ export default function BeanCard({entry = {}, expanded, onExpand}) {
             <Collapse in={expanded} timeout='auto' unmountOnExit>
                 <CardContent style={{textAlign: 'left', padding: 10, color: '#fff'}}>
                     <Stack direction='row' spacing={0} style={{flexWrap: 'wrap', marginBottom: 8}}>
-                        <FieldValue name='Rating' value={entry.ratings?.rating} suffix={'/10'} style={{marginRight: 24}}/>
+                        <FieldValue name='Rating' value={entry.ratings?.rating} suffix={'/10'}
+                                    style={{marginRight: 24}}/>
                         <FieldValue name='Tasting Notes' value={entry.tastingNotes} style={{marginRight: 24}}/>
                         <FieldValue name='Roaster Tasting Notes' value={entry.roasterNotes} style={{marginRight: 24}}/>
                     </Stack>
@@ -209,6 +241,45 @@ export default function BeanCard({entry = {}, expanded, onExpand}) {
                     <Stack direction='row' spacing={0} style={{flexWrap: 'wrap', marginBottom: 8}}>
                         <FieldValue name='Link' value={beanLink} style={{marginRight: 24}}/>
                     </Stack>
+
+                    <div style={{display: 'flex', placeContent: 'center'}}>
+                        <LogEntryButton entry={entry} entryType={'brew'} size={'small'}/>
+                        <div
+                            style={{
+                                display: 'flex',
+                                flexGrow: 1,
+                                placeContent: 'center end',
+                                marginRight: 5
+                            }}>
+                            <Tooltip title='Edit' arrow disableFocusListener>
+                                <IconButton onClick={handleDrawerClick} style={{marginRight: 2}}>
+                                    <EditIcon fontSize='medium' style={{color: '#eee'}}/>
+                                </IconButton>
+                            </Tooltip>
+                            <Tooltip title='Delete' arrow disableFocusListener>
+                                <IconButton onClick={handleDeleteConfirm}>
+                                    <DeleteIcon fontSize='medium' style={{color: '#e3aba0'}}/>
+                                </IconButton>
+                            </Tooltip>
+                            <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={() => setAnchorEl(null)}
+                                  slotProps={{paper: {sx: {backgroundColor: '#333'}}}}>
+                                <div style={{padding: 20, textAlign: 'center'}}>
+                                    Delete cannot be undone.<br/>
+                                    Are you sure?
+                                </div>
+                                <div style={{textAlign: 'center'}}>
+                                    <Button style={{marginBottom: 10, color: '#000'}}
+                                            variant='contained'
+                                            onClick={handleDelete}
+                                            edge='start'
+                                            color='error'
+                                    >
+                                        Delete Brew
+                                    </Button>
+                                </div>
+                            </Menu>
+                        </div>
+                    </div>
 
                     <Tracker feature='beanDetails' id={entry.id}/>
                 </CardContent>

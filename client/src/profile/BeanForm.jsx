@@ -12,7 +12,7 @@ import {enqueueSnackbar} from 'notistack'
 import {useTheme} from '@mui/material/styles'
 import {roastLevels, currencies} from '../data/equipmentBeans'
 import roasters from '../data/roasters.json'
-import EntryRating from '../espressoBeans/EntryRating.jsx'
+import EntryRating from './EntryRating.jsx'
 
 export default function BeanForm({bean, open}) {
     const {flexStyle, isMobile} = useWindowSize()
@@ -75,10 +75,15 @@ export default function BeanForm({bean, open}) {
         event.preventDefault()
         console.log('form', form)
         setUploading(true)
+        const roaster = form.roaster || form.newRoaster
+        const fullName = roaster
+            ? `${form.name} (${roaster})`
+            : `${form.name || ''}${roaster || ''}`
+
         const formCopy = {
             ...form,
-            roaster: form.roaster || form.newRoaster,
-            model: form.model || form.newModel
+            roaster,
+            fullName
         }
         delete formCopy.newRoaster
         delete formCopy.newModel
@@ -88,9 +93,13 @@ export default function BeanForm({bean, open}) {
             })
         )
         const flags = bean ? {update: true} : {}
+        const message = bean
+            ? 'Changes saved!'
+            : 'New bean saved!'
+
         try {
             await updateCollection({collection: 'beans', item: cleanForm, flags})
-            enqueueSnackbar('New bean saved!', {variant: 'success'})
+            enqueueSnackbar(message, {variant: 'success'})
         } catch (error) {
             enqueueSnackbar(`Error saving bean: ${error}`, {variant: 'error', autoHideDuration: 3000})
         } finally {
@@ -282,7 +291,7 @@ export default function BeanForm({bean, open}) {
 
                             <div style={{marginRight: 10, marginTop: 0}}>
                                 <div style={{fontSize: '1.0rem', marginBottom: 2}}>Origin</div>
-                                <TextField type='text' name='origin' style={{width: 100}} size='small'
+                                <TextField type='text' name='origin' style={{width: 175}} size='small'
                                            onChange={handleFormChange} value={form.origin || ''}
                                            color='info'/>
                             </div>
@@ -313,7 +322,7 @@ export default function BeanForm({bean, open}) {
 
                         <div style={{display: flexStyle, marginBottom: 10}}>
 
-                            <div style={{marginRight: 10, marginTop: 0}}>
+                            <div style={{marginRight: 20, marginTop: 0}}>
                                 <div style={{fontSize: '1.0rem', marginBottom: 2}}>Weight</div>
                                 <div style={{display: 'flex'}}>
                                     <TextField type='text' name='weight' style={{width: 100, marginRight: 5}}
@@ -323,9 +332,9 @@ export default function BeanForm({bean, open}) {
                                     <SelectBox changeHandler={handleFormChange}
                                                form={form}
                                                name='weightUnit'
-                                               optionsList={['Gram', 'Ounce']}
+                                               optionsList={['g', 'oz']}
                                                multiple={false} defaultValue={''}
-                                               size='small' width={100}/>
+                                               size='small' width={65}/>
 
                                 </div>
                             </div>
@@ -333,7 +342,7 @@ export default function BeanForm({bean, open}) {
                             <div style={{marginRight: 10, marginTop: 0}}>
                                 <div style={{fontSize: '1.0rem', marginBottom: 2}}>Price</div>
                                 <div style={{display: 'flex'}}>
-                                    <TextField type='text' name='price' style={{width: 100, marginRight: 5}}
+                                    <TextField type='text' name='price' style={{width: 85, marginRight: 5}}
                                                size='small'
                                                onChange={handleFormChange} value={form.price || ''}
                                                color='info'/>
@@ -349,13 +358,11 @@ export default function BeanForm({bean, open}) {
 
                         </div>
 
-                        <div style={{display: flexStyle, marginRight: 20, marginBottom: 10}}>
-                            <div style={{marginRight: 10, marginTop: 0}}>
+                        <div style={{marginRight: 15, marginBottom: 10, flexGrow: 1}}>
                                 <div style={{fontSize: '1.0rem', marginBottom: 2}}>Product Link</div>
-                                <TextField type='text' name='productLink' style={{width: 350}} size='small'
+                                <TextField type='text' name='productLink' fullWidth size='small'
                                            onChange={handleFormChange} value={form.productLink || ''}
                                            color='info'/>
-                            </div>
                         </div>
 
 

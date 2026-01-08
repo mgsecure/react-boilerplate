@@ -40,22 +40,6 @@ export default [{
             }
         },
         {
-            path: '/suggestions',
-            name: 'suggestion box',
-            lazy: async () => {
-                const {default: SendToDiscordRoute} = await import('../sendToDiscord/SendToDiscordRoute')
-                return {element: <Suspense><SendToDiscordRoute/></Suspense>}
-            }
-        },
-        {
-            path: '/modbox',
-            name: 'modbox',
-            lazy: async () => {
-                const {default: SendToDiscordRoute} = await import('../sendToDiscord/SendToDiscordRoute')
-                return {element: <Suspense><SendToDiscordRoute/></Suspense>}
-            }
-        },
-        {
             path: '/espressoBeans',
             name: 'espressoBeans',
             lazy: async () => {
@@ -69,6 +53,14 @@ export default [{
             lazy: async () => {
                 const {default: EspressoStatsRoute} = await import('../espressoStats/EspressoStatsRoute.jsx')
                 return {element: <Suspense><EspressoStatsRoute/></Suspense>}
+            }
+        },
+        {
+            path: '/brews',
+            name: 'brews',
+            lazy: async () => {
+                const {default: BrewsRoute} = await import('../brews/BrewsRoute.jsx')
+                return {element: <Suspense><BrewsRoute/></Suspense>}
             }
         },
         {
@@ -87,6 +79,30 @@ export default [{
                     }
                 },
                 ]
+        },
+        {
+            path: '/roasters',
+            name: 'roasters',
+            lazy: async () => {
+                const {default: RoastersRoute} = await import('../roasters/RoastersRoute.jsx')
+                return {element: <Suspense><RoastersRoute/></Suspense>}
+            }
+        },
+        {
+            path: '/suggestions',
+            name: 'suggestion box',
+            lazy: async () => {
+                const {default: SendToDiscordRoute} = await import('../sendToDiscord/SendToDiscordRoute')
+                return {element: <Suspense><SendToDiscordRoute/></Suspense>}
+            }
+        },
+        {
+            path: '/modbox',
+            name: 'modbox',
+            lazy: async () => {
+                const {default: SendToDiscordRoute} = await import('../sendToDiscord/SendToDiscordRoute')
+                return {element: <Suspense><SendToDiscordRoute/></Suspense>}
+            }
         },
         {
             path: '/testing',

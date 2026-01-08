@@ -5,7 +5,7 @@ import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
 import {useLocation} from 'react-router-dom'
 
-function CopyLinkToEntryButton({entry, nameType}) {
+function CopyLinkToEntryButton({entry, entryType}) {
 
     const handleClick = useCallback(async () => {
         const safeName = entry.fullName.replace(/[\s/]/g, '_').replace(/\W/g, '')
@@ -13,7 +13,7 @@ function CopyLinkToEntryButton({entry, nameType}) {
         
         await navigator.clipboard.writeText(link)
         enqueueSnackbar('Link to entry copied to clipboard.')
-    }, [entry, nameType])
+    }, [entry])
 
     return (
         <Tooltip title='Copy Link to Entry' arrow disableFocusListener>

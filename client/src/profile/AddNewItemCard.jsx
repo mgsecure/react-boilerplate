@@ -2,6 +2,7 @@ import React, {useCallback, useState} from 'react'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import ItemDrawer from './ItemDrawer.jsx'
+import {useTheme} from '@mui/material/styles'
 
 export default function AddNewItemCard({type = 'Bean', count = 10}) {
 
@@ -10,12 +11,14 @@ export default function AddNewItemCard({type = 'Bean', count = 10}) {
         setOpen(true)
     }, [])
 
+    const theme = useTheme()
+
     return (
         <React.Fragment>
             <Card
                 onClick={handleCardClick} sx={{height: '100%'}}
                 style={{
-                    backgroundColor: '#805046',
+                    backgroundColor: theme.palette.card.add,
                     color: '#fff',
                     boxShadow: 'unset',
                     padding: '0px',
