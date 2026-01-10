@@ -12,8 +12,6 @@ export default function EntryRating({
                                         }
                                     }) {
 
-    console.log('EntryRating', entry)
-
     const [ratings, setRatings] = useState(entry.ratings || {})
     const ratingDimensions = {rating: 'rating'}
     const handleRatingChange = useCallback(({dimension, rating}) => {

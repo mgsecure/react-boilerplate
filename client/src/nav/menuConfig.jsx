@@ -29,6 +29,11 @@ export default [
         path: '/profile',
     },
     {
+        title: 'My Coffees',
+        icon: <CoffeeIcon fontSize='small'/>,
+        path: '/coffees',
+    },
+    {
         title: 'My Brews',
         icon: <CoffeeIcon fontSize='small'/>,
         path: '/brews',

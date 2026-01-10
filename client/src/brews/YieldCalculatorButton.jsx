@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useState} from 'react'
+import React, {useCallback, useContext, useEffect, useState} from 'react'
 import Tooltip from '@mui/material/Tooltip'
 import DBContext from '../app/DBContext.jsx'
 import {Button} from '@mui/material'
@@ -9,6 +9,12 @@ export default function YieldCalculatorButton() {
 
     const {userProfile = {}, updateProfileField} = useContext(DBContext)
     const [form, setForm] = useState(userProfile.yieldCalculator || {dose: '18', yield: '36', ratio: '2'})
+
+    useEffect(() => {
+        setForm(userProfile.yieldCalculator || {dose: '18', yield: '36', ratio: '2'})
+    },[userProfile.yieldCalculator])
+
+
     const handleFormChange = useCallback((event) => {
         const {name, value} = event.target
 

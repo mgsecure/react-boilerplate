@@ -6,6 +6,7 @@ import EquipmentForm from './EquipmentForm.jsx'
 import BeanForm from './BeanForm.jsx'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 import BrewForm from './BrewForm.jsx'
+import CoffeeForm from '../coffees/CoffeeForm.jsx'
 
 export default function ItemDrawer({item, open, setOpen, type = 'Item', action = 'edit'}) {
     const {isMobile} = useWindowSize()
@@ -61,7 +62,9 @@ export default function ItemDrawer({item, open, setOpen, type = 'Item', action =
                 {type === 'Bean' &&
                     <BeanForm bean={item} open={open} setOpen={setOpen} type={type}/>
                 }
-
+                {type === 'Coffee' &&
+                    <CoffeeForm coffee={item} action={action} open={open} setOpen={setOpen} type={type}/>
+                }
                 {type === 'Brew' &&
                     <BrewForm entry={item} action={action} open={open} setOpen={setOpen} type={type}/>
                 }

@@ -5,35 +5,46 @@ import dayjs from 'dayjs'
 import removeAccents from 'remove-accents'
 import filterEntriesAdvanced from '../filters/filterEntriesAdvanced'
 import searchEntriesForText from '../filters/searchEntriesForText'
+import entryName from '../entries/entryName'
+import roasters from '../data/roasters.json'
 
-export function BrewsDataProvider({children, profile}) {
+export function CoffeesDataProvider({children, profile}) {
     const {filters: allFilters, advancedFilterGroups} = useContext(FilterContext)
     const {search, sort, expandAll} = allFilters
 
     const allEntries = useMemo(() => {
-        return !profile.brews
-            ? []
-            : profile.brews
-    }, [profile.brews])
+        return profile.coffees || []
+    }, [profile.coffees])
 
     const mappedEntries = useMemo(() => {
         return allEntries
             .map(entry => {
-                const coffee = profile.coffees.find(g => g.id === entry.coffee?.id) || entry.coffee || {}
+                const roaster = roasters.find(r => r.id === entry.roaster?.id) || entry.roaster?.name ? {name: entry.roaster.name} : {name: 'Unknown Roaster'}
+                const grinder = profile.equipment?.find(e => e.id === entry.grinderId) || {brand: 'Unknown Grinder'}
+                const machine = profile.equipment?.find(e => e.id === entry.machineId) || {brand: 'Unknown Machine'}
+                const brews = profile.brews?.filter(e => e.coffee?.id === entry.id) || []
 
                 return {
                     ...entry,
                     originalEntry: entry,
-                    fullName: coffee.roaster ? `${coffee.name} (${coffee.roaster.name})` : coffee.name,
+                    roaster,
+                    brews,
+                    fullName: roaster.name !== 'Unknown Roaster' ? `${entry.name} (${entry.roaster.name})` : entry.name,
                     modifiedAt: entry.modifiedAt || entry.addedAt,
+                    grinderName: entryName({entry: grinder}),
+                    machineName: entryName({entry: machine}),
+                    roasterName: roaster.name,
                     restedDays: Math.max(dayjs(entry.addedAt).diff(dayjs(entry.roastDate), 'day'), 0),
                     isFlagged: entry.flagged ? 'Yes' : 'No',
                     fuzzy: removeAccents([
-                        entry.fullName
+                        entry.name,
+                        entry.roaster?.name,
+                        entryName({entry: machine}),
+                        entryName({entry: grinder}),
                     ].join(','))
                 }
             })
-    }, [allEntries, profile.coffees])
+    }, [allEntries, profile.brews, profile.equipment])
 
     const searchedEntries = useMemo(() => {
         return searchEntriesForText(search, mappedEntries)
@@ -75,18 +86,27 @@ export function BrewsDataProvider({children, profile}) {
 
     const grinderList = useMemo(() => {
         return (profile.equipment?.filter(e => e.type === 'Grinder') || [])
-            .sort((a, b) => a.fullName.localeCompare(b.fullName))
+            .reduce((acc, grinder) => {
+                const grinderName = [grinder.brand, grinder.model].filter(Boolean).join(' ')
+                acc[grinderName] = grinder
+                return acc
+            }, {})
     }, [profile.equipment])
 
     const machineList = useMemo(() => {
         return (profile.equipment?.filter(e => e.type !== 'Grinder') || [])
-            .sort((a, b) => a.fullName.localeCompare(b.fullName))
+            .reduce((acc, machine) => {
+                const machineName = [machine.brand, machine.model].filter(Boolean).join(' ')
+                acc[machineName] = machine
+                return acc
+            }, {})
     }, [profile.equipment])
 
-    const coffeesList = useMemo(() => {
-        return ([...profile.coffees || []])
-            .sort((a, b) => a.fullName.localeCompare(b.fullName))
-    }, [profile.coffees])
+    const brewsList = useMemo(() => {
+        return (profile.brews || []).sort((a, b) => dayjs(b.modifiedAt).valueOf() - dayjs(a.modifiedAt).valueOf())
+    }, [profile.brews])
+
+    console.log('brewsList', brewsList)
 
     const value = useMemo(() => ({
         allEntries,
@@ -96,7 +116,7 @@ export function BrewsDataProvider({children, profile}) {
         expandAll,
         grinderList,
         machineList,
-        coffeesList
+        brewsList
     }), [
         allEntries,
         mappedEntries,
@@ -105,7 +125,7 @@ export function BrewsDataProvider({children, profile}) {
         expandAll,
         grinderList,
         machineList,
-        coffeesList
+        brewsList
     ])
 
     return (
@@ -115,4 +135,4 @@ export function BrewsDataProvider({children, profile}) {
     )
 }
 
-export default BrewsDataProvider
+export default CoffeesDataProvider

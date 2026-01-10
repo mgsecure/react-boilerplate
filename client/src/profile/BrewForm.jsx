@@ -7,52 +7,83 @@ import DBContext from '../app/DBContext.jsx'
 import {enqueueSnackbar} from 'notistack'
 import {useTheme} from '@mui/material/styles'
 import DataContext from '../context/DataContext.jsx'
-import RatingTable from '../misc/RatingTable.jsx'
+import cleanObject from '../util/cleanObject'
+import entryName from '../entries/entryName'
+import dayjs from 'dayjs'
 
 export default function BrewForm({entry, open, setOpen, action}) {
-    const {grinderList, machineList, beansList} = useContext(DataContext)
+    const {grinderList, machineList, coffeesList, brewsList} = useContext(DataContext)
     const {flexStyle, isMobile} = useWindowSize()
     const {updateCollection} = useContext(DBContext)
-    const [form, setForm] = useState(
-        action === 'clone' ? {...entry, id: `br_${genHexString(8)}`} : {...entry || {id: `br_${genHexString(8)}`}}
-    )
+    const [form, setForm] = useState({})
     useEffect(() => {
         if (open) {
             setForm(
-                action === 'clone' ? {
-                    ...entry,
-                    id: `br_${genHexString(8)}`
-                } : {...entry || {id: `br_${genHexString(8)}`}}
+                action === 'clone'
+                    ? {...entry, id: `br_${genHexString(8)}`}
+                    : {...entry || {id: `br_${genHexString(8)}`}}
             )
         }
     }, [open, entry, action])
 
+    const latestBrew = brewsList?.length > 0 ? brewsList[0] : {}
+    const doseUnitDefault = latestBrew.doseUnit || 'g'
+    const yieldUnitDefault = latestBrew.yieldUnit || 'g'
+    const temperatureUnitDefault = latestBrew.temperatureUnit || '°C'
+
+    useEffect(() => {
+        if (open) {
+            setForm((prevForm) => ({
+                ...prevForm,
+                doseUnit: prevForm.doseUnit || doseUnitDefault,
+                yieldUnit: prevForm.yieldUnit || yieldUnitDefault,
+                temperatureUnit: prevForm.temperatureUnit || temperatureUnitDefault
+            }))
+        }
+    }, [open, doseUnitDefault, yieldUnitDefault, temperatureUnitDefault])
+
+
     const [uploading, setUploading] = useState(false)
     const theme = useTheme()
 
-    const grinderNames = useMemo(() => {
-        return Object.keys(grinderList).sort()
-    }, [grinderList])
+    const coffeeNames = useMemo(() => {
+        const systemCoffees = coffeesList.map((coffee) => coffee.fullName)
+        return new Set([entry?.coffee?.fullname, ...systemCoffees].filter(Boolean).sort())
+    }, [coffeesList, entry?.coffee?.fullname])
+
+    const thisCoffee = useMemo(() => {
+        return coffeesList.find(c => c.fullName === form.coffeeName)
+            || entry?.coffee || {name: form.coffeeName}
+    }, [coffeesList, entry?.coffee, form.coffeeName])
 
     const machineNames = useMemo(() => {
-        return Object.keys(machineList).sort()
-    }, [machineList])
-
-    const beanNames = useMemo(() => {
-        return Object.keys(beansList).sort()
-    }, [beansList])
-
-    const thisBean = useMemo(() => {
-        return beansList[form.beanName] || {}
-    }, [beansList, form.beanName])
-
-    const thisGrinder = useMemo(() => {
-        return grinderList[form.grinderName] || {}
-    }, [grinderList, form.grinderName])
+        const systemMachines = machineList.reduce((acc, machine) => {
+            acc.push(machine.fullName)
+            return acc
+        }, [])
+        return new Set([entryName({
+            entry: entry?.machine,
+            entryType: 'machine'
+        }), ...systemMachines].filter(Boolean).sort())
+    }, [entry?.machine, machineList])
 
     const thisMachine = useMemo(() => {
-        return machineList[form.machineName] || {}
-    }, [machineList, form.machineName])
+        return machineList.find(e => e.fullName === form.machineName)
+            || entry?.machine || {}
+    }, [machineList, entry?.machine, form.machineName])
+
+    const grinderNames = useMemo(() => {
+        const systemGrinders = grinderList.reduce((acc, grinder) => {
+            acc.push(grinder.fullName)
+            return acc
+        }, [])
+        return new Set([entryName({entry: entry?.grinder}), ...systemGrinders].filter(Boolean).sort())
+    }, [entry?.grinder, grinderList])
+
+    const thisGrinder = useMemo(() => {
+        return grinderList.find(e => e.fullName === form.grinderName)
+            || entry?.grinder || {}
+    }, [grinderList, entry?.grinder, form.grinderName])
 
     const ratio = form.dose && form.yield
         ? (() => {
@@ -66,18 +97,6 @@ export default function BrewForm({entry, open, setOpen, action}) {
 
     const [ratings, setRatings] = useState(entry?.ratings || {})
     const [ratingsChanged, setRatingsChanged] = useState(false)
-    const ratingDimensions = {
-        rating: 'Overall Rating',
-        flavor: 'Flavor',
-        body: 'Body',
-        acidity: 'Acidity',
-        finish: 'Finish'
-    }
-
-    const handleRatingChange = useCallback(({dimension, rating}) => {
-        setRatings({...ratings, [dimension]: rating})
-        setRatingsChanged(true)
-    }, [ratings])
 
     const handleFormChange = useCallback((event) => {
         const {name, value} = event.target
@@ -86,23 +105,38 @@ export default function BrewForm({entry, open, setOpen, action}) {
 
     const handleSubmit = useCallback(async (event) => {
         event.preventDefault()
-        console.log('form', form)
         setUploading(true)
         const formCopy = {
             ...form,
-            bean: thisBean,
-            beanId: thisBean.id,
-            grinder: thisGrinder,
-            grinderId: thisGrinder.id,
-            machine: thisMachine,
-            machineId: thisMachine.id,
+            coffee: cleanObject({
+                id: thisCoffee.id,
+                name: thisCoffee.fullName,
+                roasterName: thisCoffee.roaster?.name,
+                fullName: entryName({entry: thisCoffee, entryType: 'coffee'})
+            }),
+            machine: cleanObject({
+                id: thisMachine.id,
+                brand: thisMachine.brand,
+                model: thisMachine.model,
+                fullName: entryName({entry: thisMachine})
+            }),
+            grinder: cleanObject({
+                id: thisGrinder.id,
+                brand: thisGrinder.brand,
+                model: thisGrinder.model,
+                fullName: entryName({entry: thisGrinder})
+            }),
+            fullName: entryName({entry: thisCoffee, entryType: 'coffee'}),
+            brewedAt: entry?.brewedAt || dayjs().format('YYYY-MM-DD HH:mm:ss'),
             ratings: ratingsChanged ? ratings : entry?.ratings
         }
-        const cleanForm = Object.fromEntries(
-            Object.entries(formCopy).filter(([_key, value]) => {
-                return value !== null && typeof value !== 'undefined'
-            })
-        )
+
+        delete formCopy.roasterName
+        delete formCopy.coffeeName
+        delete formCopy.machineName
+        delete formCopy.grinderName
+        const cleanForm = cleanObject(formCopy)
+
         const flags = entry && action !== 'clone' ? {update: true} : {}
         const message = action === 'clone'
             ? 'Copied brew saved.'
@@ -118,10 +152,10 @@ export default function BrewForm({entry, open, setOpen, action}) {
         } finally {
             setUploading(false)
         }
-    }, [form, thisBean, thisGrinder, thisMachine, ratingsChanged, ratings, entry, action, updateCollection, setOpen])
+    }, [form, thisCoffee, thisMachine, thisGrinder, ratingsChanged, ratings, entry, action, updateCollection, setOpen])
 
     const handleReload = useCallback(() => {
-        setForm({id: `b_${genHexString(8)}`})
+        setForm({id: `br_${genHexString(8)}`})
         setUploading(false)
         setTimeout(() => {
             window.scrollTo({
@@ -149,35 +183,10 @@ export default function BrewForm({entry, open, setOpen, action}) {
                             </div>
                             <SelectBox changeHandler={handleFormChange}
                                        form={form}
-                                       name='beanName'
-                                       optionsList={[...beanNames, '[ add bean ]']}
-                                       multiple={false} defaultValue={''}
-                                       size='small' width={'100%'}/>
-                        </div>
-
-                        <div style={{display: flexStyle, alignItems: 'center'}}>
-                            <div style={{marginRight: 10, marginBottom: 10}}>
-                                <div style={{fontSize: '1.1rem', fontWeight: 500, marginBottom: 2}}>
-                                    Grinder
-                                </div>
-                                <SelectBox changeHandler={handleFormChange}
-                                           form={form}
-                                           name='grinderName'
-                                           optionsList={grinderNames}
-                                           multiple={false} defaultValue={''}
-                                           size='small' width={300}/>
-                            </div>
-                            <div style={{marginRight: 10, marginBottom: 10}}>
-                                <div style={{fontSize: '1.1rem', fontWeight: 500, marginBottom: 2}}>
-                                    Machine/Brewer
-                                </div>
-                                <SelectBox changeHandler={handleFormChange}
-                                           form={form}
-                                           name='machineName'
-                                           optionsList={machineNames}
-                                           multiple={false} defaultValue={''}
-                                           size='small' width={300}/>
-                            </div>
+                                       name='coffeeName'
+                                       optionsList={[...coffeeNames, '[ add coffee ]']}
+                                       multiple={false} defaultValue={thisCoffee?.fullName || ''}
+                                       size='small' width='100%'/>
                         </div>
 
                         <div style={{display: flexStyle}}>
@@ -246,13 +255,6 @@ export default function BrewForm({entry, open, setOpen, action}) {
 
                         <div style={{marginRight: 10, marginBottom: 10}}>
                             <div style={{display: 'flex'}}>
-                                <div style={{marginRight: 10}}>
-                                    <div style={{fontSize: '1.0rem', marginBottom: 2}}>Roast Date</div>
-                                    <TextField type='text' name='roastDate' style={{width: 80, marginRight: 5}}
-                                               size='small'
-                                               onChange={handleFormChange} value={form.roastDate || ''}
-                                               color='info'/>
-                                </div>
                                 <div style={{flexGrow: 1, marginRight: 10}}>
                                     <div style={{fontSize: '1.0rem', marginBottom: 2}}>Recipe / Prep</div>
                                     <TextField type='text' name='recipePrep' fullWidth style={{minWidth: 300}}
@@ -264,42 +266,45 @@ export default function BrewForm({entry, open, setOpen, action}) {
                         </div>
 
                         <div style={{marginRight: 10, marginBottom: 10}}>
-                            <div style={{fontSize: '1.0rem', marginBottom: 2}}>
-                                Overall Notes
-                            </div>
-                            <TextField type='text' name='notes' multiline fullWidth rows={2}
-                                       color='info'
-                                       sx={{
-                                           '.MuiInputBase-multiline': {
-                                               padding: '8px 10px'
-                                           }
-                                       }}
-                                       value={form.notes || ''}
-                                       maxLength={1200} id='notes' onChange={handleFormChange}/>
-                        </div>
-
-                        <div style={{margin: '10px 0px'}}>
-                            <RatingTable ratingDimensions={ratingDimensions} onRatingChange={handleRatingChange}
-                                         ratings={ratings} emptyColor={'#555'} showLabel={true} useTable={true}
-                                         fontSize={'0.85rem'} size={21} paddingData={0} iconsCount={10}
-                                         backgroundColor={'transparent'}/>
-                        </div>
-
-                        <div style={{marginRight: 10, marginBottom: 10}}>
-                            <div style={{fontSize: '1.0rem', marginBottom: 2}}>Tasting Notes</div>
+                            <div style={{fontSize: '1.0rem', marginBottom: 2}}>Brew Notes</div>
                             <TextField type='text' name='tastingNotes' fullWidth style={{minWidth: 300}}
                                        size='small'
                                        onChange={handleFormChange} value={form.tastingNotes || ''}
                                        color='info'/>
                         </div>
 
-                        {thisBean?.tastingNotes &&
-                            <div style={{display: flexStyle, marginRight: 10, marginBottom: 10, fontStyle: 'italic'}}>
-                                <div style={{fontSize: '1.0rem', marginBottom: 2}}>Roaster Tasting Notes</div>
-                                {!isMobile && <span style={{marginRight: 10}}>: </span>}
-                                <div>{thisBean?.tastingNotes}</div>
+                        <div style={{display: flexStyle, alignItems: 'center'}}>
+                            <div style={{marginRight: 10}}>
+                                <div style={{fontSize: '1.0rem', marginBottom: 2}}>Roast Date</div>
+                                <TextField type='text' name='roastDate' style={{width: 80, marginRight: 5}}
+                                           size='small'
+                                           onChange={handleFormChange} value={form.roastDate || ''}
+                                           color='info'/>
                             </div>
-                        }
+                            <div style={{marginRight: 10}}>
+                                <div style={{fontSize: '1.1rem', fontWeight: 500, marginBottom: 2}}>
+                                    Grinder
+                                </div>
+                                <SelectBox changeHandler={handleFormChange}
+                                           form={form}
+                                           name='grinderName'
+                                           optionsList={[...grinderNames, '[ add grinder ]']}
+                                           multiple={false} defaultValue={thisGrinder?.fullName || ''}
+                                           size='small' width={300}/>
+                            </div>
+                            <div style={{marginRight: 10}}>
+                                <div style={{fontSize: '1.1rem', fontWeight: 500, marginBottom: 2}}>
+                                    Machine/Brewer
+                                </div>
+                                <SelectBox changeHandler={handleFormChange}
+                                           form={form}
+                                           name='machineName'
+                                           optionsList={[...machineNames, '[ add machine ]']}
+                                           multiple={false} defaultValue={thisMachine?.fullName || ''}
+                                           size='small' width={300}/>
+                            </div>
+                        </div>
+
 
                         <div style={{
                             marginTop: 30,

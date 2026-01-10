@@ -64,6 +64,33 @@ export default [{
             }
         },
         {
+            path: '/coffees',
+            name: 'coffees',
+            lazy: async () => {
+                const {default: CoffeesParentRoute} = await import('../coffees/CoffeesParentRoute.jsx')
+                return {element: <Suspense><CoffeesParentRoute/></Suspense>}
+            },
+            children: [
+                {
+                    path: '/coffees',
+                    name: 'coffees',
+                    lazy: async () => {
+                        const {default: CoffeesRoute} = await import('../coffees/CoffeesRoute.jsx')
+                        return {element: <Suspense><CoffeesRoute/></Suspense>}
+                    }
+                },
+                {
+                    path: '/coffees/add',
+                    name: 'add coffees',
+                    lazy: async () => {
+                        const {default: AddCoffeeRoute} = await import('../coffees/AddCoffeeRoute.jsx')
+                        return {element: <Suspense><AddCoffeeRoute/></Suspense>}
+                    }
+                }
+            ]
+
+        },
+        {
             path: '/profile',
             name: 'profile',
             lazy: async () => {
@@ -77,8 +104,8 @@ export default [{
                         const {default: ViewProfileRoute} = await import('../profile/ViewProfileRoute.jsx')
                         return {element: <Suspense><ViewProfileRoute/></Suspense>}
                     }
-                },
-                ]
+                }
+            ]
         },
         {
             path: '/roasters',

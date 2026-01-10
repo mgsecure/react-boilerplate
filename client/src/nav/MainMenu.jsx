@@ -7,7 +7,6 @@ import MenuItem from '@mui/material/MenuItem'
 import Stack from '@mui/material/Stack'
 import SwipeableDrawer from '@mui/material/SwipeableDrawer'
 import Tooltip from '@mui/material/Tooltip'
-import {useHotkeys} from 'react-hotkeys-hook'
 import AppContext from '../app/AppContext'
 import DBContext from '../app/DBContext'
 import MainMenuItem from './MainMenuItem'
@@ -20,9 +19,6 @@ function MainMenu() {
     const {adminRole} = useContext(DBContext)
     const {userClaims} = useContext(AuthContext)
     const [open, setOpen] = useState(false)
-
-    const handleHotkey = useCallback(() => setOpen(!open), [open])
-    useHotkeys('m', handleHotkey)
 
     const openDrawer = useCallback(() => {
         setOpen(true)

@@ -1,11 +1,15 @@
-export default function entryName({entry, entryType}) {
+export default function entryName({entry={}, entryType='machine'}) {
 
     if (entryType === 'grinder' || entryType === 'machine') return (entry.brand && entry.model)
         ? `${entry.brand} ${entry.model}`
-        : `${entry.brand || ''}${entry.model || ''}` || 'Unknown'
+        : `${entry.brand || ''}${entry.model || ''}` || ''
 
-    else if (entryType === 'bean') return entry.roaster ? `${entry.name} (${entry.roaster})` : entry.name || 'Unknown Coffee'
-    else if (entryType === 'brew') return entry.fullName || 'Unknown'
-    else return entry.name || 'Unknown'
+    else if (entryType === 'coffee') return entry.roaster
+        ? `${entry.name} (${entry.roaster.name})`
+        : entry.name || ''
+
+    else if (entryType === 'brew') return entry.fullName || ''
+
+    else return entry.name || ''
 
 }
