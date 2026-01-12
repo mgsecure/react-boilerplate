@@ -15,11 +15,14 @@ import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider'
 import {DatePicker} from '@mui/x-date-pickers/DatePicker'
 import {TimePicker} from '@mui/x-date-pickers'
 import {useNavigate} from 'react-router-dom'
+import AuthContext from '../app/AuthContext.jsx'
 
 export default function BrewForm({entry, open, setOpen, action, coffee}) {
     const {grinderList, machineList, coffeesList, brewsList} = useContext(DataContext)
     const {flexStyle, isMobile} = useWindowSize()
     const {updateCollection} = useContext(DBContext)
+    const {isLoggedIn} = useContext(AuthContext)
+    const theme = useTheme()
     const navigate = useNavigate()
 
     const baseForm = useMemo(() => {
@@ -29,8 +32,13 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
             brewTime: entry?.brewTime ? dayjs(entry.brewTime) : null
         }
     }, [entry])
-
     const [form, setForm] = useState({})
+    const [formChanged, setFormChanged] = useState(false)
+    const [uploading, setUploading] = useState(false)
+    const saveEnabled = useMemo(() => {
+        return isLoggedIn && formChanged && form.coffee && !uploading
+    },[form.coffeeName, formChanged, isLoggedIn, uploading])
+
     useEffect(() => {
         if (open) {
             setForm(
@@ -56,10 +64,6 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
             }))
         }
     }, [open, doseUnitDefault, yieldUnitDefault, temperatureUnitDefault])
-
-
-    const [uploading, setUploading] = useState(false)
-    const theme = useTheme()
 
     const coffeeNames = useMemo(() => {
         const systemCoffees = coffeesList.map((coffee) => coffee.fullName)
@@ -125,7 +129,16 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
             return
         }
         setForm({...form, [name]: value})
+        setFormChanged(true)
     }, [form, handleAddNew, setOpen])
+
+    const handleReload = useCallback(() => {
+        setForm({id: `br_${genHexString(8)}`})
+        setUploading(false)
+        document.activeElement.blur()
+        setOpen(false)
+    }, [setOpen])
+
 
     const handleSubmit = useCallback(async (event) => {
         event.preventDefault()
@@ -179,13 +192,6 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
             setUploading(false)
         }
     }, [form, thisCoffee, thisMachine, thisGrinder, ratingsChanged, ratings, entry, action, updateCollection, setOpen])
-
-    const handleReload = useCallback(() => {
-        setForm({id: `br_${genHexString(8)}`})
-        setUploading(false)
-        document.activeElement.blur()
-        setOpen(false)
-    }, [setOpen])
 
     const paddingLeft = !isMobile ? 15 : 15
 
@@ -381,7 +387,7 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
                                 CANCEL
                             </Button>
                             <Button type='submit' variant='contained' color='info'
-                                    disabled={uploading} style={{boxShadow: 'none'}}>
+                                    disabled={!saveEnabled} style={{boxShadow: 'none'}}>
                                 SAVE
                             </Button>
                         </div>

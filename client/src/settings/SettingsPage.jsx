@@ -1,12 +1,15 @@
 import React, {useContext} from 'react'
 import ToggleColorMode from '../misc/ToggleColorMode.jsx'
 import AppContext from '../app/AppContext.jsx'
+import DBContext from '../app/DBContext.jsx'
 import Switch from '@mui/material/Switch'
 
 
 export default function SettingsPage() {
 
-    const {admin, setAdmin, beta, setBeta, demo, setDemo} = useContext(AppContext)
+    const {admin, setAdmin, beta, setBeta} = useContext(AppContext)
+    const {demo, setDemo} = useContext(DBContext)
+
     return (
         <React.Fragment>
             <div style={{padding: 44}}>

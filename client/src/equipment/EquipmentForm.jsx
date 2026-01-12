@@ -1,5 +1,4 @@
 import React, {useCallback, useContext, useEffect, useMemo, useState} from 'react'
-import GetEquipment from '../data/GetEquipment.jsx'
 import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
 import Collapse from '@mui/material/Collapse'
@@ -11,21 +10,23 @@ import SelectBox from '../formUtils/SelectBox.jsx'
 import DBContext from '../app/DBContext.jsx'
 import {enqueueSnackbar} from 'notistack'
 import {useTheme} from '@mui/material/styles'
-import {machineTypes} from '../data/equipmentBeans'
+import equipment from '../data/equipment.json'
+import {setDeepUnique} from '../util/setDeep'
+import AuthContext from '../app/AuthContext.jsx'
 
 export default function EquipmentForm({machine, open, setOpen, type = 'Equipment'}) {
+    const theme = useTheme()
     const {flexStyle, isMobile} = useWindowSize()
     const {updateCollection} = useContext(DBContext)
-    const {equipment = {}} = GetEquipment()
-    const [form, setForm] = useState({...machine || {id: `e_${genHexString(8)}`}})
+    const {isLoggedIn} = useContext(AuthContext)
 
-
-    const [brandReset, setBrandReset] = useState(false)
-    const [modelReset, setModelReset] = useState(false)
-    const [inputValue, setInputValue] = useState(machine?.brand || '')
-    const [inputModelValue, setInputModelValue] = useState(machine?.model || '')
+    const [form, setForm] = useState({})
+    const [formChanged, setFormChanged] = useState(false)
     const [uploading, setUploading] = useState(false)
-    const theme = useTheme()
+    const saveEnabled = useMemo(() => {
+        return isLoggedIn && formChanged && form.type && form.brand && form.model && !uploading
+    },[form.brand, form.model, form.type, formChanged, isLoggedIn, uploading])
+
     useEffect(() => {
         if (open) {
             setForm({...machine || {id: `e_${genHexString(8)}`}})
@@ -34,31 +35,32 @@ export default function EquipmentForm({machine, open, setOpen, type = 'Equipment
         }
     }, [open, machine])
 
-    const machineBrands = useMemo(() => {
-        return machineTypes.reduce((acc, type) => {
-            acc[type] = equipment?.[type] ? Object.keys(equipment[type]).sort() : []
+    const [brandReset, setBrandReset] = useState(false)
+    const [modelReset, setModelReset] = useState(false)
+    const [inputValue, setInputValue] = useState(machine?.brand || '')
+    const [inputModelValue, setInputModelValue] = useState(machine?.model || '')
+
+    const machineTypeBrandModels = useMemo(() => {
+        return equipment.reduce((acc, machine) => {
+            setDeepUnique(acc, [machine.type, machine.brand], machine.model)
             return acc
         }, {})
-    }, [equipment])
+    }, [])
 
-    const brandModels = useMemo(() => {
-        return machineTypes.reduce((acc, type) => {
-            acc[type] = acc[type] || {}
-            const brands = machineBrands[type]
-            brands.reduce((acc2, brand) => {
-                acc[type][brand] = acc[type][brand] || []
-                const models = Object.keys(equipment[type][brand]) || []
-                acc[type][brand] = models.sort()
-                return acc2
-            }, [])
-            return acc
-        }, {})
+    const machineTypes = Object.keys(machineTypeBrandModels)
 
-    }, [machineBrands, equipment])
+    const typeBrands = useMemo(()=> {
+        return Object.keys(machineTypeBrandModels[form.type] || {}) || []
+    },[form.type, machineTypeBrandModels])
+
+    const brandModels = useMemo(()=> {
+        return machineTypeBrandModels[form.type]?.[form.brand] || []
+    },[form.brand, form.type, machineTypeBrandModels])
 
     const handleFormChange = useCallback((event) => {
         const {name, value} = event.target
         setForm({...form, [name]: value})
+        setFormChanged(true)
     }, [form])
 
     const handleAltBrandToggle = useCallback(() => {
@@ -103,6 +105,15 @@ export default function EquipmentForm({machine, open, setOpen, type = 'Equipment
         }, 100)
     }, [form, inputModelValue, modelReset])
 
+    const handleReload = useCallback(() => {
+        setBrandReset(!brandReset)
+        setModelReset(!modelReset)
+        setForm({id: genHexString(8)})
+        setUploading(false)
+        setOpen(false)
+    }, [brandReset, modelReset, setOpen])
+
+
     const handleSubmit = useCallback(async (event) => {
         event.preventDefault()
         setUploading(true)
@@ -138,22 +149,15 @@ export default function EquipmentForm({machine, open, setOpen, type = 'Equipment
             enqueueSnackbar(`Error saving item: ${error}`, {variant: 'error', autoHideDuration: 3000})
         } finally {
             setUploading(false)
+            setTimeout(() => {
+                window.scrollTo({
+                    left: 0,
+                    top: 0,
+                    behavior: 'smooth'
+                })
+            }, 100)
         }
     }, [form, machine, setOpen, updateCollection])
-
-    const handleReload = useCallback(() => {
-        setBrandReset(!brandReset)
-        setModelReset(!modelReset)
-        setForm({id: genHexString(8)})
-        setUploading(false)
-        setTimeout(() => {
-            window.scrollTo({
-                left: 0,
-                top: 0,
-                behavior: 'smooth'
-            })
-        }, 100)
-    }, [brandReset, modelReset])
 
     const detailsStyle = form.type ? {opacity: 1} : {opacity: 0.3, pointerEvents: 'none'}
     const brandBoxOpacity = form.altBrand > 0 ? 0.5 : 1
@@ -168,7 +172,6 @@ export default function EquipmentForm({machine, open, setOpen, type = 'Equipment
                 <form action={null} encType='multipart/form-data' method='post'
                       onSubmit={handleSubmit}>
                     <div style={{paddingLeft: paddingLeft, color: theme.palette.text.primary}}>
-
                         <div
                             style={{marginTop: 10, marginBottom: 20}}>
                             <div style={{fontSize: '1.1rem', fontWeight: 500}} id='machineTypeDiv'>
@@ -195,7 +198,7 @@ export default function EquipmentForm({machine, open, setOpen, type = 'Equipment
                                                 Choose Brand
                                             </div>
                                             <AutoCompleteBox changeHandler={handleFormChange}
-                                                             options={machineBrands[form.type] || []}
+                                                             options={typeBrands || []}
                                                              name={'brand'}
                                                              style={{
                                                                  opacity: brandBoxOpacity,
@@ -249,7 +252,7 @@ export default function EquipmentForm({machine, open, setOpen, type = 'Equipment
                                                 Choose Model
                                             </div>
                                             <AutoCompleteBox changeHandler={handleFormChange}
-                                                             options={brandModels[form.type]?.[form.brand] || []}
+                                                             options={brandModels || []}
                                                              name={'model'}
                                                              style={{
                                                                  opacity: modelBoxOpacity,
@@ -312,7 +315,9 @@ export default function EquipmentForm({machine, open, setOpen, type = 'Equipment
                                            style={{}} value={form.notes || ''}
                                            maxLength={1200} id='notes' onChange={handleFormChange}/>
                             </div>
-                            <div style={{
+                        </div>
+
+                        <div style={{
                                 marginTop: 30,
                                 width: '100%',
                                 display: 'flex',
@@ -321,15 +326,14 @@ export default function EquipmentForm({machine, open, setOpen, type = 'Equipment
                                 <Button onClick={handleReload} variant='outlined' color='info'
                                         style={{marginRight: 16}}
                                         disabled={uploading}>
-                                    CLEAR
+                                    CANCEL
                                 </Button>
                                 <Button type='submit' variant='contained' color='info'
-                                        disabled={uploading} style={{boxShadow: 'none'}}>
+                                        disabled={!saveEnabled} style={{boxShadow: 'none'}}>
                                     SAVE
                                 </Button>
                             </div>
 
-                        </div>
 
                     </div>
                 </form>

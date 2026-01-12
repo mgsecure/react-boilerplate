@@ -104,6 +104,7 @@ export function BeansDataProvider({children, allEntries}) {
     const value = useMemo(() => ({
         loading,
         allEntries,
+        allEntriesCount: allEntries.length,
         mappedEntries,
         searchedEntries,
         visibleEntries,

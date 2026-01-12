@@ -15,6 +15,7 @@ import AuthContext from './AuthContext'
 import {enqueueSnackbar} from 'notistack'
 import dayjs from 'dayjs'
 import demoProfile from '../data/demoProfile.json'
+import {useLocalStorage} from 'usehooks-ts'
 
 /**
  * @typedef {object} award
@@ -32,6 +33,12 @@ export function DBProvider({children}) {
 
     const adminRole = isLoggedIn && user && userClaims.includes('admin')
     const qaUserRole = isLoggedIn && user && (['qaUser', 'admin'].some(claim => userClaims.includes(claim)) || adminRole)
+
+    const [demo, setDemo] = useLocalStorage('demo', true)
+    const handleSetDemo = useCallback(value => {
+        setDemo(value)
+    }, [setDemo])
+
 
     // Profile Subscription
     useEffect(() => {
@@ -224,9 +231,9 @@ export function DBProvider({children}) {
         }
     }, [user])
 
-
+    const demoEnabled = demo && !isLoggedIn
     const value = useMemo(() => ({
-        userProfile,
+        userProfile: demoEnabled ? demoProfile : userProfile,
         profileLoaded,
         updateProfileField,
         deleteAllUserData,
@@ -237,21 +244,11 @@ export function DBProvider({children}) {
         removeFromLockCollection,
         getProfile,
         updateProfileDisplayName,
-        qaUserRole
-    }), [
-        userProfile,
-        profileLoaded,
-        updateProfileField,
-        deleteAllUserData,
-        updateCollection,
-        addToEquipment,
-        getEquipment,
-        adminRole,
-        removeFromLockCollection,
-        getProfile,
-        updateProfileDisplayName,
-        qaUserRole
-    ])
+        qaUserRole,
+        demo,
+        setDemo: handleSetDemo,
+        demoEnabled,
+    }), [demoEnabled, userProfile, profileLoaded, updateProfileField, deleteAllUserData, updateCollection, addToEquipment, getEquipment, adminRole, removeFromLockCollection, getProfile, updateProfileDisplayName, qaUserRole, demo, handleSetDemo])
 
     return (
         <DBContext.Provider value={value}>

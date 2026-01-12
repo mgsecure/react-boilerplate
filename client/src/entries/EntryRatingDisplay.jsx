@@ -1,18 +1,13 @@
-import React, {useCallback, useState} from 'react'
+import React from 'react'
 import StarRating from '../misc/StarRating.jsx'
 import {useTheme} from '@mui/material/styles'
 import {alpha} from '@mui/material'
 
-export default function EntryRatingDisplay({entry, iconsCount=10, setRatingsChanged=() => {}}) {
+export default function EntryRatingDisplay({entry, iconsCount=10, }) {
 
     if (entry && !entry?.rating) return null
 
-    const [ratings, setRatings] = useState(entry.ratings || {})
-    const ratingDimensions = {rating: 'rating'}
-    const handleRatingChange = useCallback(({dimension, rating}) => {
-        setRatings({...ratings, [dimension]: rating})
-        setRatingsChanged(true)
-    }, [ratings, setRatingsChanged])
+    const ratings = {rating: entry.rating}
 
     const theme = useTheme()
     const emptyColor = alpha(theme.palette.text.secondary, 0.2)

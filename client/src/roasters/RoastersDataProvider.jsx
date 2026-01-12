@@ -73,6 +73,7 @@ export function RoastersDataProvider({children, allEntries, profile}) {
 
     const value = useMemo(() => ({
         allEntries,
+        allEntriesCount: allEntries.length,
         mappedEntries,
         searchedEntries,
         visibleEntries,

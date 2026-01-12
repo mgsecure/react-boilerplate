@@ -1,8 +1,8 @@
 import fs from 'fs'
-import dayjs from 'dayjs'
 import {parse} from 'csv-parse/sync'
 import {
     roasterSchema,
+    equipmentSchema,
 } from './importSchemas.js'
 import fetch from 'node-fetch'
 import validate from './importValidate.js'
@@ -31,8 +31,10 @@ const importValidate = async (tab, schema) => {
     return data
 }
 
-// Load all 3 data files (LOL)
 const roasterData = await importValidate('Roasters', roasterSchema)
+const equipmentData = await importValidate('Equipment', equipmentSchema)
+
+
 
 // Load previous JSON for recently updated checks
 //const originalData = JSON.parse(fs.readFileSync('./src/data/data.json', 'utf8'))
@@ -75,6 +77,44 @@ const jsonData = roasterData
         return a.name.localeCompare(b.name)
     })
 
+console.log('Writing roasters.json...')
+fs.writeFileSync('../src/data/roasters.json', JSON.stringify(jsonData, null, 2))
+
+
+console.log('Processing equipment data...')
+const equipment = equipmentData
+    .map(datum => {
+        const model = datum['Model']
+        const value = {
+            id: datum.ID,
+            type: datum.Type,
+            brand: datum.Brand,
+            model: model,
+            fullName: (datum.Brand && model)
+                ? `${datum.Brand} ${model}`
+                : `${datum.Brand || ''}${model || ''}` || '',
+        }
+
+        // Clean up empty values to reduce payload size
+        Object.keys(value).forEach(key => {
+            if (typeof value[key] === 'string' && value[key] === '') value[key] = undefined
+            else if (Array.isArray(value[key]) && value[key].length === 0) value[key] = undefined
+        })
+        return value
+    })
+    .sort((a, b) => {
+        return a.fullName?.localeCompare(b.fullName)
+    })
+
+console.log('Writing equipment.json...')
+fs.writeFileSync('../src/data/equipment.json', JSON.stringify(equipment, null, 2))
+
+console.log('Complete.')
+
+
+
+
+
 /*
 // Find any added or deleted entries
 const historicalData = JSON.parse(fs.readFileSync('./src/data/historicalData.json', 'utf8'))
@@ -109,10 +149,6 @@ fs.writeFileSync('./src/data/deletedEntries.json', JSON.stringify(deletedEntries
 */
 
 // Write out to src location for usage
-console.log('Writing roasters.json...')
-fs.writeFileSync('../src/data/roasters.json', JSON.stringify(jsonData, null, 2))
-
-console.log('Complete.')
 
 function splitCommaValues(string) {
     if (!string) return []

@@ -5,6 +5,16 @@ export const coffeeFilterFields = [
     {label: 'Caffeine', fieldName: 'caffeine'},
 ]
 
+export const beanFilterFields = [
+    {label: 'Roaster', fieldName: 'roaster'},
+    {label: 'Origin', fieldName: 'origin'},
+    {label: 'Caffeine', fieldName: 'caffeine'},
+    {label: 'Machine', fieldName: 'machine'},
+    {label: 'Grinder', fieldName: 'grinder'},
+    {label: 'City', fieldName: 'roasterCity'},
+    {label: 'Country', fieldName: 'roasterCountry'},
+]
+
 export const roasterFilterFields = [
     {label: 'City', fieldName: 'city'},
     {label: 'State/Region', fieldName: 'stateRegion'},

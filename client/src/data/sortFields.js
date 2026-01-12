@@ -22,7 +22,7 @@ export const coffeeSortFields = [
 
 
 export const roasterSortFields = [
-    {label: 'Default', value: undefined},
+    {label: 'Name', value: undefined},
     {label: 'r/Pourover Votes', value: 'pouroverVotes'},
     {label: 'Roastful Ranking', value: 'roastfulRanking'},
 ]

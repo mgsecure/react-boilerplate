@@ -10,9 +10,10 @@ import Tooltip from '@mui/material/Tooltip'
 import AppContext from '../app/AppContext'
 import DBContext from '../app/DBContext'
 import MainMenuItem from './MainMenuItem'
-import menuConfig from './menuConfig'
+import menuConfig from './menuConfig.jsx'
 import lpuHeaderSmall from '../resources/bean2.png'
 import AuthContext from '../app/AuthContext.jsx'
+import Box from '@mui/material/Box'
 
 function MainMenu() {
     const {beta} = useContext(AppContext)
@@ -51,15 +52,17 @@ function MainMenu() {
             >
                 <Stack direction='column' style={{minWidth: 250}}>
                     <MenuItem onClick={closeDrawer} style={{
-                        padding: '12px 0px 6px 10px',
-                        margin: '0px',
-                        backgroundColor: '#291915',
-                        borderBottom: '1px solid #000'
+                        padding: '10px 0px',
+                        display: 'flex',
+                        placeItems: 'center'
                     }}>
-                        <ListItemIcon style={{margin: '2px 0px 8px 10px'}}>
-                            <img alt='LPU' src={lpuHeaderSmall} width={210}/>
+                        <ListItemIcon style={{display: 'flex', flexGrow: 1, placeItems: 'center'}}>
+                            <Box component='img' alt='Coffee Tracker' src={lpuHeaderSmall} style={{
+                                width: 150, margin: 0
+                            }}/>
                         </ListItemIcon>
                     </MenuItem>
+                    <Divider style={{margin: 0}}/>
 
                     {menuConfig
                         .filter(menuItem => beta || !menuItem.beta)

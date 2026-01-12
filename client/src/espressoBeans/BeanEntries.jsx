@@ -1,15 +1,14 @@
 import React, {useCallback, useContext, useDeferredValue, useState} from 'react'
 import DataContext from '../context/DataContext'
-import NoEntriesCard from '../misc/NoEntriesCard'
 import BeanEntry from './BeanEntry.jsx'
 import FilterContext from '../context/FilterContext'
 import ExportButton from './ExportButton.jsx'
 import Footer from '../nav/Footer.jsx'
-import AdvancedFilters from '../filters/AdvancedFilters.jsx'
 import LoadingDisplay from '../misc/LoadingDisplay.jsx'
+import FilterDisplayAdvanced from '../filters/FilterDisplayAdvanced.jsx'
 
 function BeanEntries() {
-    const {filters} = useContext(FilterContext)
+    const {filters, filterCount} = useContext(FilterContext)
     const [expanded, setExpanded] = useState(filters.id)
     const {visibleEntries, expandAll, loading} = useContext(DataContext)
 
@@ -28,10 +27,13 @@ function BeanEntries() {
     return (
         <div style={{margin: 8, paddingBottom: 32, width: '100%', maxWidth: 800}}>
 
-            <AdvancedFilters entryType={'Bean'}/>
+            {filterCount > 0 &&
+                <div style={{marginBottom: 10}}>
+                    <FilterDisplayAdvanced/>
+                </div>
+            }
 
             { loading && <LoadingDisplay/>}
-            {!loading && visibleEntries.length === 0 && <NoEntriesCard label='Safe Locks'/>}
 
             {visibleEntries.map(entry =>
                 <BeanEntry

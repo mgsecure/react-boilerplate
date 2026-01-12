@@ -18,6 +18,7 @@ import Link from '@mui/material/Link'
 import ItemDrawer from '../profile/ItemDrawer.jsx'
 import Tooltip from '@mui/material/Tooltip'
 import LogEntryButton from '../entries/LogEntryButton.jsx'
+import DeleteEntryButton from '../entries/DeleteEntryButton.jsx'
 
 const ExpandMore = styled((props) => {
     const {expand, ...other} = props
@@ -170,33 +171,14 @@ export default function EquipmentCard({entry={}, expanded, onExpand}) {
                                 placeContent: 'center end',
                                 marginRight: 5
                             }}>
-                            <Tooltip title='Edit' arrow disableFocusListener>
+                            <Tooltip title='Edit' arrow disableFocusListener placement={'top'}>
                                 <IconButton onClick={handleDrawerClick} style={{marginRight: 2}}>
                                     <EditIcon fontSize='medium' style={{color: '#eee'}}/>
                                 </IconButton>
                             </Tooltip>
-                            <Tooltip title='Delete' arrow disableFocusListener>
-                                <IconButton onClick={handleDeleteConfirm}>
-                                    <DeleteIcon fontSize='medium' style={{color: '#e3aba0'}}/>
-                                </IconButton>
-                            </Tooltip>
-                            <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={() => setAnchorEl(null)}
-                                  slotProps={{paper: {sx: {backgroundColor: '#333'}}}}>
-                                <div style={{padding: 20, textAlign: 'center'}}>
-                                    Delete cannot be undone.<br/>
-                                    Are you sure?
-                                </div>
-                                <div style={{textAlign: 'center'}}>
-                                    <Button style={{marginBottom: 10, color: '#000'}}
-                                            variant='contained'
-                                            onClick={handleDelete}
-                                            edge='start'
-                                            color='error'
-                                    >
-                                        Delete Gear
-                                    </Button>
-                                </div>
-                            </Menu>
+                            <DeleteEntryButton entry={entry} entryType={'Gear'} handleDelete={handleDelete} size={'small'}
+                                               style={{marginRight: 8}} tooltipPlacement={'top'}/>
+
                         </div>
                     </div>
 

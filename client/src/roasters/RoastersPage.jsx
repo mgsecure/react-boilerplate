@@ -8,15 +8,15 @@ import DataContext from '../context/DataContext.jsx'
 import {roasterSortFields} from '../data/sortFields'
 import FilterContext from '../context/FilterContext.jsx'
 import ExportButton from '../espressoBeans/ExportButton.jsx'
-import AdvancedFilters from '../filters/AdvancedFilters.jsx'
 import LoadingDisplay from '../misc/LoadingDisplay.jsx'
-import NoEntriesCard from '../misc/NoEntriesCard.jsx'
+import NoMatchingEntriesCard from '../profile/NoMatchingEntriesCard.jsx'
 import RoasterEntry from './RoasterEntry.jsx'
 import Footer from '../nav/Footer.jsx'
+import FilterDisplayAdvanced from '../filters/FilterDisplayAdvanced.jsx'
 
 export default function RoastersPage() {
-    const {visibleEntries, expandAll, loading} = useContext(DataContext)
-    const {filters} = useContext(FilterContext)
+    const {visibleEntries, allEntriesCount, expandAll, loading} = useContext(DataContext)
+    const {filters, filterCount} = useContext(FilterContext)
     const [expanded, setExpanded] = useState(filters.id)
     const {isMobile} = useWindowSize()
 
@@ -27,7 +27,7 @@ export default function RoastersPage() {
     }, [])
 
     const footerBefore = (
-        <div style={{margin:'30px 0px'}}>
+        <div style={{margin: '30px 0px'}}>
             <ExportButton text={true} entries={visibleEntries}/>
         </div>
     )
@@ -35,8 +35,8 @@ export default function RoastersPage() {
     const extras = (
         <React.Fragment>
             <SearchBox label='Roasters' extraFilters={[]} keepOpen={false} entryCount={visibleEntries.length}/>
-            <ViewFilterButtons entryType={'Roaster'} sortValues={roasterSortFields} advancedEnabled={true}
-                               compactMode={false} resetAll={true} expandAll={true}/>
+            <ViewFilterButtons entryType={'Roaster'} sortValues={roasterSortFields} advancedEnabled={false}
+                               compactMode={false} resetAll={true} expandAll={false}/>
             {!isMobile && <div style={{flexGrow: 1, minWidth: '10px'}}/>}
         </React.Fragment>
     )
@@ -45,12 +45,21 @@ export default function RoastersPage() {
         <React.Fragment>
             <Nav title='Roasters' titleMobile='Roasters' extras={extras}/>
 
+            <div style={{marginBottom: 16}}/>
             <div style={{margin: 8, paddingBottom: 32, width: '100%', maxWidth: 800}}>
 
-                <AdvancedFilters entryType={'Bean'}/>
+                {loading && <LoadingDisplay/>}
 
-                { loading && <LoadingDisplay/>}
-                {!loading && visibleEntries.length === 0 && <NoEntriesCard label='Roasters'/>}
+                {filterCount > 0 &&
+                    <div style={{marginBottom: 10}}>
+                        <FilterDisplayAdvanced/>
+                    </div>
+                }
+
+                {!loading && visibleEntries.length === 0 &&
+                    <NoMatchingEntriesCard type={'roaster'} entriesCount={visibleEntries.length}
+                                             allEntriesCount={allEntriesCount} addNew={false}/>
+                }
 
                 {visibleEntries.map(entry =>
                     <RoasterEntry

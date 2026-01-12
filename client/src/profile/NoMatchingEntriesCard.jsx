@@ -3,7 +3,7 @@ import {useTheme} from '@mui/material/styles'
 import AddNewItemCard from './AddNewItemCard.jsx'
 import DBContext from '../app/DBContext.jsx'
 
-export default function NoMatchingEntriesCard({type = 'coffee', entriesCount, allEntriesCount}) {
+export default function NoMatchingEntriesCard({type = 'coffee', entriesCount, allEntriesCount, addNew = true}) {
     const {profileLoaded} = useContext(DBContext)
     const theme = useTheme()
 
@@ -33,8 +33,9 @@ export default function NoMatchingEntriesCard({type = 'coffee', entriesCount, al
                 }
             </div>
 
-            <AddNewItemCard type={type} count={1} clearParams={true} action={'noMatch'}/>
-
+            {addNew &&
+                <AddNewItemCard type={type} count={1} clearParams={true} action={'noMatch'}/>
+            }
         </div>
 
     )

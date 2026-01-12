@@ -59,11 +59,11 @@ export default function ItemDrawer({item, open, setOpen, type = 'Item', action =
                     </div>
                 </div>
 
-                {type === 'Equipment' &&
+                {(type === 'Equipment' || type === 'Gear') &&
                     <EquipmentForm machine={item} action={action} open={open} setOpen={setOpen} type={type}/>
                 }
                 {type === 'Bean' &&
-                    'FOO!'
+                    'Ooops.'
                 }
                 {type === 'Coffee' &&
                     <CoffeeForm coffee={item} open={open} setOpen={setOpen} type={type}/>

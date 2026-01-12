@@ -137,6 +137,7 @@ export default function BrewCard({entry = {}, expanded, context = 'brews', brewC
 
     const {isMobile, flexStyle, columnStyle} = useWindowSize()
     const flexDirection = isMobile ? 'column' : 'row'
+    const tooltipPlacement = isMobile ? 'bottom' : 'left'
 
     return (
         <Card
@@ -259,26 +260,26 @@ export default function BrewCard({entry = {}, expanded, context = 'brews', brewC
 
                 </div>
                 <div style={{...columnStyle, placeItems: 'center', marginLeft: 30}}>
-                    <Tooltip title='Flag this brew' arrow disableFocusListener>
+                    <Tooltip title='Flag this brew' arrow disableFocusListener placement={tooltipPlacement}>
                         <IconButton onClick={handleFlaggedChange} style={{marginRight: 8}}>
                             <ThumbUpIcon fontSize='small' style={{color: flaggedColor}}/>
                         </IconButton>
                     </Tooltip>
 
-                    <Tooltip title='Edit a copy of this brew' arrow disableFocusListener>
+                    <Tooltip title='Edit a copy of this brew' arrow disableFocusListener placement={tooltipPlacement}>
                         <IconButton onClick={handleCloneClick} style={{marginRight: 8}}>
                             <AddCircleOutlineIcon fontSize='small' style={{color: '#eee'}}/>
                         </IconButton>
                     </Tooltip>
 
-                    <Tooltip title='Edit this brew' arrow disableFocusListener>
+                    <Tooltip title='Edit this brew' arrow disableFocusListener placement={tooltipPlacement}>
                         <IconButton onClick={handleDrawerClick} style={{marginRight: 8}}>
                             <EditIcon fontSize='small' style={{color: '#eee'}}/>
                         </IconButton>
                     </Tooltip>
 
                     <DeleteEntryButton entry={entry} entryType={'Brew'} handleDelete={handleDelete} size={'small'}
-                                       style={{marginRight: 8}}/>
+                                       style={{marginRight: 8}} tooltipPlacement={tooltipPlacement}/>
 
                     <LogEntryButton entry={entry} entryType={'Brew'} size={'small'} style={{marginRight: 8}}/>
 

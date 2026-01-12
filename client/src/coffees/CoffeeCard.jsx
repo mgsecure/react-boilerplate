@@ -43,8 +43,8 @@ export default function CoffeeCard({entry = {}, expanded, onExpand}) {
     }
 
     const latestBrew = entry.brews?.length > 0 ? entry.brews[0] : undefined
-    const currencyDescription = entry.priceUnit.match(/(\w{3})\s\((.*)\)/)[1]
-    const currencySymbol = entry.priceUnit.match(/(\w{3})\s\((.*)\)/)[2]
+    const currencyDescription = entry.priceUnit?.match(/(\w{3})\s\((.*)\)/)[1]
+    const currencySymbol = entry.priceUnit?.match(/(\w{3})\s\((.*)\)/)[2]
 
     const handleUpdate = useCallback(async (entry) => {
         const cleanEntry = Object.fromEntries(
@@ -72,8 +72,15 @@ export default function CoffeeCard({entry = {}, expanded, onExpand}) {
 
     const handleDelete = useCallback(async () => {
         try {
-            await updateCollection({collection: 'brews', item: entry, flags: {delete: true}})
-            enqueueSnackbar('Item deleted.', {variant: 'success'})
+            await updateCollection({collection: 'coffees', item: entry, flags: {delete: true}})
+            enqueueSnackbar('Coffee deleted.', {variant: 'success'})
+            setTimeout(() => {
+                window.scrollTo({
+                    left: 0,
+                    top: 0,
+                    behavior: 'smooth'
+                })
+            }, 100)
         } catch (error) {
             enqueueSnackbar(`Error deleting item: ${error}`, {variant: 'error', autoHideDuration: 3000})
         }
@@ -200,7 +207,7 @@ export default function CoffeeCard({entry = {}, expanded, onExpand}) {
                                 brewCount={entry.brews?.length}
                             />
                             : <div style={{padding: '10px 40px'}}>
-                                <AddNewItemCard label={'Brew It!'} count={0} defaultValue={entry.originalEntry}/>
+                                <AddNewItemCard type={'Brew'} label={'Brew It!'} count={0} defaultValue={entry.originalEntry}/>
                             </div>
                         }
                     </div>
@@ -281,12 +288,12 @@ export default function CoffeeCard({entry = {}, expanded, onExpand}) {
                                 placeContent: 'center end',
                                 marginRight: 5
                             }}>
-                            <Tooltip title='Edit' arrow disableFocusListener>
+                            <Tooltip title='Edit' arrow disableFocusListener placement='top'>
                                 <IconButton onClick={handleDrawerClick} style={{marginRight: 2}}>
                                     <EditIcon fontSize='medium' style={{color: '#eee'}}/>
                                 </IconButton>
                             </Tooltip>
-                            <Tooltip title='Delete' arrow disableFocusListener>
+                            <Tooltip title='Delete' arrow disableFocusListener placement='top'>
                                 <IconButton onClick={handleDeleteConfirm}>
                                     <DeleteIcon fontSize='medium' style={{color: '#e3aba0'}}/>
                                 </IconButton>

@@ -8,10 +8,16 @@ import DataContext from '../context/DataContext.jsx'
 import {coffeeSortFields} from '../data/sortFields'
 import Coffees from './Coffees.jsx'
 import Footer from '../nav/Footer.jsx'
+import DemoBar from '../profile/DemoBar.jsx'
+import AuthContext from '../app/AuthContext.jsx'
+import MustBeLoggedIn from '../profile/MustBeLoggedIn.jsx'
+import DBContext from '../app/DBContext.jsx'
 
 export default function CoffeesPage() {
     const {isMobile} = useWindowSize()
     const {visibleEntries = []} = useContext(DataContext)
+    const {isLoggedIn} = useContext(AuthContext)
+    const {demoEnabled} = useContext(DBContext)
 
     const extras = (
         <React.Fragment>
@@ -30,8 +36,13 @@ export default function CoffeesPage() {
         <React.Fragment>
             <Nav title='My Coffees' titleMobile='Coffees' extras={extras}/>
 
+            <DemoBar/>
             <div style={{marginBottom: 16}}/>
-            <Coffees/>
+
+            {!isLoggedIn && !demoEnabled
+                ? <MustBeLoggedIn/>
+                : <Coffees/>
+            }
 
             <Tracker feature='coffees'/>
             <Footer before={footerBefore}/>

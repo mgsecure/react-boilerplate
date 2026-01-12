@@ -8,10 +8,16 @@ import DataContext from '../context/DataContext.jsx'
 import {brewSortFields} from '../data/sortFields'
 import Brews from './Brews.jsx'
 import Footer from '../nav/Footer.jsx'
+import DemoBar from '../profile/DemoBar.jsx'
+import MustBeLoggedIn from '../profile/MustBeLoggedIn.jsx'
+import AuthContext from '../app/AuthContext.jsx'
+import DBContext from '../app/DBContext.jsx'
 
 export default function BrewsPage() {
     const {isMobile} = useWindowSize()
     const {visibleEntries = []} = useContext(DataContext)
+    const {isLoggedIn} = useContext(AuthContext)
+    const {demoEnabled} = useContext(DBContext)
 
     const extras = (
         <React.Fragment>
@@ -29,8 +35,13 @@ export default function BrewsPage() {
         <React.Fragment>
             <Nav title='All Brews' titleMobile='Brews' extras={extras}/>
 
+            <DemoBar/>
             <div style={{marginBottom: 16}}/>
-            <Brews entries={visibleEntries}/>
+
+            {!isLoggedIn && !demoEnabled
+                ? <MustBeLoggedIn actionText={'track your brews'}/>
+                : <Brews entries={visibleEntries}/>
+            }
 
             <Tracker feature='brews'/>
             <Footer before={footerBefore}/>

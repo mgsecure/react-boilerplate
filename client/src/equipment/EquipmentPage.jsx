@@ -5,12 +5,15 @@ import Nav from '../nav/Nav'
 import Footer from '../nav/Footer.jsx'
 import Equipment from './Equipment.jsx'
 import DBContext from '../app/DBContext.jsx'
+import AuthContext from '../app/AuthContext.jsx'
+import DemoBar from '../profile/DemoBar.jsx'
+import MustBeLoggedIn from '../profile/MustBeLoggedIn.jsx'
+import Brews from '../brews/Brews.jsx'
 
 export default function EquipmentPage() {
     const {isMobile} = useWindowSize()
-    const {
-        userProfile = {},
-    } = useContext(DBContext)
+    const {userProfile = {}, demoEnabled} = useContext(DBContext)
+    const {isLoggedIn} = useContext(AuthContext)
 
     const extras = (
         <React.Fragment>
@@ -25,10 +28,13 @@ export default function EquipmentPage() {
         <React.Fragment>
             <Nav title='My Gear' titleMobile='My Gear' extras={extras}/>
 
+            <DemoBar/>
             <div style={{marginBottom: 16}}/>
-            <div style={{padding: 16, width: '100%'}} key={'equipment'}>
-                <Equipment machines={userProfile.equipment}/>
-            </div>
+
+            {!isLoggedIn && !demoEnabled
+                ? <MustBeLoggedIn actionText={'track your brews'}/>
+                : <Equipment machines={userProfile.equipment}/>
+            }
 
             <Tracker feature='equipment'/>
             <Footer before={footerBefore}/>

@@ -47,8 +47,6 @@ export default function EspressoStats() {
 
     }, [mappedEntries])
 
-    console.log('exportData', exportData)
-
     const statsData = useMemo(() => {
         let data = {}
 
@@ -223,14 +221,11 @@ export default function EspressoStats() {
         fontWeight: 600
     }
 
-    console.log('statsData', statsData)
-
     return (
         <React.Fragment>
             <Nav title='r/espresso stats' titleMobile='stats' extras={extras}/>
 
-            <DataTest/>
-
+            <div style={{marginBottom: 6}}/>
             <div style={firstHeaderStyle} role='heading' aria-label='Machine Stats'>
                 Machine Stats
             </div>

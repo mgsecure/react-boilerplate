@@ -7,10 +7,11 @@ import SearchBox from '../nav/SearchBox'
 import ViewFilterButtons from '../filters/ViewFilterButtons.jsx'
 import DataContext from '../context/DataContext.jsx'
 import {beanSortFields} from '../data/sortFields'
+import NoMatchingEntriesCard from '../profile/NoMatchingEntriesCard.jsx'
 
 export default function Beans() {
     const {isMobile} = useWindowSize()
-    const {visibleEntries = []} = useContext(DataContext)
+    const {visibleEntries = [], loading, allEntriesCount} = useContext(DataContext)
 
     const extras = (
         <React.Fragment>
@@ -25,6 +26,12 @@ export default function Beans() {
         <React.Fragment>
             <Nav title='r/espresso beans' titleMobile='r/espresso' extras={extras}/>
 
+            <div style={{marginBottom: 16}}/>
+
+            {!loading && visibleEntries.length === 0 &&
+                <NoMatchingEntriesCard type={'roaster'} entriesCount={visibleEntries.length}
+                                       allEntriesCount={allEntriesCount} addNew={false}/>
+            }
             <BeanEntries/>
 
             <Tracker feature='espressoBeans'/>

@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useEffect, useState} from 'react'
+import React, {useCallback, useContext, useEffect, useMemo, useState} from 'react'
 import Tooltip from '@mui/material/Tooltip'
 import DBContext from '../app/DBContext.jsx'
 import {Button} from '@mui/material'
@@ -11,6 +11,9 @@ export default function YieldCalculatorButton() {
     const {userProfile = {}, updateProfileField} = useContext(DBContext)
     const {isLoggedIn} = useContext(AuthContext)
     const [form, setForm] = useState(userProfile.yieldCalculator || {dose: '18', yield: '36', ratio: '2'})
+    const saveEnabled = useMemo(() => {
+        return isLoggedIn
+    }, [isLoggedIn])
 
     useEffect(() => {
         setForm(userProfile.yieldCalculator || {dose: '18', yield: '36', ratio: '2'})
@@ -62,7 +65,6 @@ export default function YieldCalculatorButton() {
         setForm(userProfile.yieldCalculator || {dose: '18', yield: '36', ratio: '2'})
     }, [userProfile.yieldCalculator])
 
-    const marginTop = isLoggedIn ? 0 : 20
 
     return (
         <>
@@ -88,7 +90,12 @@ export default function YieldCalculatorButton() {
                             }
                         }
                     }}>
-                <div style={{marginTop: marginTop, textAlign: 'center', fontWeight: 700, fontSize: '1.2rem', marginBottom: 5}}>
+                <div style={{
+                    textAlign: 'center',
+                    fontWeight: 700,
+                    fontSize: '1.2rem',
+                    marginBottom: 5
+                }}>
                     Yield Calculator
                 </div>
                 <div style={{textAlign: 'center'}}>
@@ -119,15 +126,14 @@ export default function YieldCalculatorButton() {
                         </div>
                     </div>
 
-                    {isLoggedIn &&
-                        <Button style={{marginBottom: 0}}
-                                variant='contained'
-                                onClick={handleSave}
-                                color='success'
-                        >
-                            SAVE
-                        </Button>
-                    }
+                    <Button style={{marginBottom: 0}}
+                            variant='contained'
+                            onClick={handleSave}
+                            color='success'
+                            disabled={!saveEnabled}>
+                        SAVE
+                    </Button>
+
                 </div>
             </Dialog>
         </>

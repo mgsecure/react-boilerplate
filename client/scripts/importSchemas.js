@@ -14,6 +14,21 @@ export const roasterSchema = Joi.array().items(
     }).unknown()
 )
 
+export const equipmentSchema = Joi.array().items(
+    Joi.object({
+        'ID': Joi.string().regex(/^[0-9a-f]{8}$/),
+        Type: Joi.string().min(1),
+        Brand: Joi.string().allow(''),
+        Model: Joi.string().allow(''),
+    }).unknown()
+)
+
+
+
+
+
+
+
 export const linkSchema = Joi.array().items(
     Joi.object({
         'Unique ID': Joi.string().regex(/^[0-9a-f]{8}$/),

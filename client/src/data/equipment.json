@@ -1,0 +1,2339 @@
+[
+  {
+    "id": "4d6ed405",
+    "type": "Grinder",
+    "brand": "1Zpresso",
+    "model": "J manual",
+    "fullName": "1Zpresso J manual"
+  },
+  {
+    "id": "b9a2502b",
+    "type": "Grinder",
+    "brand": "1Zpresso",
+    "model": "J-Max",
+    "fullName": "1Zpresso J-Max"
+  },
+  {
+    "id": "07b35fb6",
+    "type": "Grinder",
+    "brand": "1Zpresso",
+    "model": "J-Ultra",
+    "fullName": "1Zpresso J-Ultra"
+  },
+  {
+    "id": "2f455d70",
+    "type": "Grinder",
+    "brand": "1Zpresso",
+    "model": "X-Pro",
+    "fullName": "1Zpresso X-Pro"
+  },
+  {
+    "id": "d22b7842",
+    "type": "Espresso",
+    "brand": "969.Coffee",
+    "model": "Elba 1",
+    "fullName": "969.Coffee Elba 1"
+  },
+  {
+    "id": "5ec6a9b6",
+    "type": "Espresso",
+    "brand": "969.Coffee",
+    "model": "Elba 3",
+    "fullName": "969.Coffee Elba 3"
+  },
+  {
+    "id": "2d8ece8a",
+    "type": "Espresso",
+    "brand": "9Barista",
+    "model": "Mk.1",
+    "fullName": "9Barista Mk.1"
+  },
+  {
+    "id": "6d29e8ad",
+    "type": "Stovetop",
+    "brand": "9Barista",
+    "model": "Mk.1",
+    "fullName": "9Barista Mk.1"
+  },
+  {
+    "id": "e58188fd",
+    "type": "Espresso",
+    "brand": "9Barista",
+    "model": "Mk.2",
+    "fullName": "9Barista Mk.2"
+  },
+  {
+    "id": "535964c9",
+    "type": "Stovetop",
+    "brand": "9Barista",
+    "model": "Mk.2",
+    "fullName": "9Barista Mk.2"
+  },
+  {
+    "id": "b78c2ccf",
+    "type": "Grinder",
+    "brand": "Amzchef",
+    "fullName": "Amzchef"
+  },
+  {
+    "id": "9a66c0d6",
+    "type": "Espresso",
+    "brand": "Ascaso",
+    "model": "Bar 1 Group - Volumetric",
+    "fullName": "Ascaso Bar 1 Group - Volumetric"
+  },
+  {
+    "id": "b0310c72",
+    "type": "Espresso",
+    "brand": "Ascaso",
+    "model": "Dream",
+    "fullName": "Ascaso Dream"
+  },
+  {
+    "id": "8ea76464",
+    "type": "Espresso",
+    "brand": "Ascaso",
+    "model": "Dream PID",
+    "fullName": "Ascaso Dream PID"
+  },
+  {
+    "id": "0b9551b5",
+    "type": "Espresso",
+    "brand": "Ascaso",
+    "model": "Steel Duo Plus PID",
+    "fullName": "Ascaso Steel Duo Plus PID"
+  },
+  {
+    "id": "bd2dcf99",
+    "type": "Espresso",
+    "brand": "Ascaso",
+    "model": "Steel Uno",
+    "fullName": "Ascaso Steel Uno"
+  },
+  {
+    "id": "45a6ec33",
+    "type": "Espresso",
+    "brand": "Astra",
+    "model": "GS022",
+    "fullName": "Astra GS022"
+  },
+  {
+    "id": "1ef84ddf",
+    "type": "Espresso",
+    "brand": "Astra",
+    "model": "GS023",
+    "fullName": "Astra GS023"
+  },
+  {
+    "id": "c9272f6d",
+    "type": "Espresso",
+    "brand": "Astra",
+    "model": "PRO",
+    "fullName": "Astra PRO"
+  },
+  {
+    "id": "01acbf90",
+    "type": "Grinder",
+    "brand": "Baratza",
+    "model": "Encore",
+    "fullName": "Baratza Encore"
+  },
+  {
+    "id": "ac98ad81",
+    "type": "Grinder",
+    "brand": "Baratza",
+    "model": "Encore ESP",
+    "fullName": "Baratza Encore ESP"
+  },
+  {
+    "id": "d967f59c",
+    "type": "Grinder",
+    "brand": "Baratza",
+    "model": "Encore ESP Pro",
+    "fullName": "Baratza Encore ESP Pro"
+  },
+  {
+    "id": "2664c302",
+    "type": "Grinder",
+    "brand": "Baratza",
+    "model": "Sette 270Wi",
+    "fullName": "Baratza Sette 270Wi"
+  },
+  {
+    "id": "b1bcea40",
+    "type": "Grinder",
+    "brand": "Baratza",
+    "model": "Vario",
+    "fullName": "Baratza Vario"
+  },
+  {
+    "id": "2ff59d31",
+    "type": "Pour-over",
+    "brand": "Bee House",
+    "fullName": "Bee House"
+  },
+  {
+    "id": "a1afc7b8",
+    "type": "Espresso",
+    "brand": "Belezza",
+    "model": "Bellona",
+    "fullName": "Belezza Bellona"
+  },
+  {
+    "id": "cb896509",
+    "type": "Espresso",
+    "brand": "Bezzera",
+    "model": "BZ07 DE V2",
+    "fullName": "Bezzera BZ07 DE V2"
+  },
+  {
+    "id": "adf961e2",
+    "type": "Espresso",
+    "brand": "Bezzera",
+    "model": "BZ10",
+    "fullName": "Bezzera BZ10"
+  },
+  {
+    "id": "662d9841",
+    "type": "Espresso",
+    "brand": "Bezzera",
+    "model": "BZ16 DE - Volumetric",
+    "fullName": "Bezzera BZ16 DE - Volumetric"
+  },
+  {
+    "id": "b9f39a89",
+    "type": "Espresso",
+    "brand": "Bezzera",
+    "model": "BZ16 PM",
+    "fullName": "Bezzera BZ16 PM"
+  },
+  {
+    "id": "f84bd48d",
+    "type": "Espresso",
+    "brand": "Bezzera",
+    "model": "Duo DE - Volumetric",
+    "fullName": "Bezzera Duo DE - Volumetric"
+  },
+  {
+    "id": "e8b26593",
+    "type": "Espresso",
+    "brand": "Bezzera",
+    "model": "Duo MN",
+    "fullName": "Bezzera Duo MN"
+  },
+  {
+    "id": "eb78fff8",
+    "type": "Espresso",
+    "brand": "Bezzera",
+    "model": "Hobby 01",
+    "fullName": "Bezzera Hobby 01"
+  },
+  {
+    "id": "f2c20ccf",
+    "type": "Espresso",
+    "brand": "Bezzera",
+    "model": "Magica PID V2",
+    "fullName": "Bezzera Magica PID V2"
+  },
+  {
+    "id": "479cb363",
+    "type": "Espresso",
+    "brand": "Bezzera",
+    "model": "Magica V2",
+    "fullName": "Bezzera Magica V2"
+  },
+  {
+    "id": "e5f0d97d",
+    "type": "Espresso",
+    "brand": "Bezzera",
+    "model": "Matrix MN",
+    "fullName": "Bezzera Matrix MN"
+  },
+  {
+    "id": "6ec1b5b0",
+    "type": "Espresso",
+    "brand": "Bezzera",
+    "model": "Mitica V2",
+    "fullName": "Bezzera Mitica V2"
+  },
+  {
+    "id": "a01bc961",
+    "type": "Espresso",
+    "brand": "Bezzera",
+    "model": "Strega Switchable",
+    "fullName": "Bezzera Strega Switchable"
+  },
+  {
+    "id": "43a0fc6e",
+    "type": "Espresso",
+    "brand": "Bezzera",
+    "model": "Unica",
+    "fullName": "Bezzera Unica"
+  },
+  {
+    "id": "b1bad4c3",
+    "type": "Espresso",
+    "brand": "Bialetti",
+    "model": "Moka Pot",
+    "fullName": "Bialetti Moka Pot"
+  },
+  {
+    "id": "abe91ea6",
+    "type": "Stovetop",
+    "brand": "Bialetti",
+    "model": "Moka Pot",
+    "fullName": "Bialetti Moka Pot"
+  },
+  {
+    "id": "40ba6066",
+    "type": "Drip",
+    "brand": "BLACK+DECKER",
+    "model": "12-Cup Thermal Programmable",
+    "fullName": "BLACK+DECKER 12-Cup Thermal Programmable"
+  },
+  {
+    "id": "735dd289",
+    "type": "Pour-over",
+    "brand": "Blue Bottle",
+    "fullName": "Blue Bottle"
+  },
+  {
+    "id": "639bb060",
+    "type": "Grinder",
+    "brand": "Bodum",
+    "model": "Bistro",
+    "fullName": "Bodum Bistro"
+  },
+  {
+    "id": "9f730f96",
+    "type": "Grinder",
+    "brand": "Bodum",
+    "model": "C-Mill Electric Coffee Grinder",
+    "fullName": "Bodum C-Mill Electric Coffee Grinder"
+  },
+  {
+    "id": "ab39e26d",
+    "type": "Drip",
+    "brand": "Bonavita",
+    "model": "Classic 5-Cup",
+    "fullName": "Bonavita Classic 5-Cup"
+  },
+  {
+    "id": "6e6ea9c8",
+    "type": "Drip",
+    "brand": "Bonavita",
+    "model": "Connoisseur 8-Cup",
+    "fullName": "Bonavita Connoisseur 8-Cup"
+  },
+  {
+    "id": "7161560f",
+    "type": "Espresso",
+    "brand": "Bosco",
+    "model": "Sorrento",
+    "fullName": "Bosco Sorrento"
+  },
+  {
+    "id": "4a2123da",
+    "type": "Drip",
+    "brand": "Braun",
+    "model": "BrewSense 12-Cup",
+    "fullName": "Braun BrewSense 12-Cup"
+  },
+  {
+    "id": "e337eaf7",
+    "type": "Drip",
+    "brand": "Braun",
+    "model": "MultiServe Coffee Maker",
+    "fullName": "Braun MultiServe Coffee Maker"
+  },
+  {
+    "id": "65686cea",
+    "type": "Drip",
+    "brand": "Braun",
+    "model": "MultiServe Plus",
+    "fullName": "Braun MultiServe Plus"
+  },
+  {
+    "id": "c5ad87e1",
+    "type": "Espresso",
+    "brand": "Breville",
+    "model": "Bambino",
+    "fullName": "Breville Bambino"
+  },
+  {
+    "id": "760425d6",
+    "type": "Espresso",
+    "brand": "Breville",
+    "model": "Bambino Plus",
+    "fullName": "Breville Bambino Plus"
+  },
+  {
+    "id": "fc90f41a",
+    "type": "Espresso",
+    "brand": "Breville",
+    "model": "Barista Express",
+    "fullName": "Breville Barista Express"
+  },
+  {
+    "id": "23e6f014",
+    "type": "Grinder",
+    "brand": "Breville",
+    "model": "Barista Express",
+    "fullName": "Breville Barista Express"
+  },
+  {
+    "id": "0599cbc8",
+    "type": "Espresso",
+    "brand": "Breville",
+    "model": "Barista Express Impress",
+    "fullName": "Breville Barista Express Impress"
+  },
+  {
+    "id": "af1e69ea",
+    "type": "Grinder",
+    "brand": "Breville",
+    "model": "Barista Express Impress",
+    "fullName": "Breville Barista Express Impress"
+  },
+  {
+    "id": "56f43f90",
+    "type": "Espresso",
+    "brand": "Breville",
+    "model": "Barista Pro",
+    "fullName": "Breville Barista Pro"
+  },
+  {
+    "id": "e4a915eb",
+    "type": "Grinder",
+    "brand": "Breville",
+    "model": "Barista Pro",
+    "fullName": "Breville Barista Pro"
+  },
+  {
+    "id": "d0deaa72",
+    "type": "Espresso",
+    "brand": "Breville",
+    "model": "Dual Boiler",
+    "fullName": "Breville Dual Boiler"
+  },
+  {
+    "id": "5351532b",
+    "type": "Espresso",
+    "brand": "Breville",
+    "model": "Duo-Temp Pro",
+    "fullName": "Breville Duo-Temp Pro"
+  },
+  {
+    "id": "0d5dfcbb",
+    "type": "Drip",
+    "brand": "Breville",
+    "model": "Grind Control",
+    "fullName": "Breville Grind Control"
+  },
+  {
+    "id": "488bdf43",
+    "type": "Espresso",
+    "brand": "Breville",
+    "model": "Infuser",
+    "fullName": "Breville Infuser"
+  },
+  {
+    "id": "0f036c8f",
+    "type": "Espresso",
+    "brand": "Breville",
+    "model": "Oracle",
+    "fullName": "Breville Oracle"
+  },
+  {
+    "id": "9db520e9",
+    "type": "Espresso",
+    "brand": "Breville",
+    "model": "Oracle Jet",
+    "fullName": "Breville Oracle Jet"
+  },
+  {
+    "id": "d8114f96",
+    "type": "Grinder",
+    "brand": "Breville",
+    "model": "Oracle Jet",
+    "fullName": "Breville Oracle Jet"
+  },
+  {
+    "id": "6c0c86cd",
+    "type": "Drip",
+    "brand": "Breville",
+    "model": "Precision Brewer Thermal",
+    "fullName": "Breville Precision Brewer Thermal"
+  },
+  {
+    "id": "b1231e40",
+    "type": "Grinder",
+    "brand": "Breville",
+    "model": "Smart Grinder",
+    "fullName": "Breville Smart Grinder"
+  },
+  {
+    "id": "e643e1ad",
+    "type": "Grinder",
+    "brand": "Breville",
+    "model": "Smart Grinder Pro",
+    "fullName": "Breville Smart Grinder Pro"
+  },
+  {
+    "id": "4ccd9b7c",
+    "type": "Espresso",
+    "brand": "Breville",
+    "model": "Sunbeam",
+    "fullName": "Breville Sunbeam"
+  },
+  {
+    "id": "ee94cf91",
+    "type": "Grinder",
+    "brand": "Breville",
+    "model": "Sunbeam",
+    "fullName": "Breville Sunbeam"
+  },
+  {
+    "id": "3b147565",
+    "type": "Pour-over",
+    "brand": "Brewista",
+    "model": "Smart Brew Porcelain",
+    "fullName": "Brewista Smart Brew Porcelain"
+  },
+  {
+    "id": "8661481d",
+    "type": "Pour-over",
+    "brand": "Brewista",
+    "model": "Tornado Duo",
+    "fullName": "Brewista Tornado Duo"
+  },
+  {
+    "id": "c41832d4",
+    "type": "Pour-over",
+    "brand": "CAFEC",
+    "model": "Deep 27",
+    "fullName": "CAFEC Deep 27"
+  },
+  {
+    "id": "ad3377dc",
+    "type": "Pour-over",
+    "brand": "CAFEC",
+    "model": "Flower Dripper",
+    "fullName": "CAFEC Flower Dripper"
+  },
+  {
+    "id": "a13f57e9",
+    "type": "Espresso",
+    "brand": "Cafelat",
+    "model": "Robot",
+    "fullName": "Cafelat Robot"
+  },
+  {
+    "id": "cc1f650a",
+    "type": "Espresso",
+    "brand": "Caffeum",
+    "model": "Perfectus Minima",
+    "fullName": "Caffeum Perfectus Minima"
+  },
+  {
+    "id": "c711e49f",
+    "type": "Espresso",
+    "brand": "Casabrews",
+    "model": "3700 ESSENTIAL",
+    "fullName": "Casabrews 3700 ESSENTIAL"
+  },
+  {
+    "id": "ea661fa9",
+    "type": "Espresso",
+    "brand": "Casabrews",
+    "model": "3700 GENSE",
+    "fullName": "Casabrews 3700 GENSE"
+  },
+  {
+    "id": "1f5eab4a",
+    "type": "Espresso",
+    "brand": "Casabrews",
+    "model": "5418 PRO",
+    "fullName": "Casabrews 5418 PRO"
+  },
+  {
+    "id": "ef9dbbbb",
+    "type": "Espresso",
+    "brand": "Casabrews",
+    "model": "5700 PRO",
+    "fullName": "Casabrews 5700 PRO"
+  },
+  {
+    "id": "9f7b4f37",
+    "type": "Espresso",
+    "brand": "Casabrews",
+    "model": "CM 5418",
+    "fullName": "Casabrews CM 5418"
+  },
+  {
+    "id": "013c08d7",
+    "type": "Espresso",
+    "brand": "Casabrews",
+    "model": "CM 5418 BASIC",
+    "fullName": "Casabrews CM 5418 BASIC"
+  },
+  {
+    "id": "46884020",
+    "type": "Espresso",
+    "brand": "Casabrews",
+    "model": "CM 7036E",
+    "fullName": "Casabrews CM 7036E"
+  },
+  {
+    "id": "1ebdb665",
+    "type": "Espresso",
+    "brand": "Casabrews",
+    "model": "NEUTRON PRO",
+    "fullName": "Casabrews NEUTRON PRO"
+  },
+  {
+    "id": "1ec87f1c",
+    "type": "Espresso",
+    "brand": "Casabrews",
+    "model": "ULTRA",
+    "fullName": "Casabrews ULTRA"
+  },
+  {
+    "id": "64ec7fbb",
+    "type": "Grinder",
+    "brand": "Ceado",
+    "model": "E37S",
+    "fullName": "Ceado E37S"
+  },
+  {
+    "id": "f2cf1294",
+    "type": "Grinder",
+    "brand": "Ceado",
+    "model": "E5SD",
+    "fullName": "Ceado E5SD"
+  },
+  {
+    "id": "a0dd8f49",
+    "type": "Pour-over",
+    "brand": "Ceado",
+    "model": "Hoop",
+    "fullName": "Ceado Hoop"
+  },
+  {
+    "id": "f831c1af",
+    "type": "Pour-over",
+    "brand": "Chemex",
+    "model": "Classic Carafe",
+    "fullName": "Chemex Classic Carafe"
+  },
+  {
+    "id": "22bbbfcb",
+    "type": "Pour-over",
+    "brand": "Chemex",
+    "model": "Glass Handle Coffeemaker",
+    "fullName": "Chemex Glass Handle Coffeemaker"
+  },
+  {
+    "id": "f99f4fe8",
+    "type": "Pour-over",
+    "brand": "Chemex",
+    "model": "Ottomatic",
+    "fullName": "Chemex Ottomatic"
+  },
+  {
+    "id": "6fd2af2c",
+    "type": "Pour-over",
+    "brand": "Clever",
+    "model": "Clever Dripper",
+    "fullName": "Clever Clever Dripper"
+  },
+  {
+    "id": "5d74bbd4",
+    "type": "Grinder",
+    "brand": "Comandante",
+    "fullName": "Comandante"
+  },
+  {
+    "id": "e1cc929f",
+    "type": "Espresso",
+    "brand": "Crossland Coffee",
+    "model": "CC1 V 2.0",
+    "fullName": "Crossland Coffee CC1 V 2.0"
+  },
+  {
+    "id": "f8acb47b",
+    "type": "Drip",
+    "brand": "Cuisinart",
+    "model": "PerfecTemp 14-Cup",
+    "fullName": "Cuisinart PerfecTemp 14-Cup"
+  },
+  {
+    "id": "8d573c21",
+    "type": "Espresso",
+    "brand": "Dalla Corte",
+    "model": "Mina",
+    "fullName": "Dalla Corte Mina"
+  },
+  {
+    "id": "e56ad126",
+    "type": "Espresso",
+    "brand": "De'longhi",
+    "model": "Dedica",
+    "fullName": "De'longhi Dedica"
+  },
+  {
+    "id": "ed16b22a",
+    "type": "Espresso",
+    "brand": "De'longhi",
+    "model": "Dedica EC685",
+    "fullName": "De'longhi Dedica EC685"
+  },
+  {
+    "id": "9c0756ee",
+    "type": "Espresso",
+    "brand": "De'longhi",
+    "model": "ECP 31.21",
+    "fullName": "De'longhi ECP 31.21"
+  },
+  {
+    "id": "d985e626",
+    "type": "Espresso",
+    "brand": "De'longhi",
+    "model": "ECP 33.21",
+    "fullName": "De'longhi ECP 33.21"
+  },
+  {
+    "id": "281b538c",
+    "type": "Espresso",
+    "brand": "De'longhi",
+    "model": "ECP 35.31",
+    "fullName": "De'longhi ECP 35.31"
+  },
+  {
+    "id": "ead9c063",
+    "type": "Drip",
+    "brand": "De'Longhi",
+    "model": "TrueBrew Drip Coffee Maker",
+    "fullName": "De'Longhi TrueBrew Drip Coffee Maker"
+  },
+  {
+    "id": "b8e0bc87",
+    "type": "Drip",
+    "brand": "De'Longhi",
+    "model": "TrueBrew Drip Coffee Maker Thermal",
+    "fullName": "De'Longhi TrueBrew Drip Coffee Maker Thermal"
+  },
+  {
+    "id": "78e12c3f",
+    "type": "Espresso",
+    "brand": "Decent",
+    "model": "DE1+",
+    "fullName": "Decent DE1+"
+  },
+  {
+    "id": "2e31abe7",
+    "type": "Espresso",
+    "brand": "Decent",
+    "model": "DE1+ PRO",
+    "fullName": "Decent DE1+ PRO"
+  },
+  {
+    "id": "4ccb95c4",
+    "type": "Espresso",
+    "brand": "Decent",
+    "model": "DE1+ PRO XL",
+    "fullName": "Decent DE1+ PRO XL"
+  },
+  {
+    "id": "063cf581",
+    "type": "Espresso",
+    "brand": "Decent",
+    "model": "XL",
+    "fullName": "Decent XL"
+  },
+  {
+    "id": "69b96398",
+    "type": "Grinder",
+    "brand": "DF",
+    "model": "54",
+    "fullName": "DF 54"
+  },
+  {
+    "id": "4f2a9496",
+    "type": "Grinder",
+    "brand": "DF",
+    "model": "64",
+    "fullName": "DF 64"
+  },
+  {
+    "id": "f2b9c3f6",
+    "type": "Grinder",
+    "brand": "DF",
+    "model": "64 Gen 2",
+    "fullName": "DF 64 Gen 2"
+  },
+  {
+    "id": "43c5f56e",
+    "type": "Grinder",
+    "brand": "DF",
+    "model": "64V",
+    "fullName": "DF 64V"
+  },
+  {
+    "id": "f400cbc0",
+    "type": "Grinder",
+    "brand": "DF",
+    "model": "83V",
+    "fullName": "DF 83V"
+  },
+  {
+    "id": "c3fdb0c4",
+    "type": "Espresso",
+    "brand": "Diletta",
+    "model": "Mio",
+    "fullName": "Diletta Mio"
+  },
+  {
+    "id": "a5290f7d",
+    "type": "Espresso",
+    "brand": "E-61",
+    "model": "DB",
+    "fullName": "E-61 DB"
+  },
+  {
+    "id": "da8827a8",
+    "type": "Pour-over",
+    "brand": "E&B Lab",
+    "model": "Dripper Cone",
+    "fullName": "E&B Lab Dripper Cone"
+  },
+  {
+    "id": "944783f8",
+    "type": "Pour-over",
+    "brand": "E&B Lab",
+    "model": "Flower Dripper",
+    "fullName": "E&B Lab Flower Dripper"
+  },
+  {
+    "id": "07472d78",
+    "type": "Pour-over",
+    "brand": "E&B Lab",
+    "model": "Pour Over Set",
+    "fullName": "E&B Lab Pour Over Set"
+  },
+  {
+    "id": "c8583526",
+    "type": "Espresso",
+    "brand": "ECM",
+    "model": "Barista",
+    "fullName": "ECM Barista"
+  },
+  {
+    "id": "cae19208",
+    "type": "Espresso",
+    "brand": "ECM",
+    "model": "Casa V",
+    "fullName": "ECM Casa V"
+  },
+  {
+    "id": "897f8baf",
+    "type": "Espresso",
+    "brand": "ECM",
+    "model": "Classika",
+    "fullName": "ECM Classika"
+  },
+  {
+    "id": "b4d6a3d4",
+    "type": "Espresso",
+    "brand": "ECM",
+    "model": "Controvento",
+    "fullName": "ECM Controvento"
+  },
+  {
+    "id": "a70f4f2e",
+    "type": "Espresso",
+    "brand": "ECM",
+    "model": "Elektronika II Profi Switchable",
+    "fullName": "ECM Elektronika II Profi Switchable"
+  },
+  {
+    "id": "cd9dee09",
+    "type": "Espresso",
+    "brand": "ECM",
+    "model": "Mechanika IV Profi Switchable",
+    "fullName": "ECM Mechanika IV Profi Switchable"
+  },
+  {
+    "id": "dcc328e9",
+    "type": "Espresso",
+    "brand": "ECM",
+    "model": "Mechanika V Slim",
+    "fullName": "ECM Mechanika V Slim"
+  },
+  {
+    "id": "97e5bced",
+    "type": "Espresso",
+    "brand": "ECM",
+    "model": "Special Edition Classika",
+    "fullName": "ECM Special Edition Classika"
+  },
+  {
+    "id": "50e4b2b6",
+    "type": "Espresso",
+    "brand": "ECM",
+    "model": "Synchronika",
+    "fullName": "ECM Synchronika"
+  },
+  {
+    "id": "b1cc8abe",
+    "type": "Espresso",
+    "brand": "ECM",
+    "model": "Synchronika Anthracite",
+    "fullName": "ECM Synchronika Anthracite"
+  },
+  {
+    "id": "68243cc2",
+    "type": "Espresso",
+    "brand": "ECM",
+    "model": "Synchronika Flow Ctrl",
+    "fullName": "ECM Synchronika Flow Ctrl"
+  },
+  {
+    "id": "160f7b64",
+    "type": "Espresso",
+    "brand": "ECM",
+    "model": "Technika V Profi PID",
+    "fullName": "ECM Technika V Profi PID"
+  },
+  {
+    "id": "bfd6c330",
+    "type": "Grinder",
+    "brand": "EK43",
+    "model": "HU",
+    "fullName": "EK43 HU"
+  },
+  {
+    "id": "4db1c3fc",
+    "type": "Grinder",
+    "brand": "EK65",
+    "model": "GBW",
+    "fullName": "EK65 GBW"
+  },
+  {
+    "id": "73fca088",
+    "type": "Espresso",
+    "brand": "Elektra",
+    "model": "Micro Casa a Leva",
+    "fullName": "Elektra Micro Casa a Leva"
+  },
+  {
+    "id": "46a68b97",
+    "type": "Espresso",
+    "brand": "Elektra",
+    "model": "Microcasa Manual Leva",
+    "fullName": "Elektra Microcasa Manual Leva"
+  },
+  {
+    "id": "00207e29",
+    "type": "Espresso",
+    "brand": "Elektra",
+    "model": "Mini Verticale",
+    "fullName": "Elektra Mini Verticale"
+  },
+  {
+    "id": "688d7a02",
+    "type": "Espresso",
+    "brand": "Elektra",
+    "model": "Semiautomatica",
+    "fullName": "Elektra Semiautomatica"
+  },
+  {
+    "id": "bae1d34a",
+    "type": "Pour-over",
+    "brand": "ESPRO",
+    "model": "Bloom",
+    "fullName": "ESPRO Bloom"
+  },
+  {
+    "id": "74affa89",
+    "type": "Grinder",
+    "brand": "Eureka",
+    "model": "Atom W 65",
+    "fullName": "Eureka Atom W 65"
+  },
+  {
+    "id": "63f8e7c0",
+    "type": "Grinder",
+    "brand": "Eureka",
+    "model": "Firenze 75",
+    "fullName": "Eureka Firenze 75"
+  },
+  {
+    "id": "bfa8a291",
+    "type": "Grinder",
+    "brand": "Eureka",
+    "model": "Libra",
+    "fullName": "Eureka Libra"
+  },
+  {
+    "id": "53a0382a",
+    "type": "Grinder",
+    "brand": "Eureka",
+    "model": "Mignon Notte",
+    "fullName": "Eureka Mignon Notte"
+  },
+  {
+    "id": "e0d39458",
+    "type": "Grinder",
+    "brand": "Eureka",
+    "model": "Mignon Specialita",
+    "fullName": "Eureka Mignon Specialita"
+  },
+  {
+    "id": "22d57ce9",
+    "type": "Grinder",
+    "brand": "Eureka",
+    "model": "Mignon Zero",
+    "fullName": "Eureka Mignon Zero"
+  },
+  {
+    "id": "e2718e84",
+    "type": "Espresso",
+    "brand": "Eureka",
+    "model": "Pura",
+    "fullName": "Eureka Pura"
+  },
+  {
+    "id": "65db63b5",
+    "type": "Grinder",
+    "brand": "Eureka",
+    "model": "Silenzio 55",
+    "fullName": "Eureka Silenzio 55"
+  },
+  {
+    "id": "55da614e",
+    "type": "Grinder",
+    "brand": "Eureka",
+    "model": "Specialita",
+    "fullName": "Eureka Specialita"
+  },
+  {
+    "id": "0cbfe3dc",
+    "type": "Grinder",
+    "brand": "Eureka",
+    "model": "Zero",
+    "fullName": "Eureka Zero"
+  },
+  {
+    "id": "66e4aa85",
+    "type": "Espresso",
+    "brand": "Faema",
+    "model": "Faemina Satin Copper",
+    "fullName": "Faema Faemina Satin Copper"
+  },
+  {
+    "id": "55e8ec85",
+    "type": "Espresso",
+    "brand": "Faema",
+    "model": "Legend S/1",
+    "fullName": "Faema Legend S/1"
+  },
+  {
+    "id": "9781c64b",
+    "type": "Grinder",
+    "brand": "Fellow",
+    "model": "Opus",
+    "fullName": "Fellow Opus"
+  },
+  {
+    "id": "21821ed4",
+    "type": "Pour-over",
+    "brand": "Fellow",
+    "model": "Stagg [X]",
+    "fullName": "Fellow Stagg [X]"
+  },
+  {
+    "id": "96be2708",
+    "type": "Pour-over",
+    "brand": "Fellow",
+    "model": "Stagg [XF]",
+    "fullName": "Fellow Stagg [XF]"
+  },
+  {
+    "id": "a2071359",
+    "type": "Grinder",
+    "brand": "Fiorenzatta",
+    "model": "F64 EVO",
+    "fullName": "Fiorenzatta F64 EVO"
+  },
+  {
+    "id": "54858af0",
+    "type": "Espresso",
+    "brand": "Flair",
+    "model": "58",
+    "fullName": "Flair 58"
+  },
+  {
+    "id": "4de17561",
+    "type": "Espresso",
+    "brand": "Flair",
+    "model": "58 Plus 2",
+    "fullName": "Flair 58 Plus 2"
+  },
+  {
+    "id": "9ada3bd6",
+    "type": "Espresso",
+    "brand": "Flair",
+    "model": "Go",
+    "fullName": "Flair Go"
+  },
+  {
+    "id": "32a3aab6",
+    "type": "Espresso",
+    "brand": "Flair",
+    "model": "Neo Flex",
+    "fullName": "Flair Neo Flex"
+  },
+  {
+    "id": "3b80820c",
+    "type": "Espresso",
+    "brand": "Flair",
+    "model": "Pro 2",
+    "fullName": "Flair Pro 2"
+  },
+  {
+    "id": "9debb551",
+    "type": "Grinder",
+    "brand": "Forte",
+    "model": "270",
+    "fullName": "Forte 270"
+  },
+  {
+    "id": "5c24b332",
+    "type": "Espresso",
+    "brand": "Gaggia",
+    "model": "Classic",
+    "fullName": "Gaggia Classic"
+  },
+  {
+    "id": "ec3c4373",
+    "type": "Espresso",
+    "brand": "Gaggia",
+    "model": "Classic E24",
+    "fullName": "Gaggia Classic E24"
+  },
+  {
+    "id": "cae065ae",
+    "type": "Espresso",
+    "brand": "Gaggia",
+    "model": "Classic Pro",
+    "fullName": "Gaggia Classic Pro"
+  },
+  {
+    "id": "123e13d1",
+    "type": "Espresso",
+    "brand": "Gaggia",
+    "model": "Classic Pro E24",
+    "fullName": "Gaggia Classic Pro E24"
+  },
+  {
+    "id": "dad07add",
+    "type": "Espresso",
+    "brand": "Gaggia",
+    "model": "Classic Pro EVO",
+    "fullName": "Gaggia Classic Pro EVO"
+  },
+  {
+    "id": "4f069866",
+    "type": "Espresso",
+    "brand": "Gaggia",
+    "model": "Classic Pro V2",
+    "fullName": "Gaggia Classic Pro V2"
+  },
+  {
+    "id": "5ecb6e8b",
+    "type": "Grinder",
+    "brand": "Graef",
+    "model": "800",
+    "fullName": "Graef 800"
+  },
+  {
+    "id": "490f0137",
+    "type": "Drip",
+    "brand": "Hamilton Beach",
+    "model": "FlexBrew Programmable Single-Serve",
+    "fullName": "Hamilton Beach FlexBrew Programmable Single-Serve"
+  },
+  {
+    "id": "b8be2019",
+    "type": "Drip",
+    "brand": "Hamilton Beach",
+    "model": "FlexBrew Trio",
+    "fullName": "Hamilton Beach FlexBrew Trio"
+  },
+  {
+    "id": "3f2395ff",
+    "type": "Grinder",
+    "brand": "Hario",
+    "model": "Ceramic Coffee Mill",
+    "fullName": "Hario Ceramic Coffee Mill"
+  },
+  {
+    "id": "c11acd58",
+    "type": "Pour-over",
+    "brand": "Hario",
+    "model": "V60",
+    "fullName": "Hario V60"
+  },
+  {
+    "id": "dbf0b8bf",
+    "type": "Pour-over",
+    "brand": "Hario",
+    "model": "V60 Switch",
+    "fullName": "Hario V60 Switch"
+  },
+  {
+    "id": "68014e96",
+    "type": "Espresso",
+    "brand": "Isomac",
+    "model": "Tea III",
+    "fullName": "Isomac Tea III"
+  },
+  {
+    "id": "2677bff4",
+    "type": "Espresso",
+    "brand": "Isomac",
+    "model": "Tea III W/PID",
+    "fullName": "Isomac Tea III W/PID"
+  },
+  {
+    "id": "2966d4cc",
+    "type": "Espresso",
+    "brand": "Izzo",
+    "model": "Alex Duetto",
+    "fullName": "Izzo Alex Duetto"
+  },
+  {
+    "id": "3f311ab7",
+    "type": "Espresso",
+    "brand": "IZZO",
+    "model": "Alex Duetto IV Plus",
+    "fullName": "IZZO Alex Duetto IV Plus"
+  },
+  {
+    "id": "db9aa23f",
+    "type": "Espresso",
+    "brand": "IZZO",
+    "model": "Alex Duetto IV Pro",
+    "fullName": "IZZO Alex Duetto IV Pro"
+  },
+  {
+    "id": "5c64cf42",
+    "type": "Espresso",
+    "brand": "IZZO",
+    "model": "Alex PID Pro",
+    "fullName": "IZZO Alex PID Pro"
+  },
+  {
+    "id": "4c56302b",
+    "type": "Espresso",
+    "brand": "IZZO",
+    "model": "ViVi",
+    "fullName": "IZZO ViVi"
+  },
+  {
+    "id": "0fc515e6",
+    "type": "Pour-over",
+    "brand": "Kalita",
+    "model": "Wave",
+    "fullName": "Kalita Wave"
+  },
+  {
+    "id": "992def9b",
+    "type": "Grinder",
+    "brand": "Kingrinder",
+    "model": "K1",
+    "fullName": "Kingrinder K1"
+  },
+  {
+    "id": "cd5a86a8",
+    "type": "Grinder",
+    "brand": "Kingrinder",
+    "model": "K2",
+    "fullName": "Kingrinder K2"
+  },
+  {
+    "id": "45523cab",
+    "type": "Grinder",
+    "brand": "Kingrinder",
+    "model": "K4",
+    "fullName": "Kingrinder K4"
+  },
+  {
+    "id": "79b204bd",
+    "type": "Grinder",
+    "brand": "Kingrinder",
+    "model": "K6",
+    "fullName": "Kingrinder K6"
+  },
+  {
+    "id": "a26fccd8",
+    "type": "Grinder",
+    "brand": "Kinu",
+    "model": "Phoenix",
+    "fullName": "Kinu Phoenix"
+  },
+  {
+    "id": "c79175aa",
+    "type": "Drip",
+    "brand": "KitchenAid",
+    "model": "12-Cup Drip Coffee Maker",
+    "fullName": "KitchenAid 12-Cup Drip Coffee Maker"
+  },
+  {
+    "id": "ed3d88e2",
+    "type": "Pour-over",
+    "brand": "Kōno",
+    "model": "Meimon",
+    "fullName": "Kōno Meimon"
+  },
+  {
+    "id": "b726f6f9",
+    "type": "Espresso",
+    "brand": "Krups",
+    "model": "Model 964 Espresso Novo",
+    "fullName": "Krups Model 964 Espresso Novo"
+  },
+  {
+    "id": "ef0ac0d4",
+    "type": "Espresso",
+    "brand": "La Marzocco",
+    "model": "GS3",
+    "fullName": "La Marzocco GS3"
+  },
+  {
+    "id": "15115f57",
+    "type": "Espresso",
+    "brand": "La Marzocco",
+    "model": "KB90",
+    "fullName": "La Marzocco KB90"
+  },
+  {
+    "id": "7d2a8202",
+    "type": "Espresso",
+    "brand": "La Marzocco",
+    "model": "Leva X",
+    "fullName": "La Marzocco Leva X"
+  },
+  {
+    "id": "6f31fa9e",
+    "type": "Espresso",
+    "brand": "La Marzocco",
+    "model": "Linea 2gr",
+    "fullName": "La Marzocco Linea 2gr"
+  },
+  {
+    "id": "47ccd90a",
+    "type": "Espresso",
+    "brand": "La Marzocco",
+    "model": "Linea Micra",
+    "fullName": "La Marzocco Linea Micra"
+  },
+  {
+    "id": "3eda7f0d",
+    "type": "Espresso",
+    "brand": "La Marzocco",
+    "model": "Linea Mini",
+    "fullName": "La Marzocco Linea Mini"
+  },
+  {
+    "id": "7691f74b",
+    "type": "Espresso",
+    "brand": "La Nuova Era",
+    "model": "Cuadra V3",
+    "fullName": "La Nuova Era Cuadra V3"
+  },
+  {
+    "id": "6a4bf9e5",
+    "type": "Espresso",
+    "brand": "La Pavoni",
+    "model": "Europiccola 8",
+    "fullName": "La Pavoni Europiccola 8"
+  },
+  {
+    "id": "07481e39",
+    "type": "Espresso",
+    "brand": "La Pavoni",
+    "model": "Professional 16",
+    "fullName": "La Pavoni Professional 16"
+  },
+  {
+    "id": "29a15b98",
+    "type": "Espresso",
+    "brand": "La Pavoni",
+    "model": "Stradivari 16",
+    "fullName": "La Pavoni Stradivari 16"
+  },
+  {
+    "id": "2d1733d1",
+    "type": "Espresso",
+    "brand": "La Pavoni",
+    "model": "Stradivari 8",
+    "fullName": "La Pavoni Stradivari 8"
+  },
+  {
+    "id": "310841ed",
+    "type": "Espresso",
+    "brand": "La Spaziale",
+    "model": "Dream",
+    "fullName": "La Spaziale Dream"
+  },
+  {
+    "id": "c31d90f3",
+    "type": "Espresso",
+    "brand": "La Spaziale",
+    "model": "Dream T",
+    "fullName": "La Spaziale Dream T"
+  },
+  {
+    "id": "98877cdc",
+    "type": "Espresso",
+    "brand": "La Spaziale",
+    "model": "Mini Vivaldi II",
+    "fullName": "La Spaziale Mini Vivaldi II"
+  },
+  {
+    "id": "1fb3240b",
+    "type": "Espresso",
+    "brand": "La Spaziale",
+    "model": "S2 EK Commercial",
+    "fullName": "La Spaziale S2 EK Commercial"
+  },
+  {
+    "id": "bf871f41",
+    "type": "Espresso",
+    "brand": "La Spaziale",
+    "model": "Vivaldi II",
+    "fullName": "La Spaziale Vivaldi II"
+  },
+  {
+    "id": "35293cf1",
+    "type": "Grinder",
+    "brand": "Lagom",
+    "model": "1",
+    "fullName": "Lagom 1"
+  },
+  {
+    "id": "56eb0371",
+    "type": "Grinder",
+    "brand": "Lagom",
+    "model": "Casa",
+    "fullName": "Lagom Casa"
+  },
+  {
+    "id": "51365920",
+    "type": "Espresso",
+    "brand": "Lelit",
+    "model": "Anita",
+    "fullName": "Lelit Anita"
+  },
+  {
+    "id": "8381b302",
+    "type": "Grinder",
+    "brand": "Lelit",
+    "model": "Anita (Built-in)",
+    "fullName": "Lelit Anita (Built-in)"
+  },
+  {
+    "id": "33461142",
+    "type": "Espresso",
+    "brand": "Lelit",
+    "model": "Anna",
+    "fullName": "Lelit Anna"
+  },
+  {
+    "id": "ed985d41",
+    "type": "Espresso",
+    "brand": "Lelit",
+    "model": "Bianca",
+    "fullName": "Lelit Bianca"
+  },
+  {
+    "id": "17a57252",
+    "type": "Espresso",
+    "brand": "Lelit",
+    "model": "Bianca - Flow control",
+    "fullName": "Lelit Bianca - Flow control"
+  },
+  {
+    "id": "4914adbe",
+    "type": "Espresso",
+    "brand": "Lelit",
+    "model": "Bianca V3",
+    "fullName": "Lelit Bianca V3"
+  },
+  {
+    "id": "e9724aef",
+    "type": "Espresso",
+    "brand": "Lelit",
+    "model": "Elizabeth",
+    "fullName": "Lelit Elizabeth"
+  },
+  {
+    "id": "68da0d2e",
+    "type": "Espresso",
+    "brand": "Lelit",
+    "model": "Glenda PID",
+    "fullName": "Lelit Glenda PID"
+  },
+  {
+    "id": "9cda5270",
+    "type": "Espresso",
+    "brand": "Lelit",
+    "model": "Kate",
+    "fullName": "Lelit Kate"
+  },
+  {
+    "id": "4c15891f",
+    "type": "Grinder",
+    "brand": "Lelit",
+    "model": "Kate",
+    "fullName": "Lelit Kate"
+  },
+  {
+    "id": "0a294b8a",
+    "type": "Espresso",
+    "brand": "Lelit",
+    "model": "Mara",
+    "fullName": "Lelit Mara"
+  },
+  {
+    "id": "1240cc0d",
+    "type": "Espresso",
+    "brand": "Lelit",
+    "model": "Mara \"Commercial\"",
+    "fullName": "Lelit Mara \"Commercial\""
+  },
+  {
+    "id": "efd07bb9",
+    "type": "Espresso",
+    "brand": "Lelit",
+    "model": "Mara X",
+    "fullName": "Lelit Mara X"
+  },
+  {
+    "id": "db74c336",
+    "type": "Espresso",
+    "brand": "Lelit",
+    "model": "Mara X V2",
+    "fullName": "Lelit Mara X V2"
+  },
+  {
+    "id": "8d2f816a",
+    "type": "Espresso",
+    "brand": "Lelit",
+    "model": "Victoria",
+    "fullName": "Lelit Victoria"
+  },
+  {
+    "id": "139a23a4",
+    "type": "Espresso",
+    "brand": "Londinium",
+    "model": "Compressa",
+    "fullName": "Londinium Compressa"
+  },
+  {
+    "id": "715d1abe",
+    "type": "Espresso",
+    "brand": "Londinium",
+    "model": "I",
+    "fullName": "Londinium I"
+  },
+  {
+    "id": "212b799a",
+    "type": "Espresso",
+    "brand": "Lucca",
+    "model": "A53 Mini",
+    "fullName": "Lucca A53 Mini"
+  },
+  {
+    "id": "44d1c531",
+    "type": "Espresso",
+    "brand": "Lucca",
+    "model": "M58 V2",
+    "fullName": "Lucca M58 V2"
+  },
+  {
+    "id": "239258e7",
+    "type": "Espresso",
+    "brand": "M&V Srl.",
+    "model": "Vesuvius",
+    "fullName": "M&V Srl. Vesuvius"
+  },
+  {
+    "id": "0a161d8b",
+    "type": "Grinder",
+    "brand": "Mahlkönig",
+    "model": "E65s GBW",
+    "fullName": "Mahlkönig E65s GBW"
+  },
+  {
+    "id": "6e656308",
+    "type": "Grinder",
+    "brand": "Mahlkönig",
+    "model": "E80GBW",
+    "fullName": "Mahlkönig E80GBW"
+  },
+  {
+    "id": "8ee89aa5",
+    "type": "Grinder",
+    "brand": "Mahlkönig",
+    "model": "EK43",
+    "fullName": "Mahlkönig EK43"
+  },
+  {
+    "id": "75e691be",
+    "type": "Grinder",
+    "brand": "Mazzer",
+    "model": "Mini A",
+    "fullName": "Mazzer Mini A"
+  },
+  {
+    "id": "38dba507",
+    "type": "Grinder",
+    "brand": "Mazzer",
+    "model": "Philos",
+    "fullName": "Mazzer Philos"
+  },
+  {
+    "id": "6ca332e3",
+    "type": "Grinder",
+    "brand": "Mazzer",
+    "model": "Philos with i200D",
+    "fullName": "Mazzer Philos with i200D"
+  },
+  {
+    "id": "94916d0e",
+    "type": "Drip",
+    "brand": "Melitta",
+    "model": "AromaFresh",
+    "fullName": "Melitta AromaFresh"
+  },
+  {
+    "id": "d7e55cb2",
+    "type": "Pour-over",
+    "brand": "Melitta",
+    "model": "Cone",
+    "fullName": "Melitta Cone"
+  },
+  {
+    "id": "aafdaba4",
+    "type": "Stovetop",
+    "brand": "Moka Pot",
+    "fullName": "Moka Pot"
+  },
+  {
+    "id": "735b6c54",
+    "type": "Grinder",
+    "brand": "Monolith",
+    "model": "MAX Gen 1",
+    "fullName": "Monolith MAX Gen 1"
+  },
+  {
+    "id": "30b65ff8",
+    "type": "Drip",
+    "brand": "Mr. Coffee",
+    "model": "12-Cup Programmable Coffeemaker",
+    "fullName": "Mr. Coffee 12-Cup Programmable Coffeemaker"
+  },
+  {
+    "id": "79fa76a6",
+    "type": "Grinder",
+    "brand": "Niche",
+    "model": "Duo",
+    "fullName": "Niche Duo"
+  },
+  {
+    "id": "03f36e94",
+    "type": "Grinder",
+    "brand": "Niche",
+    "model": "Zero",
+    "fullName": "Niche Zero"
+  },
+  {
+    "id": "227026e4",
+    "type": "Espresso",
+    "brand": "Ninja",
+    "model": "Luxe Cafe SE701",
+    "fullName": "Ninja Luxe Cafe SE701"
+  },
+  {
+    "id": "ba9edd57",
+    "type": "Grinder",
+    "brand": "Ninja",
+    "model": "Luxe Cafe SE701",
+    "fullName": "Ninja Luxe Cafe SE701"
+  },
+  {
+    "id": "57868f80",
+    "type": "Drip",
+    "brand": "Ninja",
+    "model": "Specialty Coffee Maker",
+    "fullName": "Ninja Specialty Coffee Maker"
+  },
+  {
+    "id": "3fb93266",
+    "type": "Pour-over",
+    "brand": "notNeutral",
+    "model": "GINO Dripper",
+    "fullName": "notNeutral GINO Dripper"
+  },
+  {
+    "id": "5930af49",
+    "type": "Espresso",
+    "brand": "Nuova Simonelli",
+    "model": "Musica - Volumetric",
+    "fullName": "Nuova Simonelli Musica - Volumetric"
+  },
+  {
+    "id": "d818dd8a",
+    "type": "Espresso",
+    "brand": "Nuova Simonelli",
+    "model": "Oscar II - Volumetric",
+    "fullName": "Nuova Simonelli Oscar II - Volumetric"
+  },
+  {
+    "id": "4795897a",
+    "type": "Espresso",
+    "brand": "Olympia",
+    "model": "Cremina",
+    "fullName": "Olympia Cremina"
+  },
+  {
+    "id": "f1a682cf",
+    "type": "Grinder",
+    "brand": "Option-O",
+    "model": "Lagom Casa 65",
+    "fullName": "Option-O Lagom Casa 65"
+  },
+  {
+    "id": "9178905b",
+    "type": "Grinder",
+    "brand": "Option-O",
+    "model": "Lagom Mini",
+    "fullName": "Option-O Lagom Mini"
+  },
+  {
+    "id": "9f53936d",
+    "type": "Pour-over",
+    "brand": "Origami",
+    "fullName": "Origami"
+  },
+  {
+    "id": "a478219b",
+    "type": "Pour-over",
+    "brand": "OXO",
+    "fullName": "OXO"
+  },
+  {
+    "id": "42fcc9b7",
+    "type": "Drip",
+    "brand": "OXO",
+    "model": "Brew 8-Cup Coffee Maker",
+    "fullName": "OXO Brew 8-Cup Coffee Maker"
+  },
+  {
+    "id": "829dac30",
+    "type": "Grinder",
+    "brand": "OXO",
+    "model": "Brew Conical",
+    "fullName": "OXO Brew Conical"
+  },
+  {
+    "id": "9571d7a6",
+    "type": "Espresso",
+    "brand": "Pasquini",
+    "model": "Livia 90",
+    "fullName": "Pasquini Livia 90"
+  },
+  {
+    "id": "5c4ecdd6",
+    "type": "Drip",
+    "brand": "Philips",
+    "model": "Grind & Brew",
+    "fullName": "Philips Grind & Brew"
+  },
+  {
+    "id": "de30cd45",
+    "type": "Grinder",
+    "brand": "Philos",
+    "model": "Mazzer I200D",
+    "fullName": "Philos Mazzer I200D"
+  },
+  {
+    "id": "f23c0845",
+    "type": "Espresso",
+    "brand": "Picopresso",
+    "model": "Picopresso",
+    "fullName": "Picopresso Picopresso"
+  },
+  {
+    "id": "8f679b1b",
+    "type": "Espresso",
+    "brand": "Ponte Vecchio",
+    "model": "Export",
+    "fullName": "Ponte Vecchio Export"
+  },
+  {
+    "id": "0cdb940e",
+    "type": "Espresso",
+    "brand": "Ponte Vecchio",
+    "model": "Lusso",
+    "fullName": "Ponte Vecchio Lusso"
+  },
+  {
+    "id": "96712061",
+    "type": "Espresso",
+    "brand": "Profitec",
+    "model": "Drive",
+    "fullName": "Profitec Drive"
+  },
+  {
+    "id": "313c8606",
+    "type": "Espresso",
+    "brand": "Profitec",
+    "model": "Go",
+    "fullName": "Profitec Go"
+  },
+  {
+    "id": "e305207a",
+    "type": "Espresso",
+    "brand": "Profitec",
+    "model": "Pro 300",
+    "fullName": "Profitec Pro 300"
+  },
+  {
+    "id": "95f4d6de",
+    "type": "Espresso",
+    "brand": "Profitec",
+    "model": "Pro 500",
+    "fullName": "Profitec Pro 500"
+  },
+  {
+    "id": "e93a00a4",
+    "type": "Espresso",
+    "brand": "Profitec",
+    "model": "Pro 600",
+    "fullName": "Profitec Pro 600"
+  },
+  {
+    "id": "37a48dfe",
+    "type": "Espresso",
+    "brand": "Profitec",
+    "model": "Pro 700",
+    "fullName": "Profitec Pro 700"
+  },
+  {
+    "id": "b877ba01",
+    "type": "Espresso",
+    "brand": "Profitec",
+    "model": "Pro 800",
+    "fullName": "Profitec Pro 800"
+  },
+  {
+    "id": "8181faae",
+    "type": "Espresso",
+    "brand": "Quick Mill",
+    "model": "Andreja Premium Evo",
+    "fullName": "Quick Mill Andreja Premium Evo"
+  },
+  {
+    "id": "c8b56480",
+    "type": "Espresso",
+    "brand": "Quick Mill",
+    "model": "Vetrano 2B Evo",
+    "fullName": "Quick Mill Vetrano 2B Evo"
+  },
+  {
+    "id": "3081fb0e",
+    "type": "Espresso",
+    "brand": "Rancilio",
+    "model": "Classe 5 ST",
+    "fullName": "Rancilio Classe 5 ST"
+  },
+  {
+    "id": "1f246269",
+    "type": "Grinder",
+    "brand": "Rancilio",
+    "model": "Rocky",
+    "fullName": "Rancilio Rocky"
+  },
+  {
+    "id": "823247b6",
+    "type": "Espresso",
+    "brand": "Rancilio",
+    "model": "RS1",
+    "fullName": "Rancilio RS1"
+  },
+  {
+    "id": "de68cfb5",
+    "type": "Espresso",
+    "brand": "Rancilio",
+    "model": "Silvia",
+    "fullName": "Rancilio Silvia"
+  },
+  {
+    "id": "d134955d",
+    "type": "Espresso",
+    "brand": "Rancilio",
+    "model": "Silvia M",
+    "fullName": "Rancilio Silvia M"
+  },
+  {
+    "id": "8bd445d4",
+    "type": "Espresso",
+    "brand": "Rancilio",
+    "model": "Silvia PID",
+    "fullName": "Rancilio Silvia PID"
+  },
+  {
+    "id": "a3563401",
+    "type": "Espresso",
+    "brand": "Rancilio",
+    "model": "Silvia Pro X",
+    "fullName": "Rancilio Silvia Pro X"
+  },
+  {
+    "id": "da183a30",
+    "type": "Espresso",
+    "brand": "Rancilio",
+    "model": "Silvia X",
+    "fullName": "Rancilio Silvia X"
+  },
+  {
+    "id": "d18a39f2",
+    "type": "Espresso",
+    "brand": "Rocket",
+    "model": "Appartamento",
+    "fullName": "Rocket Appartamento"
+  },
+  {
+    "id": "ebd2b60e",
+    "type": "Espresso",
+    "brand": "Rocket",
+    "model": "Giotto Evoluzione R",
+    "fullName": "Rocket Giotto Evoluzione R"
+  },
+  {
+    "id": "2f8bfe6c",
+    "type": "Espresso",
+    "brand": "Rocket",
+    "model": "Giotto Timer Evoluzione R",
+    "fullName": "Rocket Giotto Timer Evoluzione R"
+  },
+  {
+    "id": "15ad2eef",
+    "type": "Espresso",
+    "brand": "Rocket",
+    "model": "Giotto Timer Type V",
+    "fullName": "Rocket Giotto Timer Type V"
+  },
+  {
+    "id": "d912e703",
+    "type": "Espresso",
+    "brand": "Rocket",
+    "model": "Mozzafiato",
+    "fullName": "Rocket Mozzafiato"
+  },
+  {
+    "id": "6c14a843",
+    "type": "Espresso",
+    "brand": "Rocket",
+    "model": "Mozzafiato Evoluzione R",
+    "fullName": "Rocket Mozzafiato Evoluzione R"
+  },
+  {
+    "id": "5d3451bc",
+    "type": "Espresso",
+    "brand": "Rocket",
+    "model": "Mozzafiato Timer Evoluzione R",
+    "fullName": "Rocket Mozzafiato Timer Evoluzione R"
+  },
+  {
+    "id": "970abf8e",
+    "type": "Espresso",
+    "brand": "Rocket",
+    "model": "Mozzafiato Timer Type V",
+    "fullName": "Rocket Mozzafiato Timer Type V"
+  },
+  {
+    "id": "bb0f40d3",
+    "type": "Espresso",
+    "brand": "Rocket",
+    "model": "R Nine One",
+    "fullName": "Rocket R Nine One"
+  },
+  {
+    "id": "36cde2e8",
+    "type": "Espresso",
+    "brand": "Rocket",
+    "model": "R58 V2",
+    "fullName": "Rocket R58 V2"
+  },
+  {
+    "id": "c673ae51",
+    "type": "Espresso",
+    "brand": "Rocket",
+    "model": "R60V",
+    "fullName": "Rocket R60V"
+  },
+  {
+    "id": "1b37382d",
+    "type": "Espresso",
+    "brand": "Sage",
+    "model": "Bambino",
+    "fullName": "Sage Bambino"
+  },
+  {
+    "id": "29f1a9af",
+    "type": "Espresso",
+    "brand": "Sage",
+    "model": "Bambino Plus",
+    "fullName": "Sage Bambino Plus"
+  },
+  {
+    "id": "f090f96f",
+    "type": "Espresso",
+    "brand": "Sage",
+    "model": "Barista Express",
+    "fullName": "Sage Barista Express"
+  },
+  {
+    "id": "e3daa1fe",
+    "type": "Espresso",
+    "brand": "Sage",
+    "model": "Barista Express Impress",
+    "fullName": "Sage Barista Express Impress"
+  },
+  {
+    "id": "27904941",
+    "type": "Espresso",
+    "brand": "Sage",
+    "model": "Barista Pro",
+    "fullName": "Sage Barista Pro"
+  },
+  {
+    "id": "1ef7b2f5",
+    "type": "Grinder",
+    "brand": "Sage",
+    "model": "Dose Control Pro (modded)",
+    "fullName": "Sage Dose Control Pro (modded)"
+  },
+  {
+    "id": "7f818405",
+    "type": "Espresso",
+    "brand": "Sage",
+    "model": "Dual Boiler",
+    "fullName": "Sage Dual Boiler"
+  },
+  {
+    "id": "5f49c228",
+    "type": "Espresso",
+    "brand": "Sage",
+    "model": "Duo-Temp Pro",
+    "fullName": "Sage Duo-Temp Pro"
+  },
+  {
+    "id": "01ac8f84",
+    "type": "Espresso",
+    "brand": "Sage",
+    "model": "Infuser",
+    "fullName": "Sage Infuser"
+  },
+  {
+    "id": "97a84715",
+    "type": "Espresso",
+    "brand": "Sage",
+    "model": "Oracle",
+    "fullName": "Sage Oracle"
+  },
+  {
+    "id": "40f60304",
+    "type": "Espresso",
+    "brand": "Sage",
+    "model": "Oracle Jet",
+    "fullName": "Sage Oracle Jet"
+  },
+  {
+    "id": "8f2f2fca",
+    "type": "Grinder",
+    "brand": "Sage",
+    "model": "The Smart Grinder",
+    "fullName": "Sage The Smart Grinder"
+  },
+  {
+    "id": "85db0a25",
+    "type": "Pour-over",
+    "brand": "Saint Anthony Industries",
+    "model": "C70 Ceramic Pourover",
+    "fullName": "Saint Anthony Industries C70 Ceramic Pourover"
+  },
+  {
+    "id": "d2a8120f",
+    "type": "Pour-over",
+    "brand": "Saint Anthony Industries",
+    "model": "F70 Ceramic Flatbottom",
+    "fullName": "Saint Anthony Industries F70 Ceramic Flatbottom"
+  },
+  {
+    "id": "0e0f909c",
+    "type": "Pour-over",
+    "brand": "Saint Anthony Industries",
+    "model": "G70 Glass",
+    "fullName": "Saint Anthony Industries G70 Glass"
+  },
+  {
+    "id": "7bc9f38b",
+    "type": "Pour-over",
+    "brand": "Saint Anthony Industries",
+    "model": "Phoenix70",
+    "fullName": "Saint Anthony Industries Phoenix70"
+  },
+  {
+    "id": "7465e9e0",
+    "type": "Grinder",
+    "brand": "Sette",
+    "model": "270",
+    "fullName": "Sette 270"
+  },
+  {
+    "id": "d561d9a2",
+    "type": "Espresso",
+    "brand": "Simonelli",
+    "model": "Appia II",
+    "fullName": "Simonelli Appia II"
+  },
+  {
+    "id": "4f0709ac",
+    "type": "Espresso",
+    "brand": "Simonelli",
+    "model": "Oscar",
+    "fullName": "Simonelli Oscar"
+  },
+  {
+    "id": "86691df9",
+    "type": "Drip",
+    "brand": "SMEG",
+    "model": "Drip Filter Coffee Machine",
+    "fullName": "SMEG Drip Filter Coffee Machine"
+  },
+  {
+    "id": "8dde74b4",
+    "type": "Espresso",
+    "brand": "Soli",
+    "model": "Barista Perfetta Plus",
+    "fullName": "Soli Barista Perfetta Plus"
+  },
+  {
+    "id": "2413c9af",
+    "type": "Grinder",
+    "brand": "SPTK38",
+    "fullName": "SPTK38"
+  },
+  {
+    "id": "55418307",
+    "type": "Drip",
+    "brand": "Technivorm Moccamaster",
+    "model": "Cup-One",
+    "fullName": "Technivorm Moccamaster Cup-One"
+  },
+  {
+    "id": "f6d0f2de",
+    "type": "Drip",
+    "brand": "Technivorm Moccamaster",
+    "model": "KBGT",
+    "fullName": "Technivorm Moccamaster KBGT"
+  },
+  {
+    "id": "a4b983b2",
+    "type": "Drip",
+    "brand": "Technivorm Moccamaster",
+    "model": "KBGV Select",
+    "fullName": "Technivorm Moccamaster KBGV Select"
+  },
+  {
+    "id": "4d857edf",
+    "type": "Drip",
+    "brand": "Technivorm Moccamaster",
+    "model": "KBT",
+    "fullName": "Technivorm Moccamaster KBT"
+  },
+  {
+    "id": "4c6ff3c9",
+    "type": "Grinder",
+    "brand": "Timemore",
+    "model": "078s",
+    "fullName": "Timemore 078s"
+  },
+  {
+    "id": "b0e804f9",
+    "type": "Grinder",
+    "brand": "Timemore",
+    "model": "C2 S Black",
+    "fullName": "Timemore C2 S Black"
+  },
+  {
+    "id": "ac792336",
+    "type": "Grinder",
+    "brand": "Timemore",
+    "model": "C3 esp",
+    "fullName": "Timemore C3 esp"
+  },
+  {
+    "id": "a994acd4",
+    "type": "Pour-over",
+    "brand": "Timemore",
+    "model": "Crystal Eye",
+    "fullName": "Timemore Crystal Eye"
+  },
+  {
+    "id": "1b6f516b",
+    "type": "Grinder",
+    "brand": "Timemore",
+    "model": "Sculptor 078S",
+    "fullName": "Timemore Sculptor 078S"
+  },
+  {
+    "id": "706a896e",
+    "type": "Espresso",
+    "brand": "Tuni",
+    "model": "E2",
+    "fullName": "Tuni E2"
+  },
+  {
+    "id": "76f07d71",
+    "type": "Grinder",
+    "brand": "Tuni",
+    "model": "G1",
+    "fullName": "Tuni G1"
+  },
+  {
+    "id": "13d49649",
+    "type": "Grinder",
+    "brand": "Turin",
+    "model": "DF54",
+    "fullName": "Turin DF54"
+  },
+  {
+    "id": "eec20eda",
+    "type": "Grinder",
+    "brand": "Turin",
+    "model": "H40",
+    "fullName": "Turin H40"
+  },
+  {
+    "id": "564137ee",
+    "type": "Espresso",
+    "brand": "Turin",
+    "model": "Legato V2",
+    "fullName": "Turin Legato V2"
+  },
+  {
+    "id": "8ce89db1",
+    "type": "Grinder",
+    "brand": "Turin",
+    "model": "SK40",
+    "fullName": "Turin SK40"
+  },
+  {
+    "id": "9680a170",
+    "type": "Pour-over",
+    "brand": "Varia",
+    "model": "FLO Dripper",
+    "fullName": "Varia FLO Dripper"
+  },
+  {
+    "id": "368b7346",
+    "type": "Grinder",
+    "brand": "Varia",
+    "model": "VS3",
+    "fullName": "Varia VS3"
+  },
+  {
+    "id": "af7b6965",
+    "type": "Grinder",
+    "brand": "Varia",
+    "model": "VS3 (Gen 2)",
+    "fullName": "Varia VS3 (Gen 2)"
+  },
+  {
+    "id": "8c6bb868",
+    "type": "Espresso",
+    "brand": "VBM",
+    "model": "Domo Jr Hx",
+    "fullName": "VBM Domo Jr Hx"
+  },
+  {
+    "id": "9d046017",
+    "type": "Espresso",
+    "brand": "VBM",
+    "model": "Domobar Junior",
+    "fullName": "VBM Domobar Junior"
+  },
+  {
+    "id": "c74e9b9e",
+    "type": "Espresso",
+    "brand": "VBM",
+    "model": "Domobar Super",
+    "fullName": "VBM Domobar Super"
+  },
+  {
+    "id": "1d9cd515",
+    "type": "Espresso",
+    "brand": "VBM",
+    "model": "Lollo",
+    "fullName": "VBM Lollo"
+  },
+  {
+    "id": "de2b49ce",
+    "type": "Drip",
+    "brand": "Wolf Gourmet",
+    "model": "Programmable Coffee System",
+    "fullName": "Wolf Gourmet Programmable Coffee System"
+  },
+  {
+    "id": "d07be798",
+    "type": "Pour-over",
+    "brand": "xBloom",
+    "model": "Original",
+    "fullName": "xBloom Original"
+  },
+  {
+    "id": "b4cb096a",
+    "type": "Pour-over",
+    "brand": "xBloom",
+    "model": "Studio",
+    "fullName": "xBloom Studio"
+  },
+  {
+    "id": "b32a94ea",
+    "type": "Grinder",
+    "brand": "Zerno",
+    "model": "Z1",
+    "fullName": "Zerno Z1"
+  },
+  {
+    "id": "0eaf85af",
+    "type": "Drip",
+    "brand": "Zojirushi",
+    "model": "Fresh Brew Plus Thermal",
+    "fullName": "Zojirushi Fresh Brew Plus Thermal"
+  },
+  {
+    "id": "118e5097",
+    "type": "Drip",
+    "brand": "Zojirushi",
+    "model": "ZUTTO Coffee Maker",
+    "fullName": "Zojirushi ZUTTO Coffee Maker"
+  }
+]

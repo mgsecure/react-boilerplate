@@ -6,7 +6,6 @@ export function AppProvider({children}) {
 
     const [adminEnabled, setAdminEnabled] = useLocalStorage('adminEnabled', false)
     const [beta, setBeta] = useLocalStorage('beta', false)
-    const [demo, setDemo] = useLocalStorage('demo', false)
 
     const handleSetAdmin = useCallback(value => {
         setAdminEnabled(value)
@@ -16,10 +15,6 @@ export function AppProvider({children}) {
         setBeta(value)
     }, [setBeta])
 
-    const handleSetDemo = useCallback(value => {
-        setDemo(value)
-    }, [setDemo])
-
     const verbose = false
 
     const value = useMemo(() => ({
@@ -27,10 +22,8 @@ export function AppProvider({children}) {
         setAdminEnabled: handleSetAdmin,
         beta,
         setBeta: handleSetBeta,
-        demo,
-        setDemo: handleSetDemo,
         verbose
-    }), [adminEnabled, handleSetAdmin, beta, handleSetBeta, demo, handleSetDemo, verbose])
+    }), [adminEnabled, handleSetAdmin, beta, handleSetBeta, verbose])
 
     return (
         <AppContext.Provider value={value}>

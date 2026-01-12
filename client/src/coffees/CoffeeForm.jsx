@@ -14,11 +14,13 @@ import {roastLevels, currencies} from '../data/equipmentBeans'
 import roasters from '../data/roasters.json'
 import RatingTable from '../misc/RatingTable.jsx'
 import cleanObject from '../util/cleanObject'
+import AuthContext from '../app/AuthContext.jsx'
 
 export default function CoffeeForm({coffee, open, setOpen}) {
     const theme = useTheme()
     const {flexStyle, isMobile} = useWindowSize()
     const {updateCollection} = useContext(DBContext)
+    const {isLoggedIn} = useContext(AuthContext)
 
     const baseForm = useMemo(() => {
         return {
@@ -27,7 +29,13 @@ export default function CoffeeForm({coffee, open, setOpen}) {
             newRoasterName: coffee?.altRoaster ? coffee.roaster?.name : undefined
         }
     }, [coffee])
+
     const [form, setForm] = useState(coffee ? baseForm : {id: `c_${genHexString(8)}`})
+    const [formChanged, setFormChanged] = useState(false)
+    const [uploading, setUploading] = useState(false)
+    const saveEnabled = useMemo(() => {
+        return isLoggedIn && formChanged && form.name && form.roasterName && !uploading
+    },[form.name, form.roasterName, formChanged, isLoggedIn, uploading])
 
     const [inputValue, setInputValue] = useState(coffee?.roaster?.name || '')
     useEffect(() => {
@@ -37,9 +45,9 @@ export default function CoffeeForm({coffee, open, setOpen}) {
         }
     }, [open, coffee, baseForm])
 
+
     const [roasterReset, setRoasterReset] = useState(false)
     const [inputValueOverride, setInputValueOverride] = useState(false)
-    const [uploading, setUploading] = useState(false)
 
     const roasterNames = useMemo(() => {
         return roasters.map((roaster) => roaster.name)
@@ -67,6 +75,7 @@ export default function CoffeeForm({coffee, open, setOpen}) {
             value = !form[name]
         }
         setForm({...form, [name]: value})
+        setFormChanged(true)
     }, [form])
 
     const handleAltRoasterToggle = useCallback(() => {
@@ -110,14 +119,9 @@ export default function CoffeeForm({coffee, open, setOpen}) {
         setInputValueOverride(!inputValueOverride)
         setForm({id: `c_${genHexString(8)}`})
         setUploading(false)
-        setTimeout(() => {
-            window.scrollTo({
-                left: 0,
-                top: 0,
-                behavior: 'smooth'
-            })
-        }, 100)
-    }, [inputValueOverride, roasterReset])
+        document.activeElement.blur()
+        setOpen(false)
+    }, [inputValueOverride, roasterReset, setOpen])
 
     const handleSubmit = useCallback(async (event) => {
         event.preventDefault()
@@ -153,9 +157,6 @@ export default function CoffeeForm({coffee, open, setOpen}) {
             ratings
         }
 
-        console.log('thisRoaster', thisRoaster)
-        console.log('formCopy', formCopy)
-
         delete formCopy.roasterName
         delete formCopy.newRoasterName
         const cleanForm = Object.fromEntries(
@@ -176,6 +177,13 @@ export default function CoffeeForm({coffee, open, setOpen}) {
         } finally {
             setUploading(false)
             handleReload()
+            setTimeout(() => {
+                window.scrollTo({
+                    left: 0,
+                    top: 0,
+                    behavior: 'smooth'
+                })
+            }, 100)
             setOpen(false)
         }
     }, [form, coffee, ratings, updateCollection, handleReload, setOpen, thisRoaster])
@@ -463,10 +471,10 @@ export default function CoffeeForm({coffee, open, setOpen}) {
                             <Button onClick={handleReload} variant='outlined' color='info'
                                     style={{marginRight: 16}}
                                     disabled={uploading}>
-                                CLEAR
+                                CANCEL
                             </Button>
                             <Button type='submit' variant='contained' color='info'
-                                    disabled={uploading} style={{boxShadow: 'none'}}>
+                                    disabled={!saveEnabled} style={{boxShadow: 'none'}}>
                                 SAVE
                             </Button>
                         </div>

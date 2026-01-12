@@ -35,8 +35,8 @@ export default [{
             path: '/',
             name: 'homepage',
             lazy: async () => {
-                const {default: BeansRoute} = await import('../espressoBeans/BeansRoute.jsx')
-                return {element: <Suspense fallback={<LoadingDisplay/>}><BeansRoute/></Suspense>}
+                const {default: HomepageRoute} = await import('../homepage/HomepageRoute.jsx')
+                return {element: <Suspense fallback={<LoadingDisplay/>}><HomepageRoute/></Suspense>}
             }
         },
         {
