@@ -4,15 +4,17 @@ import DBContext from '../app/DBContext.jsx'
 import {Button} from '@mui/material'
 import TextField from '@mui/material/TextField'
 import Dialog from '@mui/material/Dialog'
+import AuthContext from '../app/AuthContext.jsx'
 
 export default function YieldCalculatorButton() {
 
     const {userProfile = {}, updateProfileField} = useContext(DBContext)
+    const {isLoggedIn} = useContext(AuthContext)
     const [form, setForm] = useState(userProfile.yieldCalculator || {dose: '18', yield: '36', ratio: '2'})
 
     useEffect(() => {
         setForm(userProfile.yieldCalculator || {dose: '18', yield: '36', ratio: '2'})
-    },[userProfile.yieldCalculator])
+    }, [userProfile.yieldCalculator])
 
 
     const handleFormChange = useCallback((event) => {
@@ -22,7 +24,9 @@ export default function YieldCalculatorButton() {
         const doseNum = parseInt(form.dose)
         const yieldNum = parseInt(form.yield)
 
-        function checkNumber(number) { return Number.isNaN(number) || !Number.isFinite(number) ? 0 : number }
+        function checkNumber(number) {
+            return Number.isNaN(number) || !Number.isFinite(number) ? 0 : number
+        }
 
         if (name === 'dose') {
             const ratio = (checkNumber(yieldNum / valueNum)).toFixed(1).replace('.0', '')
@@ -58,16 +62,14 @@ export default function YieldCalculatorButton() {
         setForm(userProfile.yieldCalculator || {dose: '18', yield: '36', ratio: '2'})
     }, [userProfile.yieldCalculator])
 
-
-
-    //if (!adminRole) return null
+    const marginTop = isLoggedIn ? 0 : 20
 
     return (
         <>
             <Tooltip title='Yield Calculator' arrow disableFocusListener>
                 <Button onClick={handleClick}
                         style={{
-                            fontWeight: 700, margin: 0, padding: 0,
+                            fontWeight: 700, padding: 0,
                             minWidth: 48, height: 48, borderRadius: 24
                         }}>
                     {userProfile.yieldCalculator?.ratio || '2'}:1
@@ -86,7 +88,7 @@ export default function YieldCalculatorButton() {
                             }
                         }
                     }}>
-                <div style={{padding: 0, textAlign: 'center', fontWeight: 700, fontSize: '1.2rem', marginBottom: 5}}>
+                <div style={{marginTop: marginTop, textAlign: 'center', fontWeight: 700, fontSize: '1.2rem', marginBottom: 5}}>
                     Yield Calculator
                 </div>
                 <div style={{textAlign: 'center'}}>
@@ -113,17 +115,19 @@ export default function YieldCalculatorButton() {
                                        size='small' color='info'
                                        onChange={handleFormChange} value={form.ratio || ''}
                                        sx={{input: {textAlign: 'center'}}} tabIndex={2}/>
-                            <div style={{ fontSize: '1.2rem', fontWeight: 500, margin: 4}}>:1</div>
+                            <div style={{fontSize: '1.2rem', fontWeight: 500, margin: 4}}>:1</div>
                         </div>
                     </div>
 
-                    <Button style={{marginBottom: 0}}
-                            variant='contained'
-                            onClick={handleSave}
-                            color='success'
-                    >
-                        SAVE
-                    </Button>
+                    {isLoggedIn &&
+                        <Button style={{marginBottom: 0}}
+                                variant='contained'
+                                onClick={handleSave}
+                                color='success'
+                        >
+                            SAVE
+                        </Button>
+                    }
                 </div>
             </Dialog>
         </>

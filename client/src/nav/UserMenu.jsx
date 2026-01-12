@@ -8,7 +8,6 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import LogoutIcon from '@mui/icons-material/Logout'
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks'
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings'
-import BiotechIcon from '@mui/icons-material/Biotech'
 import EditIcon from '@mui/icons-material/Edit'
 import IconButton from '@mui/material/IconButton'
 import Menu from '@mui/material/Menu'
@@ -23,9 +22,9 @@ import CoffeeIcon from '@mui/icons-material/Coffee'
 
 function UserMenu() {
     const navigate = useNavigate()
-    const {isLoggedIn, user, logout} = useContext(AuthContext)
-    const {adminRole, userProfile = {}, qaUserRole} = useContext(DBContext)
-    const {admin, setAdmin, qaUser, setQaUser} = useContext(AppContext)
+    const {isLoggedIn, user, logout, isAdmin} = useContext(AuthContext)
+    const {userProfile = {}} = useContext(DBContext)
+    const {adminEnabled, setAdminEnabled} = useContext(AppContext)
     const [anchorEl, setAnchorEl] = useState(null)
     const open = Boolean(anchorEl)
     const handleOpen = useCallback(event => setAnchorEl(event.currentTarget), [])
@@ -44,12 +43,8 @@ function UserMenu() {
     }, [handleClose, navigate])
 
     const handleToggleAdmin = useCallback(() => {
-        setAdmin(!admin)
-    }, [admin, setAdmin])
-
-    const handleToggleQaUser = useCallback(() => {
-        setQaUser(!qaUser)
-    }, [qaUser, setQaUser])
+        setAdminEnabled(!adminEnabled)
+    }, [adminEnabled, setAdminEnabled])
 
     const handleLogout = useCallback(() => {
         handleClose()
@@ -67,11 +62,10 @@ function UserMenu() {
                                 src={user.photoURL}
                                 sx={{width: 32, height: 32}}
                             />
-                            : <AccountCircleIcon/>
+                            : <AccountCircleIcon sx={{width: 32, height: 32}}/>
                     }
                 </IconButton>
             </Tooltip>
-
             <Menu
                 anchorEl={anchorEl}
                 open={open}
@@ -82,7 +76,6 @@ function UserMenu() {
                     }
                 }}
             >
-
                 {
                     isLoggedIn &&
                     <div>
@@ -98,31 +91,19 @@ function UserMenu() {
                             </ListItemIcon>
                             <ListItemText>My Profile</ListItemText>
                         </MenuItem>
-                        {adminRole &&
+                        {isAdmin &&
                             <MenuItem onClick={handleToggleAdmin}>
                                 <ListItemIcon>
-                                    <AdminPanelSettingsIcon color={admin ? 'success' : 'default'}/>
+                                    <AdminPanelSettingsIcon color={adminEnabled ? 'success' : 'default'}/>
                                 </ListItemIcon>
-                                {admin ?
-                                    <ListItemText>Disable Admin</ListItemText>
-                                    :
-                                    <ListItemText>Enable Admin</ListItemText>
+                                {adminEnabled
+                                    ? <ListItemText>Disable Admin</ListItemText>
+                                    : <ListItemText>Enable Admin</ListItemText>
                                 }
                             </MenuItem>
                         }
-                        {qaUserRole &&
-                            <MenuItem onClick={handleToggleQaUser}>
-                                <ListItemIcon>
-                                    <BiotechIcon color={qaUser ? 'info' : 'default'}/>
-                                </ListItemIcon>
-                                {qaUser
-                                    ? <ListItemText>Disable QA Role</ListItemText>
-                                    : <ListItemText>Enable QA Role</ListItemText>
-                                }
-                            </MenuItem>
-                        }
-                        <Divider/>
 
+                        <Divider/>
 
                         <MenuItem onClick={handleLogout}>
                             <ListItemIcon>
@@ -140,12 +121,6 @@ function UserMenu() {
                                 <LibraryBooksIcon fontSize='small'/>
                             </ListItemIcon>
                             <ListItemText>Profile</ListItemText>
-                        </MenuItem>
-                        <MenuItem disabled>
-                            <ListItemIcon>
-                                <CoffeeIcon/>
-                            </ListItemIcon>
-                            <ListItemText>My Beans</ListItemText>
                         </MenuItem>
                         <Divider/>
 

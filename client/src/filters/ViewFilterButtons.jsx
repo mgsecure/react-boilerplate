@@ -49,12 +49,10 @@ function ViewFilterButtons({
              }}
         >
             <SortTextButton sortValues={sortValues} compactMode={compactMode} expandAll={expandAll}/>
-            {advancedEnabled
-                ? <AdvancedFilterDrawerButton extraFilters={extraFilters} entryType={entryType}/>
-                : <FilterTextButton extraFilters={extraFilters}/>
-            }
+            <AdvancedFilterDrawerButton extraFilters={extraFilters} entryType={entryType}
+                                        advancedEnabled={advancedEnabled}/>
             {!!reset &&
-                <ResetFiltersButton advanced nav/>            }
+                <ResetFiltersButton advanced nav/>}
         </Box>
     )
 }

@@ -3,8 +3,8 @@ import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
 import DeleteIcon from '@mui/icons-material/Delete'
 import Menu from '@mui/material/Menu'
-import {alpha, Button} from '@mui/material'
-import {useTheme} from '@mui/material/styles'
+import {Button} from '@mui/material'
+import {useTheme, lighten} from '@mui/material/styles'
 
 export default function DeleteEntryButton({size = 'medium', entryType, handleDelete, style}) {
 
@@ -16,7 +16,7 @@ export default function DeleteEntryButton({size = 'medium', entryType, handleDel
     }, [])
 
     const theme = useTheme()
-    const iconColor = anchorEl ? theme.palette.error.main : alpha(theme.palette.warning.main, 0.4)
+    const iconColor = anchorEl ? theme.palette.error.main : lighten(theme.palette.error.main, 0.2)
 
     return (
         <>

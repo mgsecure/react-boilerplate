@@ -4,26 +4,33 @@ const AppContext = React.createContext({})
 
 export function AppProvider({children}) {
 
-    const [admin, setAdmin] = useLocalStorage('lpuAdmin', false)
-    const [beta, setBeta] = useLocalStorage('lpuBeta', false)
+    const [adminEnabled, setAdminEnabled] = useLocalStorage('adminEnabled', false)
+    const [beta, setBeta] = useLocalStorage('beta', false)
+    const [demo, setDemo] = useLocalStorage('demo', false)
 
     const handleSetAdmin = useCallback(value => {
-        setAdmin(value)
-    }, [setAdmin])
+        setAdminEnabled(value)
+    }, [setAdminEnabled])
 
     const handleSetBeta = useCallback(value => {
         setBeta(value)
     }, [setBeta])
 
+    const handleSetDemo = useCallback(value => {
+        setDemo(value)
+    }, [setDemo])
+
     const verbose = false
 
     const value = useMemo(() => ({
-        admin,
-        setAdmin: handleSetAdmin,
+        adminEnabled,
+        setAdminEnabled: handleSetAdmin,
         beta,
         setBeta: handleSetBeta,
+        demo,
+        setDemo: handleSetDemo,
         verbose
-    }), [admin, handleSetAdmin, beta, handleSetBeta, verbose])
+    }), [adminEnabled, handleSetAdmin, beta, handleSetBeta, demo, handleSetDemo, verbose])
 
     return (
         <AppContext.Provider value={value}>

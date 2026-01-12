@@ -1,20 +1,23 @@
-import React, {useCallback} from 'react'
+import React, {useCallback, useContext} from 'react'
 import Drawer from '@mui/material/Drawer'
 import useWindowSize from '../util/useWindowSize.jsx'
 import {useTheme} from '@mui/material/styles'
-import EquipmentForm from './EquipmentForm.jsx'
-import BeanForm from './BeanForm.jsx'
+import EquipmentForm from '../equipment/EquipmentForm.jsx'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
-import BrewForm from './BrewForm.jsx'
+import BrewForm from '../brews/BrewForm.jsx'
 import CoffeeForm from '../coffees/CoffeeForm.jsx'
+import FilterContext from '../context/FilterContext.jsx'
 
-export default function ItemDrawer({item, open, setOpen, type = 'Item', action = 'edit'}) {
+export default function ItemDrawer({item, open, setOpen, type = 'Item', action = 'edit', defaultValue}) {
     const {isMobile} = useWindowSize()
     const theme = useTheme()
+    const {clearAdvancedFilterGroups} = useContext(FilterContext)
 
     const handleOverlayClose = useCallback(() => {
+        document.activeElement.blur()
+        if (action === 'noMatch') clearAdvancedFilterGroups()
         setOpen(false)
-    }, [setOpen])
+    }, [action, clearAdvancedFilterGroups, setOpen])
 
     return (
         <React.Fragment>
@@ -57,16 +60,16 @@ export default function ItemDrawer({item, open, setOpen, type = 'Item', action =
                 </div>
 
                 {type === 'Equipment' &&
-                    <EquipmentForm machine={item} open={open} setOpen={setOpen} type={type}/>
+                    <EquipmentForm machine={item} action={action} open={open} setOpen={setOpen} type={type}/>
                 }
                 {type === 'Bean' &&
-                    <BeanForm bean={item} open={open} setOpen={setOpen} type={type}/>
+                    'FOO!'
                 }
                 {type === 'Coffee' &&
-                    <CoffeeForm coffee={item} action={action} open={open} setOpen={setOpen} type={type}/>
+                    <CoffeeForm coffee={item} open={open} setOpen={setOpen} type={type}/>
                 }
                 {type === 'Brew' &&
-                    <BrewForm entry={item} action={action} open={open} setOpen={setOpen} type={type}/>
+                    <BrewForm entry={item} action={action} open={open} setOpen={setOpen} type={type} coffee={defaultValue}/>
                 }
 
             </Drawer>

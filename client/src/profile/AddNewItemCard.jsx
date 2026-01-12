@@ -4,8 +4,7 @@ import CardContent from '@mui/material/CardContent'
 import ItemDrawer from './ItemDrawer.jsx'
 import {useTheme} from '@mui/material/styles'
 
-export default function AddNewItemCard({type = 'Bean', count = 10}) {
-
+export default function AddNewItemCard({label, type = 'Entry', count = 0, defaultValue, action}) {
     const [open, setOpen] = useState(false)
     const handleCardClick = useCallback(() => {
         setOpen(true)
@@ -18,7 +17,7 @@ export default function AddNewItemCard({type = 'Bean', count = 10}) {
             <Card
                 onClick={handleCardClick} sx={{height: '100%'}}
                 style={{
-                    backgroundColor: theme.palette.card.add,
+                    backgroundColor: theme.palette.card?.add,
                     color: '#fff',
                     boxShadow: 'unset',
                     padding: '0px',
@@ -31,15 +30,15 @@ export default function AddNewItemCard({type = 'Bean', count = 10}) {
                         fontSize: '1.1rem',
                         fontWeight: 500,
                         textAlign: 'center',
-                        marginTop:2
+                        marginTop: 2
                     }}>
-                        Add {count > 0 ? 'New ' : ''}{type}
+                        {label || `Add ${count > 0 ? 'New ' : ''}${type}`}
                     </div>
                 </CardContent>
 
             </Card>
 
-            <ItemDrawer open={open} setOpen={setOpen} type={type}/>
+            <ItemDrawer open={open} setOpen={setOpen} type={type} defaultValue={defaultValue} action={action}/>
 
         </React.Fragment>
 

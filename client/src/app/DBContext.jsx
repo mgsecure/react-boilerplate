@@ -14,6 +14,7 @@ import {
 import AuthContext from './AuthContext'
 import {enqueueSnackbar} from 'notistack'
 import dayjs from 'dayjs'
+import demoProfile from '../data/demoProfile.json'
 
 /**
  * @typedef {object} award
@@ -29,8 +30,7 @@ export function DBProvider({children}) {
     const [profileLoaded, setProfileLoaded] = useState(false)
     const [dbError, setDbError] = useState(null)
 
-    const dbLoaded = profileLoaded
-    const adminRole = isLoggedIn && userProfile && userProfile.admin
+    const adminRole = isLoggedIn && user && userClaims.includes('admin')
     const qaUserRole = isLoggedIn && user && (['qaUser', 'admin'].some(claim => userClaims.includes(claim)) || adminRole)
 
     // Profile Subscription
@@ -133,7 +133,7 @@ export function DBProvider({children}) {
                 transaction.update(ref, {createdAt: timestamp})
             }
         })
-    }, [dbError, user.uid, userProfile])
+    }, [dbError, user?.uid, userProfile])
 
 
     // Equipment DB

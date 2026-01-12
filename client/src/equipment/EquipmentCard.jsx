@@ -15,7 +15,7 @@ import {enqueueSnackbar} from 'notistack'
 import Menu from '@mui/material/Menu'
 import {Button} from '@mui/material'
 import Link from '@mui/material/Link'
-import ItemDrawer from './ItemDrawer.jsx'
+import ItemDrawer from '../profile/ItemDrawer.jsx'
 import Tooltip from '@mui/material/Tooltip'
 import LogEntryButton from '../entries/LogEntryButton.jsx'
 
@@ -160,11 +160,6 @@ export default function EquipmentCard({entry={}, expanded, onExpand}) {
                             </div>
                         )
                     }
-                    {!entry.notes &&
-                        <div style={{width: '100%', textAlign: 'center', marginBottom: 10, fontStyle: 'italic'}}>
-                            no machine details available<br/>
-                        </div>
-                    }
 
                     <div style={{display: 'flex', placeContent: 'center'}}>
                         <LogEntryButton entry={entry} entryType={'brew'} size={'small'}/>
@@ -198,7 +193,7 @@ export default function EquipmentCard({entry={}, expanded, onExpand}) {
                                             edge='start'
                                             color='error'
                                     >
-                                        Delete Brew
+                                        Delete Gear
                                     </Button>
                                 </div>
                             </Menu>

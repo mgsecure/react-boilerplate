@@ -22,6 +22,7 @@
     "@mui/icons-material": "^7.3.2",
     "@mui/material": "^7.3.2",
     "@mui/system": "^7.3.2",
+    "@mui/x-date-pickers": "^8.24.0",
     "@starter/shared": "workspace:*",
     "@tanstack/react-query": "^5.56.2",
     "@types/react": "^19.1.13",

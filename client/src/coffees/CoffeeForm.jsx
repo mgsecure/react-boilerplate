@@ -16,8 +16,10 @@ import RatingTable from '../misc/RatingTable.jsx'
 import cleanObject from '../util/cleanObject'
 
 export default function CoffeeForm({coffee, open, setOpen}) {
+    const theme = useTheme()
     const {flexStyle, isMobile} = useWindowSize()
     const {updateCollection} = useContext(DBContext)
+
     const baseForm = useMemo(() => {
         return {
             ...coffee,
@@ -38,7 +40,6 @@ export default function CoffeeForm({coffee, open, setOpen}) {
     const [roasterReset, setRoasterReset] = useState(false)
     const [inputValueOverride, setInputValueOverride] = useState(false)
     const [uploading, setUploading] = useState(false)
-    const theme = useTheme()
 
     const roasterNames = useMemo(() => {
         return roasters.map((roaster) => roaster.name)
@@ -59,7 +60,12 @@ export default function CoffeeForm({coffee, open, setOpen}) {
     }, [])
 
     const handleFormChange = useCallback((event) => {
-        const {name, value} = event.target
+        let {name, value} = event.target
+
+        const checkboxes = ['decaf']
+        if (checkboxes.includes(event.target.name)) {
+            value = !form[name]
+        }
         setForm({...form, [name]: value})
     }, [form])
 
@@ -177,6 +183,11 @@ export default function CoffeeForm({coffee, open, setOpen}) {
     const roasterBoxOpacity = form.altRoaster > 0 ? 0.5 : 1
     const paddingLeft = !isMobile ? 15 : 15
     const cityMarginTop = (form.roaster && !isMobile) ? 0 : 0
+    const linkSx = {
+        color: '#fff', textDecoration: 'none', cursor: 'pointer', '&:hover': {
+            textDecoration: 'underline'
+        }
+    }
 
     return (
         <div>
@@ -186,6 +197,23 @@ export default function CoffeeForm({coffee, open, setOpen}) {
                 <form action={null} encType='multipart/form-data' method='post'
                       onSubmit={handleSubmit}>
                     <div style={{paddingLeft: paddingLeft, color: theme.palette.text.primary}}>
+                        <div style={{marginRight: 10, marginTop: 10}}>
+                            <div style={{marginRight: 0, marginTop: 0}}>
+                                <div style={{
+                                    fontSize: '1.1rem',
+                                    fontWeight: 500,
+                                    marginBottom: 2
+                                }}>
+                                    Coffee Name
+                                </div>
+                                <TextField type='text' name='name' fullWidth style={{minWidth: 300}}
+                                           size='small'
+                                           onChange={handleFormChange} value={form.name || ''}
+                                           color='info'/>
+                            </div>
+                        </div>
+
+
                         <div style={{display: 'block'}}>
                             <div style={{display: flexStyle, marginRight: 10, marginBottom: 0}}>
                                 <div style={{marginTop: 10, minWidth: 350}}>
@@ -303,22 +331,6 @@ export default function CoffeeForm({coffee, open, setOpen}) {
 
                         <div style={{marginRight: 10, marginBottom: 10}}>
                             <div style={{marginRight: 0, marginTop: 0}}>
-                                <div style={{
-                                    fontSize: '1.1rem',
-                                    fontWeight: 500,
-                                    marginBottom: 2
-                                }}>
-                                    Coffee Name
-                                </div>
-                                <TextField type='text' name='name' fullWidth style={{minWidth: 300}}
-                                           size='small'
-                                           onChange={handleFormChange} value={form.name || ''}
-                                           color='info'/>
-                            </div>
-                        </div>
-
-                        <div style={{marginRight: 10, marginBottom: 10}}>
-                            <div style={{marginRight: 0, marginTop: 0}}>
                                 <div style={{fontSize: '1.0rem', marginBottom: 2}}>Tasting Notes</div>
                                 <TextField type='text' name='tastingNotes' fullWidth style={{minWidth: 300}}
                                            size='small'
@@ -345,7 +357,7 @@ export default function CoffeeForm({coffee, open, setOpen}) {
                                            color='info'/>
                             </div>
 
-                            <div style={{marginRight: 10, marginTop: 0}}>
+                            <div style={{marginRight: 15, marginTop: 0}}>
                                 <div style={{fontSize: '1.0rem', marginBottom: 2}}>
                                     Roast Level
                                 </div>
@@ -363,8 +375,13 @@ export default function CoffeeForm({coffee, open, setOpen}) {
                                     <Checkbox onChange={handleFormChange}
                                               name='decaf' id='decaf'
                                               checked={form.decaf || false} color='info'
-                                              size='small'/>
-                                    Decaf
+                                              size='small' style={{marginBottom:3}}/>
+                                    <Link style={{color: theme.palette.text.primary, marginBottom:1}} onClick={() => handleFormChange({
+                                        target: {
+                                            name: 'decaf',
+                                            value: !form.decaf
+                                        }
+                                    })}>Decaf</Link>
                                 </div>
                             </div>
                         </div>

@@ -1,8 +1,8 @@
 import React, {useDeferredValue, useState} from 'react'
 import EquipmentCard from './EquipmentCard.jsx'
-import AddNewItemCard from './AddNewItemCard.jsx'
+import AddNewItemCard from '../profile/AddNewItemCard.jsx'
 import Grid from '@mui/material/Grid'
-import {typeSort} from '../data/equipmentBeans'
+import {typeSort} from '../data/equipmentBeans.js'
 
 export default function Equipment({machines = []}) {
 
@@ -36,7 +36,7 @@ export default function Equipment({machines = []}) {
                                     </Grid>
                                 )}
                             <Grid size={{xs: 4, sm: 4, md: 4}} key={'add-machine-card'}>
-                                <AddNewItemCard type={'Equipment'} count={machines.length}/>
+                                <AddNewItemCard type={'Gear'} count={machines.length}/>
                             </Grid>
                         </Grid>
                     }

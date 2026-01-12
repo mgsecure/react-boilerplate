@@ -11,20 +11,24 @@ export function BrewsDataProvider({children, profile}) {
     const {search, sort, expandAll} = allFilters
 
     const allEntries = useMemo(() => {
-        return !profile.brews
-            ? []
-            : profile.brews
+        return profile.brews || []
     }, [profile.brews])
 
     const mappedEntries = useMemo(() => {
         return allEntries
             .map(entry => {
-                const coffee = profile.coffees.find(g => g.id === entry.coffee?.id) || entry.coffee || {}
+                const coffee = profile.coffees?.find(g => g.id === entry.coffee?.id) || entry.coffee || {}
+                const grinder = profile.equipment?.find(g => g.id === entry.grinder?.id) || entry.grinder || {}
+                const machine = profile.equipment?.find(g => g.id === entry.machine?.id) || entry.machine || {}
 
                 return {
                     ...entry,
-                    originalEntry: entry,
-                    fullName: coffee.roaster ? `${coffee.name} (${coffee.roaster.name})` : coffee.name,
+                    originalEntry: {...entry},
+                    fullName: coffee.fullName || 'Unknown Coffee',
+                    coffeeName: coffee.name || 'Unknown Coffee',
+                    roasterName: coffee.roaster?.name || 'Unknown Roaster',
+                    grinderName: grinder?.fullName || 'Unknown Grinder',
+                    machineName: machine?.fullName || 'Unknown Machine',
                     modifiedAt: entry.modifiedAt || entry.addedAt,
                     restedDays: Math.max(dayjs(entry.addedAt).diff(dayjs(entry.roastDate), 'day'), 0),
                     isFlagged: entry.flagged ? 'Yes' : 'No',
@@ -33,7 +37,7 @@ export function BrewsDataProvider({children, profile}) {
                     ].join(','))
                 }
             })
-    }, [allEntries, profile.coffees])
+    }, [allEntries, profile.coffees, profile.equipment])
 
     const searchedEntries = useMemo(() => {
         return searchEntriesForText(search, mappedEntries)
@@ -50,24 +54,21 @@ export function BrewsDataProvider({children, profile}) {
         const sorted = [...searched]
         if (sort) {
             sorted.sort((a, b) => {
-                if (sort === 'alphaAscending') {
+                if (sort === 'name') {
                     return a.fullName.localeCompare(b.fullName)
-                } else if (sort === 'alphaDescending') {
-                    return b.fullName.localeCompare(a.fullName)
-                } else if (sort === 'name') {
-                    return a.fullName.localeCompare(b.fullName)
+                        || dayjs(b.brewedAt).valueOf() - dayjs(a.brewedAt).valueOf()
                 } else if (sort === 'rating') {
                     return (b.ratings?.rating || 0) - (a.ratings?.rating || 0)
                         || a.fullName.localeCompare(b.fullName)
                 } else if (sort === 'dateAdded') {
                     return dayjs(b.addedAt).valueOf() - dayjs(a.addedAt).valueOf()
                 } else {
-                    return dayjs(b.modifiedAt).valueOf() - dayjs(a.modifiedAt).valueOf()
+                    return dayjs(b.brewedAt).valueOf() - dayjs(a.brewedAt).valueOf()
                 }
             })
         } else {
             sorted.sort((a, b) => {
-                return dayjs(b.modifiedAt).valueOf() - dayjs(a.modifiedAt).valueOf()
+                return dayjs(b.brewedAt).valueOf() - dayjs(a.brewedAt).valueOf()
             })
         }
         return sorted

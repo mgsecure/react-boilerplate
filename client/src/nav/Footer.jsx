@@ -2,6 +2,8 @@ import React from 'react'
 import Typography from '@mui/material/Typography'
 import ToggleBetaButton from './ToggleBetaButton'
 import ToggleColorMode from '../misc/ToggleColorMode.jsx'
+import Link from '@mui/material/Link'
+import {openInNewTab} from '../util/openInNewTab.js'
 
 function Footer({extras, before}) {
     return (
@@ -10,18 +12,14 @@ function Footer({extras, before}) {
 
             {before}
 
-            <a href='https://www.reddit.com/r/espresso/' target='_blank' rel='noopener noreferrer'>
-                Reddit
-            </a>
-            &nbsp;•&nbsp;
-            <span style={{color: '#777'}}>
-                YouTube
-            </span>
-            &nbsp;•&nbsp;
-            <span style={{color: '#777'}}>
-                Usage
-            </span>
-            &nbsp;•&nbsp;
+            <Link onClick={() => openInNewTab('https://www.reddit.com/r/espresso')}>
+                r/Espresso
+            </Link>
+            &nbsp;&nbsp;•&nbsp;&nbsp;
+            <Link onClick={() => openInNewTab('https://www.reddit.com/r/pourover')}>
+                r/Pourover
+            </Link>
+            &nbsp;&nbsp;•&nbsp;&nbsp;
             <span style={{color: '#777'}}>
                 Privacy
             </span>

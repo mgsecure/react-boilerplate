@@ -9,11 +9,8 @@ import {useNavigate, useSearchParams} from 'react-router-dom'
 import AuthContext from '../app/AuthContext.jsx'
 import {enqueueSnackbar} from 'notistack'
 import Menu from '@mui/material/Menu'
-import Equipment from './Equipment.jsx'
-import Beans from './Beans.jsx'
-import Brews from './Brews.jsx'
+import Equipment from '../equipment/Equipment.jsx'
 import DataContext from '../context/DataContext.jsx'
-import dayjs from 'dayjs'
 
 export default function ViewProfile() {
     const {isMobile, flexStyle} = useWindowSize()
@@ -87,19 +84,6 @@ export default function ViewProfile() {
         ? ` (${form.username}) `
         : ''
 
-    const brewsSection = (
-        <div style={{padding: 16, width: '100%'}} key={'brews'}>
-            <div style={{display: 'flex', alignItems: 'center', marginBottom: 0}}>
-                <div style={{flexGrow: 1, fontSize: '1.3rem', fontWeight: 500}}>Recent Brews</div>
-                <div style={{marginBottom:8}}>
-                    <Button variant='contained' size='small' onClick={() => navigate('/brews')}>
-                        View All</Button>
-                </div>
-            </div>
-            <Brews entries={visibleEntries}/>
-        </div>
-    )
-
     const equipmentSection = (
         <div style={{padding: 16, width: '100%'}} key={'equipment'}>
             <div style={{width: '100%', fontSize: '1.2rem', fontWeight: 500, marginBottom: 10}}>Equipment</div>
@@ -107,16 +91,9 @@ export default function ViewProfile() {
         </div>
     )
 
-    const beansSection = (
-        <div style={{padding: 16, width: '100%'}} key={'beans'}>
-            <div style={{width: '100%', fontSize: '1.2rem', fontWeight: 500, marginBottom: 10}}>Recent Beans</div>
-            <Beans beans={userProfile.beans?.sort((a, b) => dayjs(b.modifiedAt).valueOf() - dayjs(a.modifiedAt).valueOf())}/>
-        </div>
-    )
-
-    let sections = [equipmentSection, beansSection, brewsSection]
+    let sections = [equipmentSection]
     if (userProfile?.equipment?.length > 0 && userProfile?.beans?.length > 0) {
-        sections = [brewsSection, beansSection, equipmentSection]
+        sections = [equipmentSection]
     }
 
     const extras = (
@@ -177,7 +154,12 @@ export default function ViewProfile() {
                 </div>
             </div>
 
-            {sections}
+
+            <div style={{display: 'flex', placeContent: 'center', padding: 26, width: '100%'}}>
+                <div style={{fontSize: '1.2rem', fontWeight: 500, marginBottom: 10}}>
+                    [ Stats and charts and other cool stuff coming soon. ]
+                </div>
+            </div>
 
 
             <div style={{width: '100%', textAlign: 'center', margin: '60px 0px 10px 0px'}}>

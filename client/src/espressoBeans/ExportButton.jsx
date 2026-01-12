@@ -15,7 +15,7 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import download from '../util/download'
 import Button from '@mui/material/Button'
 
-function ExportButton({text, entries}) {
+function ExportButton({text, entries, filename='espressoBeans'}) {
     const [anchorEl, setAnchorEl] = useState(null)
     const open = Boolean(anchorEl)
     const handleOpen = useCallback(event => setAnchorEl(event.currentTarget), [])
@@ -23,13 +23,6 @@ function ExportButton({text, entries}) {
     const {visibleEntries} = useContext(DataContext)
 
     const exportEntries = entries || visibleEntries
-
-    const handleExportJson = useCallback(() => {
-        const data = JSON.stringify(exportEntries)
-        handleClose()
-        download('espressoBeans.json', data)
-        enqueueSnackbar('Current list downloaded as espressoBeans.json')
-    }, [handleClose, exportEntries])
 
     const handleExportClipboard = useCallback(() => {
         const data = exportEntries.map(datum => ({
@@ -48,7 +41,7 @@ function ExportButton({text, entries}) {
 
         handleClose()
         navigator.clipboard.writeText(clipboardText).then()
-        enqueueSnackbar('Current lock entries copied to clipboard.')
+        enqueueSnackbar('Current entries copied to clipboard.')
     }, [handleClose, exportEntries])
 
     const handleExportCsv = useCallback(() => {
@@ -78,6 +71,14 @@ function ExportButton({text, entries}) {
         download('lpubeltsData.csv', csvFile)
         enqueueSnackbar('Current lock entries downloaded as lpubeltsData.csv')
     }, [handleClose, exportEntries])
+
+    const handleExportJson = useCallback(() => {
+        const data = JSON.stringify(exportEntries)
+        handleClose()
+        download(`${filename}.json`, data)
+        enqueueSnackbar(`Current list downloaded as ${filename}.json`)
+    }, [exportEntries, handleClose, filename])
+
 
     return (
         <React.Fragment>

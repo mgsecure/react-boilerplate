@@ -21,20 +21,22 @@ import RedditIcon from '@mui/icons-material/Reddit'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import TableChartIcon from '@mui/icons-material/TableChart'
 import PersonIcon from '@mui/icons-material/Person'
+import CoffeeMakerIcon from '@mui/icons-material/CoffeeMaker'
+import FreeBreakfastIcon from '@mui/icons-material/FreeBreakfast'
 
 export default [
     {
-        title: 'My Profile',
-        icon: <PersonIcon fontSize='small'/>,
-        path: '/profile',
+        title: 'My Gear',
+        icon: <ConstructionIcon fontSize='small'/>,
+        path: '/equipment',
     },
     {
         title: 'My Coffees',
-        icon: <CoffeeIcon fontSize='small'/>,
+        icon: <FreeBreakfastIcon fontSize='small'/>,
         path: '/coffees',
     },
     {
-        title: 'My Brews',
+        title: 'All Brews',
         icon: <CoffeeIcon fontSize='small'/>,
         path: '/brews',
     },
@@ -65,26 +67,25 @@ export default [
         disabled: true,
     },
     {
-        title: 'Add A Bean',
-        icon: <AddCircleOutlineIcon fontSize='small'/>,
-        path: '/info',
-        disabled: true,
-    },
-    {
         title: 'Glossary',
         icon: <MenuBookIcon fontSize='small'/>,
         path: '/glossary',
         disabled: true,
     },
     {
-        title: 'About the Database',
+        title: 'About Coffee Tracker',
         icon: <InfoOutlinedIcon fontSize='small'/>,
         path: '/about',
         disabled: true,
     },
     {
-        title: 'Visit r/espresso',
+        title: 'Visit r/Espresso',
         icon: <RedditIcon fontSize='small'/>,
         path: 'https://www.reddit.com/r/espresso/',
+    },
+    {
+        title: 'Visit r/Pourover',
+        icon: <RedditIcon fontSize='small'/>,
+        path: 'https://www.reddit.com/r/pourover/',
     },
 ]

@@ -65,8 +65,8 @@ export function ColorModeProvider({children}) {
         palette: {
             mode: 'light',
             card: {
-                main: '#563028',
-                add: '#805046'
+                main: '#efc5c0',
+                add: '#e3afa4'
             }
         }
     })
@@ -82,7 +82,7 @@ export function ColorModeProvider({children}) {
 
     const theme = useMemo(() =>
             mode === 'light'
-                ? {...lightTheme, ...lightOverrides}
+                ? lightTheme
                 : darkTheme,
         [darkTheme, lightTheme, mode]
     )

@@ -6,7 +6,8 @@ import SearchBox from '../nav/SearchBox'
 import ViewFilterButtons from '../filters/ViewFilterButtons.jsx'
 import DataContext from '../context/DataContext.jsx'
 import {brewSortFields} from '../data/sortFields'
-import Brews from '../profile/Brews.jsx'
+import Brews from './Brews.jsx'
+import Footer from '../nav/Footer.jsx'
 
 export default function BrewsPage() {
     const {isMobile} = useWindowSize()
@@ -15,20 +16,24 @@ export default function BrewsPage() {
     const extras = (
         <React.Fragment>
             <SearchBox label='Brews' extraFilters={[]} keepOpen={false} entryCount={visibleEntries.length}/>
-            <ViewFilterButtons entryType={'Brew'} sortValues={brewSortFields} advancedEnabled={true}
-                               compactMode={false} resetAll={true} expandAll={true}/>
+            <ViewFilterButtons entryType={'Brew'} sortValues={brewSortFields} advancedEnabled={false}
+                               compactMode={false} resetAll={true} expandAll={false}/>
             {!isMobile && <div style={{flexGrow: 1, minWidth: '10px'}}/>}
         </React.Fragment>
+    )
+    const footerBefore = (
+        <div style={{margin: '30px 0px'}}/>
     )
 
     return (
         <React.Fragment>
-            <Nav title='Brews' titleMobile='Brews' extras={extras}/>
+            <Nav title='All Brews' titleMobile='Brews' extras={extras}/>
 
             <div style={{marginBottom: 16}}/>
             <Brews entries={visibleEntries}/>
 
             <Tracker feature='brews'/>
+            <Footer before={footerBefore}/>
         </React.Fragment>
     )
 }

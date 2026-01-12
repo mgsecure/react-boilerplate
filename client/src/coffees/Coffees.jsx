@@ -3,12 +3,13 @@ import AddNewItemCard from '../profile/AddNewItemCard.jsx'
 import Grid from '@mui/material/Grid'
 import DataContext from '../context/DataContext.jsx'
 import {motion, AnimatePresence} from 'framer-motion'
-import CoffeeEntry from './CoffeeEntry.jsx'
+import CoffeeCard from './CoffeeCard.jsx'
 import FilterContext from '../context/FilterContext.jsx'
+import FilterDisplayAdvanced from '../filters/FilterDisplayAdvanced.jsx'
+import NoMatchingEntriesCard from '../profile/NoMatchingEntriesCard.jsx'
 
-export default function Coffees({entries}) {
-    const {visibleEntries: contextEntries = []} = useContext(DataContext)
-    const visibleEntries = entries || contextEntries
+export default function Coffees() {
+    const {visibleEntries = [], allEntriesCount} = useContext(DataContext)
 
     const {filters} = useContext(FilterContext)
     const [expanded, setExpanded] = useState(filters.id)
@@ -20,12 +21,21 @@ export default function Coffees({entries}) {
             padding: 0,
             marginLeft: 'auto', marginRight: 'auto', marginTop: 0
         }}>
+            <div style={{marginBottom: 10}}>
+                <FilterDisplayAdvanced/>
+            </div>
+
+
             <div style={{maxWidth: 1200, marginLeft: 'auto', marginRight: 'auto'}}>
-                <Grid container spacing={{xs: '4px', sm: '4px', md: '4px'}} columns={{xs: 1, sm: 1, md: 1}}
+                <Grid container spacing={{xs: '6px', sm: '6px', md: '6px'}} columns={{xs: 1, sm: 1, md: 1}}
                       style={{marginTop: 0, marginLeft: 0}}>
                     <AnimatePresence>
                         <Grid size={{xs: 4, sm: 4, md: 4}} key={'add-bean-card'}>
-                            <AddNewItemCard type={'Coffee'} count={visibleEntries.length}/>
+                            {visibleEntries.length === 0
+                                ? <NoMatchingEntriesCard type={'coffee'} entriesCount={visibleEntries.length}
+                                                         allEntriesCount={allEntriesCount}/>
+                                : <AddNewItemCard type={'Coffee'} count={visibleEntries.length}/>
+                            }
                         </Grid>
                         {visibleEntries?.length > 0 &&
                             visibleEntries.filter(x => x)
@@ -35,12 +45,12 @@ export default function Coffees({entries}) {
                                         key={entry.id}
                                         component={motion.div}
                                         layout
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        exit={{ opacity: 0 }}
-                                        transition={{ type: 'spring', stiffness: 400, damping: 40 }}
+                                        initial={{opacity: 0}}
+                                        animate={{opacity: 1}}
+                                        exit={{opacity: 0}}
+                                        transition={{type: 'spring', stiffness: 400, damping: 40}}
                                     >
-                                        <CoffeeEntry
+                                        <CoffeeCard
                                             entry={entry}
                                             expanded={entry.id === defExpanded}
                                             onExpand={setExpanded}

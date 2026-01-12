@@ -98,7 +98,8 @@ export function FilterProvider({children, filterFields = []}) {
         'dataset',
         'scorecardId',
         'cId',
-        'dsId'
+        'dsId',
+        'addNew'
     ], [])
 
     const filterCount = useMemo(() => {
@@ -342,6 +343,7 @@ export function FilterProvider({children, filterFields = []}) {
             [value.fieldName]: value
         }), {id: {label: 'ID'}}),
         isSearch, isFiltered,
+        sort: filters.sort,
         nonFilters,
         // Advanced helpers
         advancedFilterGroups,

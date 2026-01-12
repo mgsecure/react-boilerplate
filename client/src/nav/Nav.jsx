@@ -11,17 +11,20 @@ import menuConfig from '../nav/menuConfig.jsx'
 import {useLocation, useNavigate} from 'react-router-dom'
 import Link from '@mui/material/Link'
 import YieldCalculatorButton from '../brews/YieldCalculatorButton.jsx'
+import {useTheme} from '@mui/material/styles'
 
 function Nav({extras, extrasTwo, title, titleMobile}) {
-    const {isFiltered} = useContext(FilterContext)
+    const {isFiltered, clearAdvancedFilterGroups} = useContext(FilterContext)
+    const theme = useTheme()
     const navigate = useNavigate()
     const location = useLocation()
     const menuItem = menuConfig.find(item => item.title === title)
     const isRootPath = location.pathname === menuItem?.path && ['', '?tab=White'].includes(location.search)
 
     const handleClickTitle = useCallback(() => {
+        clearAdvancedFilterGroups()
         menuItem?.path && navigate(menuItem.path)
-    }, [menuItem, navigate])
+    }, [clearAdvancedFilterGroups, menuItem?.path, navigate])
 
     const {isMobile, width} = useWindowSize()
     const smallWidth = width <= 500
@@ -33,7 +36,7 @@ function Nav({extras, extrasTwo, title, titleMobile}) {
 
     const flexStyle = !isMobile ? 'flex' : 'block'
     const linkSx = {
-        color: '#fff', textDecoration: 'none', cursor: 'pointer', '&:hover': {
+        color: theme.palette.text.primary, textDecoration: 'none', cursor: 'pointer', '&:hover': {
             textDecoration: 'underline'
         }
     }
@@ -58,7 +61,7 @@ function Nav({extras, extrasTwo, title, titleMobile}) {
                                     <React.Fragment>
                                         {menuItem && !isRootPath
                                             ?
-                                            <Link onClick={handleClickTitle} style={{whiteSpace: 'nowrap'}} sx={linkSx}>
+                                            <Link onClick={handleClickTitle} style={{color: theme.palette.text.primary, whiteSpace: 'nowrap'}} sx={linkSx}>
                                                 {isMobile ? titleMobile : title}
                                             </Link>
                                             : <div style={{whiteSpace: 'nowrap'}}>{isMobile ? titleMobile : title}</div>

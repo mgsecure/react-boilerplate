@@ -64,6 +64,14 @@ export default [{
             }
         },
         {
+            path: '/equipment',
+            name: 'equipment',
+            lazy: async () => {
+                const {default: EquipmentRoute} = await import('../equipment/EquipmentRoute.jsx')
+                return {element: <Suspense><EquipmentRoute/></Suspense>}
+            }
+        },
+        {
             path: '/coffees',
             name: 'coffees',
             lazy: async () => {
@@ -113,6 +121,14 @@ export default [{
             lazy: async () => {
                 const {default: RoastersRoute} = await import('../roasters/RoastersRoute.jsx')
                 return {element: <Suspense><RoastersRoute/></Suspense>}
+            }
+        },
+        {
+            path: '/userinfo',
+            name: 'userinfo',
+            lazy: async () => {
+                const {default: UserInfoRoute} = await import('../userInfo/UserInfoRoute.jsx')
+                return {element: <Suspense><UserInfoRoute/></Suspense>}
             }
         },
         {

@@ -22,15 +22,15 @@ export default function EquipmentForm({machine, open, setOpen, type = 'Equipment
 
     const [brandReset, setBrandReset] = useState(false)
     const [modelReset, setModelReset] = useState(false)
-    const [inputValue, setInputValue] = useState(machine.brand || '')
-    const [inputModelValue, setInputModelValue] = useState(machine.model || '')
+    const [inputValue, setInputValue] = useState(machine?.brand || '')
+    const [inputModelValue, setInputModelValue] = useState(machine?.model || '')
     const [uploading, setUploading] = useState(false)
     const theme = useTheme()
     useEffect(() => {
         if (open) {
             setForm({...machine || {id: `e_${genHexString(8)}`}})
-            setInputValue(machine.brand || '')
-            setInputModelValue(machine.model || '')
+            setInputValue(machine?.brand || '')
+            setInputModelValue(machine?.model || '')
         }
     }, [open, machine])
 
@@ -108,9 +108,9 @@ export default function EquipmentForm({machine, open, setOpen, type = 'Equipment
         setUploading(true)
         const brand = form.brand || form.newBrand
         const model = form.model || form.newModel
-        const fullName = (machine.brand && machine.model)
-            ? `${machine.brand} ${machine.model}`
-            : `${machine.brand || ''}${machine.model || ''}`
+        const fullName = (brand && model)
+            ? `${brand} ${model}`
+            : `${brand || ''}${model || ''}`
 
         const formCopy = {
             ...form,

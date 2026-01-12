@@ -52,16 +52,19 @@ export function AuthProvider({children}) {
         return signOut(auth)
     }, [])
 
+    const isAdmin = !!user?.uid && userClaims.includes('admin')
+
     const value = useMemo(() => ({
         authLoaded,
         isLoggedIn: !!user?.uid,
         user,
         userClaims,
+        isAdmin,
         login,
         logout,
         initialUser,
         setInitialUser
-    }), [authLoaded, login, logout, user, userClaims, initialUser, setInitialUser])
+    }), [authLoaded, login, logout, user, userClaims, isAdmin, initialUser, setInitialUser])
 
     return (
         <AuthContext.Provider value={value}>

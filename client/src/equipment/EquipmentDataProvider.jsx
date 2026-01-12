@@ -5,24 +5,30 @@ import dayjs from 'dayjs'
 import removeAccents from 'remove-accents'
 import filterEntriesAdvanced from '../filters/filterEntriesAdvanced'
 import searchEntriesForText from '../filters/searchEntriesForText'
-import roasters from '../data/roasters.json'
 
-export function CoffeesDataProvider({children, profile}) {
+export function EquipmentDataProvider({children, profile}) {
     const {filters: allFilters, advancedFilterGroups} = useContext(FilterContext)
     const {search, sort, expandAll} = allFilters
 
-    const allBrews = useMemo(() => {
+    const allEntries = useMemo(() => {
         return profile.brews || []
     }, [profile.brews])
 
-    const mappedBrews = useMemo(() => {
-        return allBrews
+    const mappedEntries = useMemo(() => {
+        return allEntries
             .map(entry => {
-                const coffee = profile.coffees.find(g => g.id === entry.coffee?.id) || entry.coffee || {}
+                const coffee = profile.coffees?.find(g => g.id === entry.coffee?.id) || entry.coffee || {}
+                const grinder = profile.equipment?.find(g => g.id === entry.grinder?.id) || entry.grinder || {}
+                const machine = profile.equipment?.find(g => g.id === entry.machine?.id) || entry.machine || {}
+
                 return {
                     ...entry,
-                    originalEntry: {...entry},
-                    fullName: coffee.roaster ? `${coffee.name} (${coffee.roaster.name})` : coffee.name,
+                    originalEntry: entry,
+                    fullName: coffee.fullName || 'Unknown Coffee',
+                    coffeeName: coffee.name || 'Unknown Coffee',
+                    roasterName: coffee.roaster?.name || 'Unknown Roaster',
+                    grinderName: grinder?.fullName || 'Unknown Grinder',
+                    machineName: machine?.fullName || 'Unknown Machine',
                     modifiedAt: entry.modifiedAt || entry.addedAt,
                     restedDays: Math.max(dayjs(entry.addedAt).diff(dayjs(entry.roastDate), 'day'), 0),
                     isFlagged: entry.flagged ? 'Yes' : 'No',
@@ -31,70 +37,38 @@ export function CoffeesDataProvider({children, profile}) {
                     ].join(','))
                 }
             })
-    }, [allBrews, profile.coffees])
-
-    const brewsList = useMemo(() => {
-        return (mappedBrews || [])
-            .sort((a, b) => dayjs(b.modifiedAt).valueOf() - dayjs(a.modifiedAt).valueOf())
-    }, [mappedBrews])
-
-    const allEntries = useMemo(() => {
-        return profile.coffees || []
-    }, [profile.coffees])
-
-    const mappedEntries = useMemo(() => {
-        return allEntries
-            .map(entry => {
-                const roaster = roasters.find(r => r.id === entry.roaster?.id) || entry.roaster ? entry.roaster : {name: 'Unknown Roaster'}
-                const brews = brewsList?.filter(e => e.coffee?.id === entry.id) || []
-
-                return {
-                    ...entry,
-                    originalEntry: entry,
-                    roaster,
-                    brews,
-                    fullName: roaster.name !== 'Unknown Roaster' ? `${entry.name} (${entry.roaster.name})` : entry.name,
-                    roasterName: roaster.name,
-                    modifiedAt: entry.modifiedAt || entry.addedAt,
-                    caffeine: entry.decaf ? 'Decaf' : 'Regular',
-                    fuzzy: removeAccents([
-                        entry.name,
-                        entry.roaster?.name,
-                    ].join(','))
-                }
-            })
-    }, [allEntries, brewsList])
+    }, [allEntries, profile.coffees, profile.equipment])
 
     const searchedEntries = useMemo(() => {
         return searchEntriesForText(search, mappedEntries)
     }, [mappedEntries, search])
 
     const visibleEntries = useMemo(() => {
+
         const filtered = filterEntriesAdvanced({
             advancedFilterGroups: advancedFilterGroups(),
             entries: mappedEntries
         })
         const searched = searchEntriesForText(search, filtered)
+
         const sorted = [...searched]
         if (sort) {
             sorted.sort((a, b) => {
                 if (sort === 'name') {
                     return a.fullName.localeCompare(b.fullName)
-                } else if (sort === 'roasterName') {
-                    return a.roasterName.localeCompare(b.roasterName)
-                    || a.fullName.localeCompare(b.fullName)
+                        || dayjs(b.brewedAt).valueOf() - dayjs(a.brewedAt).valueOf()
                 } else if (sort === 'rating') {
                     return (b.ratings?.rating || 0) - (a.ratings?.rating || 0)
                         || a.fullName.localeCompare(b.fullName)
                 } else if (sort === 'dateAdded') {
                     return dayjs(b.addedAt).valueOf() - dayjs(a.addedAt).valueOf()
                 } else {
-                    return dayjs(b.modifiedAt).valueOf() - dayjs(a.modifiedAt).valueOf()
+                    return dayjs(b.brewedAt).valueOf() - dayjs(a.brewedAt).valueOf()
                 }
             })
         } else {
             sorted.sort((a, b) => {
-                return dayjs(b.modifiedAt).valueOf() - dayjs(a.modifiedAt).valueOf()
+                return dayjs(b.brewedAt).valueOf() - dayjs(a.brewedAt).valueOf()
             })
         }
         return sorted
@@ -117,14 +91,12 @@ export function CoffeesDataProvider({children, profile}) {
 
     const value = useMemo(() => ({
         allEntries,
-        allEntriesCount: allEntries.length,
         mappedEntries,
         searchedEntries,
         visibleEntries,
         expandAll,
         grinderList,
         machineList,
-        brewsList,
         coffeesList
     }), [
         allEntries,
@@ -134,7 +106,6 @@ export function CoffeesDataProvider({children, profile}) {
         expandAll,
         grinderList,
         machineList,
-        brewsList,
         coffeesList
     ])
 
@@ -145,4 +116,4 @@ export function CoffeesDataProvider({children, profile}) {
     )
 }
 
-export default CoffeesDataProvider
+export default EquipmentDataProvider

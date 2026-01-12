@@ -1,11 +1,12 @@
 import React from 'react'
 
-export default function LocationDisplay({location = [], display='text'}) {
+export default function LocationDisplay(location = [], display = 'text') {
 
-return (
-    location.filter(Boolean).map(
-        (loc, i) => <span key={i}>{loc}{i < location.length - 1 ? ', ' : ''}</span>
+    const locationData = location.filter(Boolean)
+    return (
+        locationData.map(
+            (loc, i) => <span key={i}>{loc}{i < locationData.length - 1 ? ', ' : ''}</span>
+        )
     )
-)
 
 }

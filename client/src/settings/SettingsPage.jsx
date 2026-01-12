@@ -6,7 +6,7 @@ import Switch from '@mui/material/Switch'
 
 export default function SettingsPage() {
 
-    const {admin, setAdmin, beta, setBeta} = useContext(AppContext)
+    const {admin, setAdmin, beta, setBeta, demo, setDemo} = useContext(AppContext)
     return (
         <React.Fragment>
             <div style={{padding: 44}}>
@@ -38,6 +38,17 @@ export default function SettingsPage() {
                                 checked={beta}
                                 onChange={(e) => setBeta(e.target.checked)}
                                 name='betaMode'
+                                color='primary'
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style={{padding: '8px 12px'}}>Demo Mode</td>
+                        <td style={{padding: '8px 12px'}}>
+                            <Switch
+                                checked={demo}
+                                onChange={(e) => setDemo(e.target.checked)}
+                                name='demoMode'
                                 color='primary'
                             />
                         </td>

@@ -17,13 +17,12 @@ import Link from '@mui/material/Link'
 import DataContext from '../context/DataContext.jsx'
 import {motion} from 'motion/react'
 
-function AdvancedFilterDrawerButton({entryType}) {
+function AdvancedFilterDrawerButton({entryType, advancedEnabled}) {
     const [open, setOpen] = useState(false)
 
     const {isLoggedIn} = useContext(AuthContext)
     const {beta} = useContext(AppContext)
     const {
-        filters,
         filterCount,
         filterFields,
         showAdvancedSearch,
@@ -140,7 +139,7 @@ function AdvancedFilterDrawerButton({entryType}) {
                             }}>({(visibleBeltEntries || visibleEntries).length || 0} {entryTypeText})
                             </div>
                             <div style={{flexGrow: 1, textAlign: 'right', fontSize: '0.9rem'}}>
-                                {!showAdvancedSearch
+                                {!showAdvancedSearch && advancedEnabled
                                     ? <Link onClick={handleToggleAdvanced}
                                             sx={linkSx}>{showAdvancedSearch ? 'Reset' : 'Advanced'}</Link>
                                     : <ResetFiltersButton advanced drawer/>

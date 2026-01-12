@@ -1,22 +1,23 @@
 import React, {useContext} from 'react'
-import {coffeeFilterFields} from '../data/filterFields'
+import {brewFilterFields} from '../data/filterFields'
 import {FilterProvider} from '../context/FilterContext.jsx'
 import usePageTitle from '../util/usePageTitle'
-import DataProvider from './CoffeesDataProvider.jsx'
+import DataProvider from './EquipmentDataProvider.jsx'
 import espressoBeans from '../data/espressoBeansDatabase.json'
-import CoffeesPage from './CoffeesPage.jsx'
+import EquipmentPage from './EquipmentPage.jsx'
 import DBContext from '../app/DBContext.jsx'
 
-export default function CoffeesRoute() {
-    usePageTitle('Coffees')
+function EquipmentRoute() {
+    usePageTitle('Equipment')
     const {userProfile = {}} = useContext(DBContext)
 
     return (
-        <FilterProvider filterFields={coffeeFilterFields}>
+        <FilterProvider filterFields={brewFilterFields}>
             <DataProvider allEntries={espressoBeans} profile={userProfile}>
-                <CoffeesPage/>
+                <EquipmentPage/>
             </DataProvider>
         </FilterProvider>
     )
 }
 
+export default EquipmentRoute

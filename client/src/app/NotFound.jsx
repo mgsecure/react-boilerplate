@@ -13,7 +13,7 @@ export default function NotFound() {
     const navigate = useNavigate()
     const goHome = useCallback(() => {
         navigate('/')
-    },[])
+    },[navigate])
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',
