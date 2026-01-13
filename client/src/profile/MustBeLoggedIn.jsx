@@ -1,13 +1,13 @@
-import CardHeader from '@mui/material/CardHeader'
-import React from 'react'
-import Typography from '@mui/material/Typography'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
+import React, {useContext} from 'react'
 import SignInButton from '../auth/SignInButton.jsx'
 import {useTheme} from '@mui/material/styles'
+import AuthContext from '../app/AuthContext.jsx'
 
 export default function MustBeLoggedIn({actionText = 'track your coffees'}) {
     const theme= useTheme()
+    const {isLoggedIn} = useContext(AuthContext)
+
+    if (isLoggedIn) return null
 
     return (
         <div

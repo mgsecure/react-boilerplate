@@ -132,11 +132,11 @@ export default [{
             }
         },
         {
-            path: '/suggestions',
-            name: 'suggestion box',
+            path: '/privacy',
+            name: 'privacy policy',
             lazy: async () => {
-                const {default: SendToDiscordRoute} = await import('../sendToDiscord/SendToDiscordRoute')
-                return {element: <Suspense><SendToDiscordRoute/></Suspense>}
+                const {default: PrivacyRoute} = await import('../privacy/PrivacyRoute')
+                return {element: <Suspense><PrivacyRoute/></Suspense>}
             }
         },
         {

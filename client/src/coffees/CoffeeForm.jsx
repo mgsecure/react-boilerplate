@@ -11,16 +11,17 @@ import DBContext from '../app/DBContext.jsx'
 import {enqueueSnackbar} from 'notistack'
 import {useTheme} from '@mui/material/styles'
 import {roastLevels, currencies} from '../data/equipmentBeans'
-import roasters from '../data/roasters.json'
 import RatingTable from '../misc/RatingTable.jsx'
 import cleanObject from '../util/cleanObject'
 import AuthContext from '../app/AuthContext.jsx'
+import DataContext from '../context/DataContext.jsx'
 
 export default function CoffeeForm({coffee, open, setOpen}) {
     const theme = useTheme()
     const {flexStyle, isMobile} = useWindowSize()
     const {updateCollection} = useContext(DBContext)
     const {isLoggedIn} = useContext(AuthContext)
+    const {roastersList} = useContext(DataContext)
 
     const baseForm = useMemo(() => {
         return {
@@ -34,8 +35,8 @@ export default function CoffeeForm({coffee, open, setOpen}) {
     const [formChanged, setFormChanged] = useState(false)
     const [uploading, setUploading] = useState(false)
     const saveEnabled = useMemo(() => {
-        return isLoggedIn && formChanged && form.name && form.roasterName && !uploading
-    },[form.name, form.roasterName, formChanged, isLoggedIn, uploading])
+        return isLoggedIn && formChanged && form.name && (form.roasterName || form.newRoasterName) && !uploading
+    },[form.name, form.newRoasterName, form.roasterName, formChanged, isLoggedIn, uploading])
 
     const [inputValue, setInputValue] = useState(coffee?.roaster?.name || '')
     useEffect(() => {
@@ -50,22 +51,22 @@ export default function CoffeeForm({coffee, open, setOpen}) {
     const [inputValueOverride, setInputValueOverride] = useState(false)
 
     const roasterNames = useMemo(() => {
-        return roasters.map((roaster) => roaster.name)
-    }, [])
+        return roastersList.map((roaster) => roaster.name)
+    }, [roastersList])
 
     const thisRoaster = useMemo(() => {
-        return roasters.find(e => e.name === form.roasterName)
+        return roastersList.find(e => e.name === form.roasterName)
             || coffee?.roaster
             || {name: form.roasterName}
-    }, [coffee?.roaster, form.roasterName])
+    }, [coffee?.roaster, form.roasterName, roastersList])
 
     const roasterCities = useMemo(() => {
-        return roasters.reduce((acc, roaster) => {
+        return roastersList.reduce((acc, roaster) => {
             const citySep = roaster.city && roaster.stateRegion ? ', ' : ''
             acc[roaster.name] = `${roaster.city ? roaster.city : ''}${citySep}${roaster.stateRegion ? roaster.stateRegion : ''}${roaster.country ? ', ' + roaster.country : ''}`
             return acc
         }, {})
-    }, [])
+    }, [roastersList])
 
     const handleFormChange = useCallback((event) => {
         let {name, value} = event.target

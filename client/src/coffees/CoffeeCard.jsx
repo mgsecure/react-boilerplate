@@ -207,7 +207,8 @@ export default function CoffeeCard({entry = {}, expanded, onExpand}) {
                                 brewCount={entry.brews?.length}
                             />
                             : <div style={{padding: '10px 40px'}}>
-                                <AddNewItemCard type={'Brew'} label={'Brew It!'} count={0} defaultValue={entry.originalEntry}/>
+                                <AddNewItemCard type={'Brew'} label={'Brew It!'} count={0}
+                                                defaultValue={entry.originalEntry} action={'add'}/>
                             </div>
                         }
                     </div>
@@ -248,7 +249,7 @@ export default function CoffeeCard({entry = {}, expanded, onExpand}) {
                     <Stack direction='row' spacing={0} style={{flexWrap: 'wrap', marginBottom: 8}}>
                         <FieldValue name='Weight' value={entry.weight} suffix={entry.weightUnit}
                                     style={{marginRight: 24}}/>
-                        <FieldValue name='Price' value={parseFloat(entry.price).toFixed(2)}
+                        <FieldValue name='Price' value={entry.price ? parseFloat(entry.price).toFixed(2) : null}
                                     prefix={`${currencySymbol} `} suffix={` ${currencyDescription}`}
                                     style={{marginRight: 24}}/>
                         <FieldValue name='Price per 100g' value={entry.price100g} prefix={`${entry.priceUnit} `}

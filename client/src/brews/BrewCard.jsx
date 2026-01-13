@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton'
 import EditIcon from '@mui/icons-material/Edit'
 import DBContext from '../app/DBContext.jsx'
 import {enqueueSnackbar} from 'notistack'
-import {alpha} from '@mui/material'
+import {alpha, Button, Collapse} from '@mui/material'
 import useWindowSize from '../util/useWindowSize.jsx'
 import Stack from '@mui/material/Stack'
 import FieldValue from '../misc/FieldValue.jsx'
@@ -15,24 +15,29 @@ import Link from '@mui/material/Link'
 import ItemDrawer from '../profile/ItemDrawer.jsx'
 import LogEntryButton from '../entries/LogEntryButton.jsx'
 import dayjs from 'dayjs'
-import ThumbUpIcon from '@mui/icons-material/ThumbUp'
 import Tooltip from '@mui/material/Tooltip'
 import DataContext from '../context/DataContext.jsx'
 import cleanObject from '../util/cleanObject'
 import DeleteEntryButton from '../entries/DeleteEntryButton.jsx'
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import FilterContext from '../context/FilterContext.jsx'
 import {useNavigate} from 'react-router-dom'
+import FlagEntryButton from '../entries/FlagEntryButton.jsx'
 
-export default function BrewCard({entry = {}, expanded, context = 'brews', brewCount}) {
+export default function BrewCard({entry = {}, expanded, onExpand, context = 'brews', brewCount}) {
     const {coffeesList, visibleEntries = []} = useContext(DataContext)
     const {updateCollection} = useContext(DBContext)
     const {addFilter, sort} = useContext(FilterContext)
+
+    const [brewExpanded, setBrewExpanded] = useState(false)
+
+    //console.log('expanded', {expanded, brewExpanded})
+
     const [scrolled, setScrolled] = useState(false)
     const ref = useRef(null)
     const navigate = useNavigate()
     const theme = useTheme()
 
+    const [updating, setUpdating] = useState(false)
     const handleAddFilter = useCallback((keyToAdd, valueToAdd, replace) => {
         addFilter(keyToAdd, valueToAdd, replace)
     }, [addFilter])
@@ -54,6 +59,7 @@ export default function BrewCard({entry = {}, expanded, context = 'brews', brewC
     const [action, setAction] = useState('edit')
 
     const handleUpdate = useCallback(async (entry) => {
+        setUpdating(true)
         const cleanEntry = cleanObject(entry)
         const flags = entry ? {update: true} : {}
         try {
@@ -61,12 +67,14 @@ export default function BrewCard({entry = {}, expanded, context = 'brews', brewC
             //enqueueSnackbar('Ratings saved', {variant: 'success'})
         } catch (error) {
             enqueueSnackbar(`Error saving ratings: ${error}`, {variant: 'error', autoHideDuration: 3000})
+        } finally {
+            setUpdating(false)
         }
     }, [updateCollection])
 
     const handleFlaggedChange = useCallback(async () => {
         const entryCopy = {
-            ...entry,
+            ...entry.originalEntry,
             flagged: !entry.flagged
         }
         await handleUpdate(entryCopy)
@@ -103,6 +111,13 @@ export default function BrewCard({entry = {}, expanded, context = 'brews', brewC
     }, [expanded, scrolled, entry.id])
 
     const [drawerOpen, setDrawerOpen] = useState(false)
+
+    const handleChange = useCallback(() => {
+        onExpand
+            ? onExpand(!expanded ? entry.id : false)
+            : setBrewExpanded(!brewExpanded)
+    }, [brewExpanded, entry.id, expanded, onExpand])
+
     const handleDrawerClick = useCallback(() => {
         setDrawerOpen(true)
     }, [])
@@ -132,12 +147,13 @@ export default function BrewCard({entry = {}, expanded, context = 'brews', brewC
     const timeStyle = previousBrew?.brewTime && previousBrew.brewTime !== entry.brewTime ? highlightStyle : {}
     const recipeStyle = previousBrew?.recipePrep && previousBrew.recipePrep !== entry.recipePrep ? highlightStyle : {}
 
-    const flaggedColor = entry.flagged ? theme.palette.success.main : alpha(theme.palette.primary.main, 0.3)
+    const flaggedColor = (entry.flagged || updating) ? theme.palette.success.main : alpha(theme.palette.primary.main, 0.3)
     const backgroundColor = context !== 'coffeeEntry' ? theme.palette.card.main : lighten(theme.palette.card.main, 0.05)
 
     const {isMobile, flexStyle, columnStyle} = useWindowSize()
     const flexDirection = isMobile ? 'column' : 'row'
     const tooltipPlacement = isMobile ? 'bottom' : 'left'
+    const tooltipPlacementRight = isMobile ? 'bottom' : 'right'
 
     return (
         <Card
@@ -155,7 +171,7 @@ export default function BrewCard({entry = {}, expanded, context = 'brews', brewC
                 <ItemDrawer item={entry.originalEntry} open={drawerOpen} setOpen={setDrawerOpen} type={'Brew'}
                             action={action}/>
 
-                <div style={{width: '100%'}}>
+                <div style={{width: '100%', flexGrow: 1}}>
                     <div style={{
                         display: 'flex',
                         flexGrow: 1,
@@ -173,41 +189,23 @@ export default function BrewCard({entry = {}, expanded, context = 'brews', brewC
                                 <div style={{
                                     fontSize: '1.1rem',
                                     lineHeight: '1.3rem',
-                                    margin: '5px 0px 4px 5px',
+                                    margin: '5px 0px 4px 5px'
                                 }}>
                                     {context !== 'coffeeEntry' &&
-                                        <div style={{fontSize: '1.2rem', marginBottom:5}}>
+                                        <div style={{fontSize: '1.2rem', marginBottom: 5}}>
                                             <Link style={{color: '#fff', fontWeight: 600}}
                                                   onClick={() => handleAddFilter('coffeeName', thisCoffee?.name, true)}>
                                                 {thisCoffee?.name}
                                             </Link>
-                                            {thisCoffee?.roaster?.name &&
+                                            {thisCoffee?.roasterName &&
                                                 <>
                                                     &nbsp;(<Link style={{color: '#fff', fontWeight: 600}}
-                                                                 onClick={() => handleAddFilter('roasterName', thisCoffee?.roaster?.name, true)}>
-                                                    {thisCoffee?.roaster?.name}
+                                                                 onClick={() => handleAddFilter('roasterName', thisCoffee?.roasterName, true)}>
+                                                    {thisCoffee?.roasterName}
                                                 </Link>)
                                                 </>
                                             }
                                         </div>
-                                    }
-                                    {context === 'coffeeEntry' &&
-                                        <>
-                                            <Link style={{color: '#fff', fontWeight: 600}}
-                                                  onClick={() => handleDrawerClick()}>
-                                                {context === 'coffeeEntry' ? 'Latest Brew' : thisCoffee?.fullName}
-                                            </Link>
-
-                                            {brewCount > 1 &&
-                                                <>
-                                                    &nbsp;&nbsp;|&nbsp;&nbsp;<Link
-                                                    style={{color: theme.palette.primary.main}}
-                                                    onClick={() => handleViewAll()}>
-                                                    view all ({brewCount})
-                                                </Link>
-                                                </>
-                                            }
-                                        </>
                                     }
                                 </div>
                             </div>
@@ -215,7 +213,8 @@ export default function BrewCard({entry = {}, expanded, context = 'brews', brewC
                     </div>
                     <Stack direction='row' spacing={0}
                            style={{flexWrap: 'wrap', alignContent: 'center', marginBottom: 4}}>
-                        <FieldValue name='Brew Date' value={`${entryDate} ${entryTime}`}
+                        <FieldValue name={`${context === 'coffeeEntry' ? 'Latest ' : ''}Brew Date`}
+                                    value={`${entryDate} ${entryTime}`}
                                     style={{marginRight: 24}}/>
                         <FieldValue name='Dose' value={entry.dose} suffix={entry.doseUnit}
                                     style={{marginRight: 15}} textStyle={doseStyle}/>
@@ -228,66 +227,98 @@ export default function BrewCard({entry = {}, expanded, context = 'brews', brewC
                         <FieldValue name='Time' value={brewTime}
                                     style={{marginRight: 15}} textStyle={timeStyle}/>
                         <FieldValue name='Recipe/Prep' value={entry.recipePrep}
-                                    style={{}} textStyle={recipeStyle}/>
-                    </Stack>
-
-                    <Stack direction='row' spacing={0} style={{flexWrap: 'wrap', marginBottom: 4}}>
-                        <FieldValue name='Brew Notes' value={entry.tastingNotes} style={{}}/>
-                    </Stack>
-
-                    <Stack direction='row' spacing={0} style={{flexWrap: 'wrap', marginBottom: 4}}>
-                        <FieldValue name='Roast Date' value={roastDate} style={{marginRight: 16}}/>
-                        <FieldValue name='Rested' value={entry.roastDate && entry.restedDays?.toFixed(0)}
-                                    suffix={` day${entry.restedDays !== 1 ? 's' : ''}`}
-                                    style={{marginRight: 24}}/>
-                        <FieldValue name='Grinder'
-                                    value={entry?.grinder?.fullName && <Link style={{color: '#fff'}}
-                                                                             onClick={() => handleAddFilter('grinderName', entry?.grinder?.fullName, true)}>
-                                        {entry?.grinder?.fullName}</Link>}
-                                    style={{marginRight: 24}}/>
-                        <FieldValue name='Equipment'
-                                    value={entry?.machine?.fullName && <Link style={{color: '#fff'}}
-                                                                             onClick={() => handleAddFilter('machineName', entry?.machine?.fullName, true)}>
-                                        {entry?.machine?.fullName}</Link>}
-                                    style={{marginRight: 24}}/>
-                    </Stack>
-
-                    <Stack direction='row' spacing={0} style={{flexWrap: 'wrap', marginBottom: 8}}>
-                        <FieldValue name='Roaster Tasting Notes' value={entry.roasterNotes}
-                                    style={{marginRight: 24}}/>
+                                    style={{marginRight: 15}} textStyle={recipeStyle}/>
+                        {brewCount > 0 &&
+                            <FieldValue name='More Info'
+                                        value={<Link
+                                            style={{color: theme.palette.primary.main}}
+                                            onClick={() => handleViewAll()}>
+                                            View all brews ({brewCount})
+                                        </Link>}
+                                        style={{}}/>
+                        }
                     </Stack>
 
 
                 </div>
-                <div style={{...columnStyle, placeItems: 'center', marginLeft: 30}}>
-                    <Tooltip title='Flag this brew' arrow disableFocusListener placement={tooltipPlacement}>
-                        <IconButton onClick={handleFlaggedChange} style={{marginRight: 8}}>
-                            <ThumbUpIcon fontSize='small' style={{color: flaggedColor}}/>
-                        </IconButton>
-                    </Tooltip>
-
-                    <Tooltip title='Edit a copy of this brew' arrow disableFocusListener placement={tooltipPlacement}>
-                        <IconButton onClick={handleCloneClick} style={{marginRight: 8}}>
-                            <AddCircleOutlineIcon fontSize='small' style={{color: '#eee'}}/>
-                        </IconButton>
-                    </Tooltip>
-
-                    <Tooltip title='Edit this brew' arrow disableFocusListener placement={tooltipPlacement}>
-                        <IconButton onClick={handleDrawerClick} style={{marginRight: 8}}>
-                            <EditIcon fontSize='small' style={{color: '#eee'}}/>
-                        </IconButton>
-                    </Tooltip>
-
-                    <DeleteEntryButton entry={entry} entryType={'Brew'} handleDelete={handleDelete} size={'small'}
-                                       style={{marginRight: 8}} tooltipPlacement={tooltipPlacement}/>
-
-                    <LogEntryButton entry={entry} entryType={'Brew'} size={'small'} style={{marginRight: 8}}/>
-
+                <div style={{display: 'flex', alignItems: 'center', justifyItems: 'right', flexGrow: 0, width: 'auto'}}>
+                    <div style={{...columnStyle, placeContent: 'center'}}>
+                        <Button onClick={handleCloneClick}
+                                style={{textTransform: 'none', whiteSpace: 'nowrap', width: 90, padding: 4}}>
+                            Make Copy</Button>
+                        <Button onClick={handleDrawerClick}
+                                style={{textTransform: 'none', whiteSpace: 'nowrap', width: 90, padding: 4}}>
+                            Edit</Button>
+                        <Button onClick={handleChange}
+                                style={{
+                                    textTransform: 'none', whiteSpace: 'nowrap', width: 90, padding: 4,
+                                    fontWeight: expanded || brewExpanded ? 700 : 400
+                                }}>
+                            {(expanded || brewExpanded) ? 'Hide' : 'Show'} Details</Button>
+                    </div>
+                    <div style={{...columnStyle, placeContent: 'center'}}>
+                        <LogEntryButton entry={entry} entryType={'Brew'} size={'small'} style={{marginLeft: 10}}/>
+                        <FlagEntryButton handleFlaggedChange={handleFlaggedChange} updating={updating}
+                                         flaggedColor={flaggedColor}
+                                         tooltipPlacement={'bottom'} entryType={'Brew'}
+                                         size={'small'} style={{marginLeft: 10}}/>
+                    </div>
                 </div>
-
             </CardContent>
 
+            <Collapse in={(expanded || brewExpanded)} timeout='auto' unmountOnExit>
+                    <CardContent style={{textAlign: 'left', padding: 10, color: '#fff'}}>
+                        <Stack direction='row' spacing={0} style={{flexWrap: 'wrap', marginBottom: 4}}>
+                            <FieldValue name='Brew Notes' value={entry.tastingNotes} style={{}}/>
+                        </Stack>
+
+                        <Stack direction='row' spacing={0} style={{flexWrap: 'wrap', marginBottom: 4}}>
+                            <FieldValue name='Roast Date' value={roastDate} style={{marginRight: 16}}/>
+                            <FieldValue name='Rested' value={entry.roastDate && entry.restedDays?.toFixed(0)}
+                                        suffix={` day${entry.restedDays !== 1 ? 's' : ''}`}
+                                        style={{marginRight: 24}}/>
+                            <FieldValue name='Grinder'
+                                        value={entry?.grinder?.fullName &&
+                                            <Link style={{color: '#fff'}}
+                                                  onClick={() => handleAddFilter('grinderName', entry?.grinder?.fullName, true)}>
+                                                {entry?.grinder?.fullName}</Link>}
+                                        style={{marginRight: 24}}/>
+                            <FieldValue name='Equipment'
+                                        value={entry?.machine?.fullName &&
+                                            <Link style={{color: '#fff'}}
+                                                  onClick={() => handleAddFilter('machineName', entry?.machine?.fullName, true)}>
+                                                {entry?.machine?.fullName}</Link>}
+                                        style={{marginRight: 24}}/>
+                        </Stack>
+
+                        <Stack direction='row' spacing={0} style={{flexWrap: 'wrap', marginBottom: 8}}>
+                            <FieldValue name='Roaster Tasting Notes' value={entry.roasterNotes}
+                                        style={{marginRight: 24}}/>
+                        </Stack>
+
+                        <div style={{display: 'flex', placeContent: 'center'}}>
+                            <LogEntryButton entry={entry} entryType={'brew'} size={'small'}/>
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    flexGrow: 1,
+                                    placeContent: 'center end',
+                                    marginRight: 5
+                                }}>
+                                <Tooltip title='Edit' arrow disableFocusListener placement={'top'}>
+                                    <IconButton onClick={handleDrawerClick} style={{marginRight: 2}}>
+                                        <EditIcon fontSize='medium' style={{color: '#eee'}}/>
+                                    </IconButton>
+                                </Tooltip>
+                                <DeleteEntryButton entry={entry} entryType={'Brew'} handleDelete={handleDelete}
+                                                   size={'small'}
+                                                   style={{marginRight: 8}} tooltipPlacement={'top'}/>
+
+                            </div>
+                        </div>
+
+                    </CardContent>
+            </Collapse>
         </Card>
     )
 }
-

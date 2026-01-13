@@ -18,7 +18,7 @@ export function CoffeesDataProvider({children, profile}) {
     const mappedBrews = useMemo(() => {
         return allBrews
             .map(entry => {
-                const coffee = profile.coffees.find(g => g.id === entry.coffee?.id) || entry.coffee || {}
+                const coffee = profile.coffees?.find(g => g.id === entry.coffee?.id) || entry.coffee || {}
                 return {
                     ...entry,
                     originalEntry: {...entry},
@@ -47,7 +47,6 @@ export function CoffeesDataProvider({children, profile}) {
             .map(entry => {
                 const roaster = roasters.find(r => r.id === entry.roaster?.id) || entry.roaster ? entry.roaster : {name: 'Unknown Roaster'}
                 const brews = brewsList?.filter(e => e.coffee?.id === entry.id) || []
-
                 return {
                     ...entry,
                     originalEntry: entry,
@@ -56,6 +55,7 @@ export function CoffeesDataProvider({children, profile}) {
                     fullName: roaster.name !== 'Unknown Roaster' ? `${entry.name} (${entry.roaster.name})` : entry.name,
                     roasterName: roaster.name,
                     modifiedAt: entry.modifiedAt || entry.addedAt,
+                    sortDate: brews[0]?.modifiedAt || entry.modifiedAt || entry.addedAt,
                     caffeine: entry.decaf ? 'Decaf' : 'Regular',
                     fuzzy: removeAccents([
                         entry.name,
@@ -89,12 +89,12 @@ export function CoffeesDataProvider({children, profile}) {
                 } else if (sort === 'dateAdded') {
                     return dayjs(b.addedAt).valueOf() - dayjs(a.addedAt).valueOf()
                 } else {
-                    return dayjs(b.modifiedAt).valueOf() - dayjs(a.modifiedAt).valueOf()
+                    return dayjs(b.sortDate).valueOf() - dayjs(a.sortDate).valueOf()
                 }
             })
         } else {
             sorted.sort((a, b) => {
-                return dayjs(b.modifiedAt).valueOf() - dayjs(a.modifiedAt).valueOf()
+                return dayjs(b.sortDate).valueOf() - dayjs(a.sortDate).valueOf()
             })
         }
         return sorted
@@ -115,6 +115,13 @@ export function CoffeesDataProvider({children, profile}) {
             .sort((a, b) => a.fullName.localeCompare(b.fullName))
     }, [profile.coffees])
 
+    const roastersList = useMemo(() => {
+        const userList = ([...profile.coffees || []])
+            .map(coffee => coffee.roaster)
+        return getUniqueObjectsByKey([...roasters, ...userList], 'id')
+            .sort((a, b) => a.name.localeCompare(b.name))
+    }, [profile.coffees])
+
     const value = useMemo(() => ({
         allEntries,
         allEntriesCount: allEntries.length,
@@ -125,18 +132,9 @@ export function CoffeesDataProvider({children, profile}) {
         grinderList,
         machineList,
         brewsList,
-        coffeesList
-    }), [
-        allEntries,
-        mappedEntries,
-        searchedEntries,
-        visibleEntries,
-        expandAll,
-        grinderList,
-        machineList,
-        brewsList,
-        coffeesList
-    ])
+        coffeesList,
+        roastersList,
+    }), [allEntries, mappedEntries, searchedEntries, visibleEntries, expandAll, grinderList, machineList, brewsList, coffeesList, roastersList])
 
     return (
         <DataContext.Provider value={value}>
@@ -146,3 +144,14 @@ export function CoffeesDataProvider({children, profile}) {
 }
 
 export default CoffeesDataProvider
+
+function getUniqueObjectsByKey(arr, key) {
+    const uniqueIds = new Set()
+    return arr.filter(item => {
+        if (!uniqueIds.has(item[key])) {
+            uniqueIds.add(item[key])
+            return true
+        }
+        return false
+    })
+}

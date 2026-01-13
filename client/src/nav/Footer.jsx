@@ -3,14 +3,19 @@ import Typography from '@mui/material/Typography'
 import ToggleBetaButton from './ToggleBetaButton'
 import ToggleColorMode from '../misc/ToggleColorMode.jsx'
 import Link from '@mui/material/Link'
-import {openInNewTab} from '../util/openInNewTab.js'
+import {openInNewTab} from '../util/openInNewTab'
+import {useNavigate} from 'react-router-dom'
 
 function Footer({extras, before}) {
+    const navigate = useNavigate()
+
     return (
 
-        <Typography align='center' component='div' style={{marginTop: 16, marginBottom: 80}}>
+        <Typography align='center' component='div' style={{marginTop: 0, marginBottom: 80}}>
 
             {before}
+
+            <div style={{margin: '20px 0px'}}/>
 
             <Link onClick={() => openInNewTab('https://www.reddit.com/r/espresso')}>
                 r/Espresso
@@ -20,9 +25,9 @@ function Footer({extras, before}) {
                 r/Pourover
             </Link>
             &nbsp;&nbsp;•&nbsp;&nbsp;
-            <span style={{color: '#777'}}>
+            <Link onClick={() => navigate('/privacy')}>
                 Privacy
-            </span>
+            </Link>
 
             {extras}
 

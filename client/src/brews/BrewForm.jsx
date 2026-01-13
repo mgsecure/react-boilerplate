@@ -36,8 +36,8 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
     const [formChanged, setFormChanged] = useState(false)
     const [uploading, setUploading] = useState(false)
     const saveEnabled = useMemo(() => {
-        return isLoggedIn && formChanged && form.coffee && !uploading
-    },[form.coffeeName, formChanged, isLoggedIn, uploading])
+        return isLoggedIn && formChanged && (form.coffeeName || form.coffee || coffee) && !uploading
+    },[coffee, form.coffee, form.coffeeName, formChanged, isLoggedIn, uploading])
 
     useEffect(() => {
         if (open) {
@@ -71,9 +71,9 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
     }, [coffeesList, entry?.coffee?.fullname])
 
     const thisCoffee = useMemo(() => {
-        return coffeesList.find(c => c.fullName === form.coffeeName)
-            || entry?.coffee || {name: form.coffeeName}
-    }, [coffeesList, entry?.coffee, form.coffeeName])
+        const foundCoffee = coffeesList.find(c => [form.coffeeName, coffee?.fullname].includes(c.fullName))
+        return foundCoffee || entry?.coffee || coffee || {name: form.coffeeName}
+    }, [coffee, coffeesList, entry, form.coffeeName])
 
     const machineNames = useMemo(() => {
         const systemMachines = machineList.reduce((acc, machine) => {
@@ -110,7 +110,7 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
             const yieldNum = parseFloat(form.yield)
             if (isNaN(doseNum) || isNaN(yieldNum) || doseNum === 0) return ''
             const r = yieldNum / doseNum
-            return `(1:${r.toFixed(1).replace('.0', '')})`
+            return `(${r.toFixed(1).replace('.0', '')}:1)`
         })()
         : ''
 
@@ -139,7 +139,6 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
         setOpen(false)
     }, [setOpen])
 
-
     const handleSubmit = useCallback(async (event) => {
         event.preventDefault()
         setUploading(true)
@@ -147,9 +146,9 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
             ...form,
             coffee: cleanObject({
                 id: thisCoffee.id,
-                name: thisCoffee.fullName,
-                roasterName: thisCoffee.roaster?.name,
-                fullName: entryName({entry: thisCoffee, entryType: 'coffee'})
+                name: thisCoffee.name,
+                roasterName: thisCoffee.roaster?.name || entry?.coffee?.roaster?.name,
+                fullName: thisCoffee.fullName || entryName({entry: thisCoffee, entryType: 'coffee'})
             }),
             machine: cleanObject({
                 id: thisMachine.id,
@@ -170,6 +169,7 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
             brewTime: form.brewTime ? dayjs(form.brewTime).format('YYYY-MM-DD HH:mm:ss') : entry?.brewTime
         }
 
+        delete formCopy.originalEntry
         delete formCopy.roasterName
         delete formCopy.coffeeName
         delete formCopy.machineName
@@ -221,7 +221,7 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
                                 <div style={{marginRight: 15, marginTop: 0}}>
                                     <div style={{fontSize: '1.0rem', marginBottom: 2}}>Dose</div>
                                     <div style={{display: 'flex'}}>
-                                        <TextField type='text' name='dose' style={{width: 80, marginRight: 5}}
+                                        <TextField type='text' name='dose' style={{width: 70, marginRight: 5}}
                                                    size='small'
                                                    onChange={handleFormChange} value={form.dose || ''}
                                                    color='info'/>
@@ -237,16 +237,10 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
                                 <div style={{marginRight: 15, marginTop: 0}}>
                                     <div style={{fontSize: '1.0rem', marginBottom: 2}}>Yield {ratio}</div>
                                     <div style={{display: 'flex'}}>
-                                        <TextField type='text' name='yield' style={{width: 80, marginRight: 5}}
+                                        <TextField type='text' name='yield' style={{width: 70, marginRight: 5}}
                                                    size='small'
                                                    onChange={handleFormChange} value={form.yield || ''}
                                                    color='info'/>
-                                        <SelectBox changeHandler={handleFormChange}
-                                                   form={form}
-                                                   name='yieldUnit'
-                                                   optionsList={['g', 'oz']}
-                                                   multiple={false} defaultValue={form.doseUnit || ''}
-                                                   size='small' width={65}/>
                                     </div>
                                 </div>
                             </div>
@@ -255,7 +249,7 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
                                 <div style={{marginRight: 15, marginTop: 0}}>
                                     <div style={{fontSize: '1.0rem', marginBottom: 2}}>Temperature</div>
                                     <div style={{display: 'flex'}}>
-                                        <TextField type='text' name='temperature' style={{width: 80, marginRight: 5}}
+                                        <TextField type='text' name='temperature' style={{width: 70, marginRight: 5}}
                                                    size='small'
                                                    onChange={handleFormChange} value={form.temperature || ''}
                                                    color='info'/>
@@ -271,38 +265,38 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
                                 <div style={{marginRight: 15, marginTop: 0}}>
                                     <div style={{fontSize: '1.0rem', marginBottom: 2}}>Grind</div>
                                     <div style={{display: 'flex'}}>
-                                        <TextField type='text' name='grinderSetting' style={{width: 100}}
+                                        <TextField type='text' name='grinderSetting' style={{width: 80}}
                                                    size='small'
                                                    onChange={handleFormChange} value={form.grinderSetting || ''}
                                                    color='info'/>
                                     </div>
                                 </div>
+                            </div>
 
-                                <div style={{marginRight: 15, marginTop: 0}}>
-                                    <div style={{fontSize: '1.0rem', marginBottom: 2}}>Time</div>
-                                    <div style={{display: 'flex'}}>
-                                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                            <TimePicker views={['minutes', 'seconds']}
-                                                        view='seconds'
-                                                        format='mm:ss'
-                                                        label=' '
-                                                        timeSteps={{minutes: 1, seconds: 1}}
-                                                        sx={{
-                                                            width: 120,
-                                                            '.MuiPickersSectionList-root': {
-                                                                padding: '8px 0px'
-                                                            }
-                                                        }}
-                                                        value={form.brewTime || null}
-                                                        onChange={(newValue) => handleFormChange({
-                                                            target: {
-                                                                name: 'brewTime',
-                                                                value: newValue
-                                                            }
-                                                        })}
-                                            />
-                                        </LocalizationProvider>
-                                    </div>
+                            <div style={{marginRight: 15, marginBottom: 10}}>
+                                <div style={{fontSize: '1.0rem', marginBottom: 2}}>Time</div>
+                                <div style={{display: 'flex'}}>
+                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                        <TimePicker views={['minutes', 'seconds']}
+                                                    view='seconds'
+                                                    format='mm:ss'
+                                                    label=' '
+                                                    timeSteps={{minutes: 1, seconds: 1}}
+                                                    sx={{
+                                                        width: 120,
+                                                        '.MuiPickersSectionList-root': {
+                                                            padding: '8px 0px'
+                                                        }
+                                                    }}
+                                                    value={form.brewTime || null}
+                                                    onChange={(newValue) => handleFormChange({
+                                                        target: {
+                                                            name: 'brewTime',
+                                                            value: newValue
+                                                        }
+                                                    })}
+                                        />
+                                    </LocalizationProvider>
                                 </div>
                             </div>
                         </div>
@@ -374,7 +368,6 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
                             </div>
                         </div>
 
-
                         <div style={{
                             marginTop: 30,
                             width: '100%',
@@ -391,7 +384,6 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
                                 SAVE
                             </Button>
                         </div>
-
 
                     </div>
                 </form>

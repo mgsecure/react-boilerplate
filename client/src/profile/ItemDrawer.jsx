@@ -32,13 +32,13 @@ export default function ItemDrawer({item, open, setOpen, type = 'Item', action =
                         direction: 'right'
                     }
                 }}
-                sx={{backgroundColor: '#ffffff22'}}>
+                sx={{backgroundColor: '#00000022'}}>
 
                 <div style={{
                     display: 'flex',
                     padding: '15px 15px',
                     height: 64,
-                    backgroundColor: theme.palette.background.default
+                    backgroundColor: theme.palette.card?.add
                 }} onClick={() => setOpen(false)}>
 
                     <div
@@ -50,7 +50,7 @@ export default function ItemDrawer({item, open, setOpen, type = 'Item', action =
                         }}>
                         {`${item
                             ? action === 'clone'
-                                ? 'Clone'
+                                ? 'Edit New Copy of'
                                 : 'Edit'
                             : 'Add'} ${type}`}
                     </div>

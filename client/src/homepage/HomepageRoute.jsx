@@ -10,7 +10,7 @@ import Grid from '@mui/material/Grid'
 import {Card} from '@mui/material'
 
 export default function HomepageRoute() {
-    usePageTitle('Coffee Tracker')
+    usePageTitle('Home')
     const navigate = useNavigate()
     const theme = useTheme()
     const {isMobile} = useWindowSize()
@@ -21,9 +21,7 @@ export default function HomepageRoute() {
         </React.Fragment>
     )
 
-    const footerBefore = (
-        <div style={{margin: '30px 0px'}}/>
-    )
+    const footerBefore = null
 
     const style = {
         backgroundColor: theme.palette.card.add,
@@ -48,7 +46,6 @@ export default function HomepageRoute() {
                 <div style={{fontSize: '1.0rem', marginBottom: 26}}>
                     Coffee-Tracker.com is a free, open-source site for tracking your coffees, brewing history, and coffee gear.
                 </div>
-
 
                 <Grid container spacing={1} style={{margin: '0px 0px 30px'}} columns={{xs: 4, sm: 8, md: 12}}>
                     <Grid size={12}>
