@@ -20,10 +20,13 @@ export default function DeleteEntryButton({size = 'medium', entryType, handleDel
     const theme = useTheme()
     const iconColor = anchorEl ? theme.palette.error.main : lighten(theme.palette.error.main, 0.2)
 
+    const diameterValues = {small: 36, medium: 24, large: 35}
+    const diameter = diameterValues[size] || 36
+
     return (
         <>
             <Tooltip title='Delete' arrow disableFocusListener placement={tooltipPlacement}>
-                <IconButton onClick={handleDeleteConfirm} style={style}>
+                <IconButton onClick={handleDeleteConfirm} style={{...style, height: diameter, width: diameter}}>
                     <DeleteIcon fontSize={size} style={{color: iconColor}}/>
                 </IconButton>
             </Tooltip>

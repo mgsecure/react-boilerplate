@@ -22,16 +22,15 @@ import DeleteEntryButton from '../entries/DeleteEntryButton.jsx'
 import FilterContext from '../context/FilterContext.jsx'
 import {useNavigate} from 'react-router-dom'
 import FlagEntryButton from '../entries/FlagEntryButton.jsx'
+import AppContext from '../app/AppContext.jsx'
 
 export default function BrewCard({entry = {}, expanded, onExpand, context = 'brews', brewCount}) {
+    const {adminEnabled} = useContext(AppContext)
     const {coffeesList, visibleEntries = []} = useContext(DataContext)
     const {updateCollection} = useContext(DBContext)
     const {addFilter, sort} = useContext(FilterContext)
 
     const [brewExpanded, setBrewExpanded] = useState(false)
-
-    //console.log('expanded', {expanded, brewExpanded})
-
     const [scrolled, setScrolled] = useState(false)
     const ref = useRef(null)
     const navigate = useNavigate()
@@ -257,67 +256,71 @@ export default function BrewCard({entry = {}, expanded, onExpand, context = 'bre
                             {(expanded || brewExpanded) ? 'Hide' : 'Show'} Details</Button>
                     </div>
                     <div style={{...columnStyle, placeContent: 'center'}}>
-                        <LogEntryButton entry={entry} entryType={'Brew'} size={'small'} style={{marginLeft: 10}}/>
                         <FlagEntryButton handleFlaggedChange={handleFlaggedChange} updating={updating}
                                          flaggedColor={flaggedColor}
                                          tooltipPlacement={'bottom'} entryType={'Brew'}
                                          size={'small'} style={{marginLeft: 10}}/>
+                        <LogEntryButton entry={entry} entryType={'Brew'} size={'small'} style={{marginLeft: 10}}/>
+                        {adminEnabled &&
+                            <DeleteEntryButton entry={entry} entryType={'Brew'} handleDelete={handleDelete}
+                                               size={'small'}
+                                               style={{marginLeft: 10}} tooltipPlacement={'top'}/>
+                        }
                     </div>
                 </div>
             </CardContent>
 
             <Collapse in={(expanded || brewExpanded)} timeout='auto' unmountOnExit>
-                    <CardContent style={{textAlign: 'left', padding: 10, color: '#fff'}}>
-                        <Stack direction='row' spacing={0} style={{flexWrap: 'wrap', marginBottom: 4}}>
-                            <FieldValue name='Brew Notes' value={entry.tastingNotes} style={{}}/>
-                        </Stack>
+                <CardContent style={{textAlign: 'left', padding: 10, color: '#fff'}}>
+                    <Stack direction='row' spacing={0} style={{flexWrap: 'wrap', marginBottom: 4}}>
+                        <FieldValue name='Brew Notes' value={entry.tastingNotes} style={{}}/>
+                    </Stack>
 
-                        <Stack direction='row' spacing={0} style={{flexWrap: 'wrap', marginBottom: 4}}>
-                            <FieldValue name='Roast Date' value={roastDate} style={{marginRight: 16}}/>
-                            <FieldValue name='Rested' value={entry.roastDate && entry.restedDays?.toFixed(0)}
-                                        suffix={` day${entry.restedDays !== 1 ? 's' : ''}`}
-                                        style={{marginRight: 24}}/>
-                            <FieldValue name='Grinder'
-                                        value={entry?.grinder?.fullName &&
-                                            <Link style={{color: '#fff'}}
-                                                  onClick={() => handleAddFilter('grinderName', entry?.grinder?.fullName, true)}>
-                                                {entry?.grinder?.fullName}</Link>}
-                                        style={{marginRight: 24}}/>
-                            <FieldValue name='Equipment'
-                                        value={entry?.machine?.fullName &&
-                                            <Link style={{color: '#fff'}}
-                                                  onClick={() => handleAddFilter('machineName', entry?.machine?.fullName, true)}>
-                                                {entry?.machine?.fullName}</Link>}
-                                        style={{marginRight: 24}}/>
-                        </Stack>
+                    <Stack direction='row' spacing={0} style={{flexWrap: 'wrap', marginBottom: 4}}>
+                        <FieldValue name='Roast Date' value={roastDate} style={{marginRight: 16}}/>
+                        <FieldValue name='Rested' value={entry.roastDate && entry.restedDays?.toFixed(0)}
+                                    suffix={` day${entry.restedDays !== 1 ? 's' : ''}`}
+                                    style={{marginRight: 24}}/>
+                        <FieldValue name='Grinder'
+                                    value={entry?.grinder?.fullName &&
+                                        <Link style={{color: '#fff'}}
+                                              onClick={() => handleAddFilter('grinderName', entry?.grinder?.fullName, true)}>
+                                            {entry?.grinder?.fullName}</Link>}
+                                    style={{marginRight: 24}}/>
+                        <FieldValue name='Equipment'
+                                    value={entry?.machine?.fullName &&
+                                        <Link style={{color: '#fff'}}
+                                              onClick={() => handleAddFilter('machineName', entry?.machine?.fullName, true)}>
+                                            {entry?.machine?.fullName}</Link>}
+                                    style={{marginRight: 24}}/>
+                    </Stack>
 
-                        <Stack direction='row' spacing={0} style={{flexWrap: 'wrap', marginBottom: 8}}>
-                            <FieldValue name='Roaster Tasting Notes' value={entry.roasterNotes}
-                                        style={{marginRight: 24}}/>
-                        </Stack>
+                    <Stack direction='row' spacing={0} style={{flexWrap: 'wrap', marginBottom: 8}}>
+                        <FieldValue name='Roaster Tasting Notes' value={entry.roasterNotes}
+                                    style={{marginRight: 24}}/>
+                    </Stack>
 
-                        <div style={{display: 'flex', placeContent: 'center'}}>
-                            <LogEntryButton entry={entry} entryType={'brew'} size={'small'}/>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    flexGrow: 1,
-                                    placeContent: 'center end',
-                                    marginRight: 5
-                                }}>
-                                <Tooltip title='Edit' arrow disableFocusListener placement={'top'}>
-                                    <IconButton onClick={handleDrawerClick} style={{marginRight: 2}}>
-                                        <EditIcon fontSize='medium' style={{color: '#eee'}}/>
-                                    </IconButton>
-                                </Tooltip>
-                                <DeleteEntryButton entry={entry} entryType={'Brew'} handleDelete={handleDelete}
-                                                   size={'small'}
-                                                   style={{marginRight: 8}} tooltipPlacement={'top'}/>
-
-                            </div>
+                    <div style={{display: 'flex', placeContent: 'center'}}>
+                        <LogEntryButton entry={entry} entryType={'brew'} size={'small'}/>
+                        <div
+                            style={{
+                                display: 'flex',
+                                flexGrow: 1,
+                                placeContent: 'center end',
+                                marginRight: 5
+                            }}>
+                            <Tooltip title='Edit' arrow disableFocusListener placement={'top'}>
+                                <IconButton onClick={handleDrawerClick} style={{marginRight: 2}}>
+                                    <EditIcon fontSize='medium' style={{color: '#eee'}}/>
+                                </IconButton>
+                            </Tooltip>
+                            <DeleteEntryButton entry={entry} entryType={'Brew'} handleDelete={handleDelete}
+                                               size={'small'}
+                                               style={{marginRight: 8}} tooltipPlacement={'top'}/>
                         </div>
+                    </div>
 
-                    </CardContent>
+                </CardContent>
             </Collapse>
         </Card>
     )

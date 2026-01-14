@@ -26,6 +26,7 @@
     "@starter/shared": "workspace:*",
     "@tanstack/react-query": "^5.56.2",
     "@types/react": "^19.1.13",
+    "add": "^2.0.6",
     "axios": "^1.12.2",
     "babel-plugin-styled-components": "^2.1.4",
     "dayjs": "^1.11.18",
@@ -45,7 +46,8 @@
     "styled-components": "^6.1.19",
     "usehooks-ts": "^3.1.1",
     "vite": "^7.1.6",
-    "winston": "^3.17.0"
+    "winston": "^3.17.0",
+    "yarn": "^1.22.22"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^5.0.3",

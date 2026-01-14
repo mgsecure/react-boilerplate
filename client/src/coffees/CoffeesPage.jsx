@@ -17,7 +17,7 @@ export default function CoffeesPage() {
     const {isMobile} = useWindowSize()
     const {visibleEntries = []} = useContext(DataContext)
     const {isLoggedIn} = useContext(AuthContext)
-    const {demoEnabled} = useContext(DBContext)
+    const {profileLoaded, demoEnabled} = useContext(DBContext)
 
     const extras = (
         <React.Fragment>
@@ -39,7 +39,7 @@ export default function CoffeesPage() {
             <DemoBar/>
             <div style={{marginBottom: 16}}/>
 
-            {!isLoggedIn && !demoEnabled
+            {profileLoaded && !isLoggedIn && !demoEnabled
                 ? <MustBeLoggedIn/>
                 : <Coffees/>
             }

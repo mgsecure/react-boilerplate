@@ -9,7 +9,7 @@ export const beanSortFields = [
 
 export const brewSortFields = [
     {label: 'Brew Date', value: undefined},
-    {label: 'Bean Name', value: 'name'},
+    {label: 'Coffee Name', value: 'name'},
     {label: 'Date Added', value: 'dateAdded'}
 ]
 

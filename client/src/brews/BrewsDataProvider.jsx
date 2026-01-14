@@ -68,7 +68,7 @@ export function BrewsDataProvider({children, profile}) {
             })
         } else {
             sorted.sort((a, b) => {
-                return dayjs(b.brewedAt).valueOf() - dayjs(a.brewedAt).valueOf()
+                return dayjs(b.brewedAt || b.addedAt).valueOf() - dayjs(a.brewedAt || a.addedAt).valueOf()
             })
         }
         return sorted

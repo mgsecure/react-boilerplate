@@ -4,7 +4,7 @@ import CardContent from '@mui/material/CardContent'
 import ItemDrawer from './ItemDrawer.jsx'
 import {useTheme} from '@mui/material/styles'
 
-export default function AddNewItemCard({label, type = 'Entry', count = 0, defaultValue, action}) {
+export default function AddNewItemCard({label, type = 'Entry', count = 0, defaultValue}) {
     const [open, setOpen] = useState(false)
     const handleCardClick = useCallback(() => {
         setOpen(true)
@@ -38,7 +38,7 @@ export default function AddNewItemCard({label, type = 'Entry', count = 0, defaul
 
             </Card>
 
-            <ItemDrawer open={open} setOpen={setOpen} type={type} defaultValue={defaultValue} action={action}/>
+            <ItemDrawer open={open} setOpen={setOpen} type={type} defaultValue={defaultValue} action={'add'}/>
 
         </React.Fragment>
 
