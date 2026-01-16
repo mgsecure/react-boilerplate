@@ -25,7 +25,7 @@ export default function Brews() {
 
             <div style={{width: '100%', marginLeft: 'auto', marginRight: 'auto'}}>
 
-                <Grid container spacing={{xs: '4px', sm: '4px', md: '4px'}} columns={{xs: 1, sm: 1, md: 1}}
+                <Grid container spacing={'6px'} columns={{xs: 1, sm: 1, md: 1}}
                       style={{marginTop: 0, marginLeft: 0, width: '100%'}}>
                     <AnimatePresence>
                         <Grid size={{xs: 4, sm: 4, md: 4}} key={'add-bean-card'}>
@@ -39,7 +39,7 @@ export default function Brews() {
                             visibleEntries.filter(x => x)
                                 .map((entry, index) =>
                                     <Grid
-                                        size={{xs: 4, sm: 4, md: 4}}
+                                        size={12}
                                         key={entry.id}
                                         component={motion.div}
                                         layout

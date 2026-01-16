@@ -25,7 +25,7 @@ export default function DeleteEntryButton({size = 'medium', entryType, handleDel
 
     return (
         <>
-            <Tooltip title='Delete' arrow disableFocusListener placement={tooltipPlacement}>
+            <Tooltip title='Delete' arrow disableFocusListener placement={tooltipPlacement} disableInteractive>
                 <IconButton onClick={handleDeleteConfirm} style={{...style, height: diameter, width: diameter}}>
                     <DeleteIcon fontSize={size} style={{color: iconColor}}/>
                 </IconButton>

@@ -14,7 +14,7 @@ import equipment from '../data/equipment.json'
 import {setDeepUnique} from '../util/setDeep'
 import AuthContext from '../app/AuthContext.jsx'
 
-export default function EquipmentForm({machine, open, setOpen, type = 'Equipment'}) {
+export default function EquipmentForm({machine, open, setOpen}) {
     const theme = useTheme()
     const {flexStyle, isMobile} = useWindowSize()
     const {updateCollection} = useContext(DBContext)
@@ -24,8 +24,8 @@ export default function EquipmentForm({machine, open, setOpen, type = 'Equipment
     const [formChanged, setFormChanged] = useState(false)
     const [uploading, setUploading] = useState(false)
     const saveEnabled = useMemo(() => {
-        return isLoggedIn && formChanged && form.type && form.brand && form.model && !uploading
-    },[form.brand, form.model, form.type, formChanged, isLoggedIn, uploading])
+        return isLoggedIn && formChanged && form.type && (form.brand || form.newBrand) && !uploading
+    }, [form.brand, form.newBrand, form.type, formChanged, isLoggedIn, uploading])
 
     useEffect(() => {
         if (open) {
@@ -38,7 +38,10 @@ export default function EquipmentForm({machine, open, setOpen, type = 'Equipment
     const [brandReset, setBrandReset] = useState(false)
     const [modelReset, setModelReset] = useState(false)
     const [inputValue, setInputValue] = useState(machine?.brand || '')
+    const [inputValueOverride, setInputValueOverride] = useState(false)
+
     const [inputModelValue, setInputModelValue] = useState(machine?.model || '')
+    const [inputModelValueOverride, setInputModelValueOverride] = useState(false)
 
     const machineTypeBrandModels = useMemo(() => {
         return equipment.reduce((acc, machine) => {
@@ -49,14 +52,15 @@ export default function EquipmentForm({machine, open, setOpen, type = 'Equipment
 
     const machineTypes = Object.keys(machineTypeBrandModels)
 
-    const typeBrands = useMemo(()=> {
-        return Object.keys(machineTypeBrandModels[form.type] || {}) || []
-    },[form.type, machineTypeBrandModels])
+    const typeBrands = useMemo(() => {
+        return Object.keys(machineTypeBrandModels[form.type] || {}).filter(x => x)  || []
+    }, [form.type, machineTypeBrandModels])
 
-    const brandModels = useMemo(()=> {
-        return machineTypeBrandModels[form.type]?.[form.brand] || []
-    },[form.brand, form.type, machineTypeBrandModels])
+    const brandModels = useMemo(() => {
+        return (machineTypeBrandModels[form.type]?.[form.brand] || []).filter(x => x)
+    }, [form.brand, form.type, machineTypeBrandModels])
 
+    console.log('form', {machineTypes, typeBrands, brandModels})
     const handleFormChange = useCallback((event) => {
         const {name, value} = event.target
         setForm({...form, [name]: value})
@@ -108,11 +112,12 @@ export default function EquipmentForm({machine, open, setOpen, type = 'Equipment
     const handleReload = useCallback(() => {
         setBrandReset(!brandReset)
         setModelReset(!modelReset)
+        setInputValueOverride(!inputValueOverride)
+        setInputModelValueOverride(!inputModelValueOverride)
         setForm({id: genHexString(8)})
         setUploading(false)
         setOpen(false)
-    }, [brandReset, modelReset, setOpen])
-
+    }, [brandReset, inputModelValueOverride, inputValueOverride, modelReset, setOpen])
 
     const handleSubmit = useCallback(async (event) => {
         event.preventDefault()
@@ -138,8 +143,8 @@ export default function EquipmentForm({machine, open, setOpen, type = 'Equipment
         )
         const flags = machine ? {update: true} : {}
         const message = machine
-                ? 'Changes saved!'
-                : 'New item saved!'
+            ? 'Changes saved!'
+            : 'New item saved!'
 
         try {
             await updateCollection({collection: 'equipment', item: cleanForm, flags})
@@ -164,6 +169,8 @@ export default function EquipmentForm({machine, open, setOpen, type = 'Equipment
     const modelBoxOpacity = form.altModel > 0 ? 0.5 : 1
     const paddingLeft = !isMobile ? 15 : 15
 
+    const requiredStyle = {fontSize: '1.0rem', lineHeight: '1.3rem', fontWeight: 400}
+
     return (
         <div>
 
@@ -173,16 +180,16 @@ export default function EquipmentForm({machine, open, setOpen, type = 'Equipment
                       onSubmit={handleSubmit}>
                     <div style={{paddingLeft: paddingLeft, color: theme.palette.text.primary}}>
                         <div
-                            style={{marginTop: 10, marginBottom: 20}}>
-                            <div style={{fontSize: '1.1rem', fontWeight: 500}} id='machineTypeDiv'>
-                                Machine Type
+                            style={{marginTop: 15, marginBottom: 20}}>
+                            <div style={{fontSize: '1.1rem', lineHeight: '1.3rem', fontWeight: 500, marginBottom: 5}}>
+                                Machine Type <span style={requiredStyle}>(Required)</span>
                             </div>
                             <SelectBox changeHandler={handleFormChange}
                                        form={form}
                                        name='type'
                                        optionsList={machineTypes}
                                        multiple={false} defaultValue={''}
-                                       size='small' width={150}/>
+                                       size='small' width={200}/>
                         </div>
 
                         <div style={detailsStyle}>
@@ -192,21 +199,24 @@ export default function EquipmentForm({machine, open, setOpen, type = 'Equipment
                                         <div style={{marginRight: 10}}>
                                             <div style={{
                                                 fontSize: '1.0rem',
+                                                lineHeight: '1.3rem',
                                                 fontWeight: 500,
-                                                marginBottom: 2
+                                                marginBottom: 3
                                             }}>
-                                                Choose Brand
+                                                Choose Brand <span style={requiredStyle}>(Required)</span>
                                             </div>
                                             <AutoCompleteBox changeHandler={handleFormChange}
                                                              options={typeBrands || []}
                                                              name={'brand'}
+                                                             inputValue={inputValue}
+                                                             setInputValue={setInputValue}
                                                              style={{
                                                                  opacity: brandBoxOpacity,
                                                                  minWidth: isMobile ? 150 : 200
                                                              }}
-                                                             reset={brandReset} disabled={form.altBrand}
-                                                             setInputValue={setInputValue}
-                                                             inputValue={form.brand}
+                                                             reset={brandReset}
+                                                             disabled={form.altBrand}
+                                                             inputValueOverride={inputValueOverride}
                                                              inputValueHandler={setInputValue}
                                                              noOptionsMessage={'Add a brand'}
                                                              noOptionsHandler={handleAltBrandToggle}/>
@@ -246,21 +256,24 @@ export default function EquipmentForm({machine, open, setOpen, type = 'Equipment
                                         <div style={{marginRight: 10}}>
                                             <div style={{
                                                 fontSize: '1.0rem',
-                                                fontWeight: 500,
-                                                marginBottom: 2
+                                                lineHeight: '1.3rem',
+                                                fontWeight: 400,
+                                                marginBottom: 3
                                             }}>
                                                 Choose Model
                                             </div>
                                             <AutoCompleteBox changeHandler={handleFormChange}
                                                              options={brandModels || []}
                                                              name={'model'}
+                                                             inputValue={inputModelValue}
+                                                             setInputValue={setInputModelValue}
                                                              style={{
                                                                  opacity: modelBoxOpacity,
                                                                  minWidth: isMobile ? 150 : 200
                                                              }}
-                                                             reset={modelReset} disabled={form.altModel}
-                                                             inputValue={form.model}
-                                                             setInputValue={setInputValue}
+                                                             reset={brandReset}
+                                                             disabled={form.altBrand}
+                                                             inputValueOverride={inputModelValueOverride}
                                                              inputValueHandler={setInputModelValue}
                                                              noOptionsMessage={'Add a model'}
                                                              noOptionsHandler={handleAltModelToggle}/>
@@ -294,7 +307,12 @@ export default function EquipmentForm({machine, open, setOpen, type = 'Equipment
                                 </div>
 
                                 <div style={{marginRight: 20, marginTop: 10}}>
-                                    <div style={{fontSize: '1.0rem', marginBottom: 5}}>
+                                    <div style={{
+                                        fontSize: '1.0rem',
+                                        lineHeight: '1.3rem',
+                                        fontWeight: 400,
+                                        marginBottom: 3
+                                    }}>
                                         Model Year
                                     </div>
                                     <TextField type='text' name='year' style={{width: 100}} size='small'
@@ -306,7 +324,12 @@ export default function EquipmentForm({machine, open, setOpen, type = 'Equipment
                             </div>
 
                             <div style={{marginRight: 15, marginTop: 10}}>
-                                <div style={{fontSize: '1.1rem'}}>
+                                <div style={{
+                                    fontSize: '1.0rem',
+                                    lineHeight: '1.3rem',
+                                    fontWeight: 400,
+                                    marginBottom: 3
+                                }}>
                                     Notes <span
                                     style={{color: theme.palette.text.secondary}}>(optional)</span>
                                 </div>
@@ -318,21 +341,21 @@ export default function EquipmentForm({machine, open, setOpen, type = 'Equipment
                         </div>
 
                         <div style={{
-                                marginTop: 30,
-                                width: '100%',
-                                display: 'flex',
-                                justifyContent: 'center'
-                            }}>
-                                <Button onClick={handleReload} variant='outlined' color='info'
-                                        style={{marginRight: 16}}
-                                        disabled={uploading}>
-                                    CANCEL
-                                </Button>
-                                <Button type='submit' variant='contained' color='info'
-                                        disabled={!saveEnabled} style={{boxShadow: 'none'}}>
-                                    SAVE
-                                </Button>
-                            </div>
+                            margin: '30px 0px 60px',
+                            width: '100%',
+                            display: 'flex',
+                            justifyContent: 'center'
+                        }}>
+                            <Button onClick={handleReload} variant='outlined' color='info'
+                                    style={{marginRight: 16}}
+                                    disabled={uploading}>
+                                CANCEL
+                            </Button>
+                            <Button type='submit' variant='contained' color='info'
+                                    disabled={!saveEnabled} style={{boxShadow: 'none'}}>
+                                SAVE
+                            </Button>
+                        </div>
 
 
                     </div>

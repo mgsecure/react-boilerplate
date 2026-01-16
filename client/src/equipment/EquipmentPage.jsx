@@ -32,7 +32,7 @@ export default function EquipmentPage() {
             <div style={{marginBottom: 16}}/>
 
             {!isLoggedIn && !demoEnabled
-                ? <MustBeLoggedIn actionText={'track your brews'}/>
+                ? <MustBeLoggedIn actionText={'track your gear'}/>
                 : <Equipment machines={userProfile.equipment}/>
             }
 

@@ -15,22 +15,20 @@ export default function AddNewItemCard({label, type = 'Entry', count = 0, defaul
     return (
         <React.Fragment>
             <Card
-                onClick={handleCardClick} sx={{height: '100%'}}
+                onClick={handleCardClick} sx={{}}
                 style={{
                     backgroundColor: theme.palette.card?.add,
                     color: '#fff',
                     boxShadow: 'unset',
-                    padding: '0px',
-                    placeContent: 'center',
-                    cursor: 'pointer'
+                    placeItems: 'center',
+                    cursor: 'pointer',
                 }}>
 
-                <CardContent style={{display: 'flex', placeContent: 'center', width: '100%'}}>
+                <CardContent style={{display: 'flex', placeContent: 'center', width: '100%', padding: 15}}>
                     <div style={{
                         fontSize: '1.1rem',
                         fontWeight: 500,
                         textAlign: 'center',
-                        marginTop: 2
                     }}>
                         {label || `Add ${count > 0 ? 'New ' : ''}${type}`}
                     </div>

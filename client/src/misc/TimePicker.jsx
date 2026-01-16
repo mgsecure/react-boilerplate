@@ -4,12 +4,14 @@ import {TimeField} from '@mui/x-date-pickers/TimeField'
 import React, {useCallback, useEffect, useState} from 'react'
 import dayjs from 'dayjs'
 
-export default function TimePicker({value, handleChangeTime}) {
+export default function TimePicker({value = dayjs('00:00', 'mm:ss'), handleChangeTime}) {
 
     const [timeComponents, setTimeComponents] = useState({minutes: 0, seconds: 0})
     useEffect(() => {
-        setTimeComponents({minutes: value?.minute() || 0, seconds: value?.second() || 0})
-    }, [value])
+        if (dayjs(value).minute() !== timeComponents.minutes || dayjs(value).second() !== timeComponents.seconds) {
+            setTimeComponents({minutes: dayjs(value).minute() || 0, seconds: dayjs(value).second() || 0})
+        }
+    }, [timeComponents, value])
 
     const handleChange = useCallback((newValue, field) => {
         const updatedTimeComponents = {...timeComponents, [field]: newValue}

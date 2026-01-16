@@ -40,7 +40,7 @@ export default function CoffeesPage() {
             <div style={{marginBottom: 16}}/>
 
             {profileLoaded && !isLoggedIn && !demoEnabled
-                ? <MustBeLoggedIn/>
+                ? <MustBeLoggedIn actionText={'track your coffees'}/>
                 : <Coffees/>
             }
 

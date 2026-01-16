@@ -110,36 +110,39 @@ export function DBProvider({children}) {
 
     const updateCollection = useCallback(async ({collection, item, flags = {}}) => {
         if (dbError) return false
-        const cleanItem = Object.fromEntries(
-            Object.entries(item).filter(([_key, value]) => {
-                return value !== null && typeof value !== 'undefined'
-            })
-        )
-
-        const timestamp = dayjs().format('YYYY-MM-DD HH:mm:ss')
-        cleanItem.addedAt = cleanItem.addedAt || timestamp
-        cleanItem.modifiedAt = timestamp
-
-        const ref = doc(db, 'user-profiles', user.uid)
-        let newItems
-        if (flags.delete) {
-            newItems = userProfile[collection]?.filter(e => e.id !== cleanItem.id)
-        } else if (flags.update && userProfile[collection]) {
-            newItems = userProfile[collection]?.map(e => e.id === cleanItem.id ? cleanItem : e)
+        if (!user?.uid) {
+            enqueueSnackbar('You must be logged in to update your profile.', {variant: 'error'})
         } else {
-            newItems = [...userProfile[collection] || [], cleanItem]
-        }
+            const cleanItem = Object.fromEntries(
+                Object.entries(item).filter(([_key, value]) => {
+                    return value !== null && typeof value !== 'undefined'
+                })
+            )
+            const timestamp = dayjs().format('YYYY-MM-DD HH:mm:ss')
+            cleanItem.addedAt = cleanItem.addedAt || timestamp
+            cleanItem.modifiedAt = timestamp
 
-        await runTransaction(db, async transaction => {
-            const sfDoc = await transaction.get(ref)
-            if (sfDoc.exists()) {
-                transaction.update(ref, {[collection]: newItems})
-                transaction.update(ref, {modifiedAt: timestamp})
+            const ref = doc(db, 'user-profiles', user.uid)
+            let newItems
+            if (flags.delete) {
+                newItems = userProfile[collection]?.filter(e => e.id !== cleanItem.id)
+            } else if (flags.update && userProfile[collection]) {
+                newItems = userProfile[collection]?.map(e => e.id === cleanItem.id ? cleanItem : e)
             } else {
-                transaction.set(ref, {[collection]: newItems})
-                transaction.update(ref, {createdAt: timestamp})
+                newItems = [...userProfile[collection] || [], cleanItem]
             }
-        })
+
+            await runTransaction(db, async transaction => {
+                const sfDoc = await transaction.get(ref)
+                if (sfDoc.exists()) {
+                    transaction.update(ref, {[collection]: newItems})
+                    transaction.update(ref, {modifiedAt: timestamp})
+                } else {
+                    transaction.set(ref, {[collection]: newItems})
+                    transaction.update(ref, {createdAt: timestamp})
+                }
+            })
+        }
     }, [dbError, user?.uid, userProfile])
 
 

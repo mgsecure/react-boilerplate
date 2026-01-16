@@ -19,6 +19,7 @@ import ItemDrawer from '../profile/ItemDrawer.jsx'
 import Tooltip from '@mui/material/Tooltip'
 import LogEntryButton from '../entries/LogEntryButton.jsx'
 import DeleteEntryButton from '../entries/DeleteEntryButton.jsx'
+import FieldValue from '../misc/FieldValue.jsx'
 
 const ExpandMore = styled((props) => {
     const {expand, ...other} = props
@@ -31,7 +32,7 @@ const ExpandMore = styled((props) => {
     })
 }))
 
-export default function EquipmentCard({entry={}, expanded, onExpand}) {
+export default function EquipmentCard({entry = {}, expanded, onExpand}) {
     const {updateCollection} = useContext(DBContext)
     const [scrolled, setScrolled] = useState(false)
     const ref = useRef(null)
@@ -98,8 +99,17 @@ export default function EquipmentCard({entry={}, expanded, onExpand}) {
             }}
             ref={ref}>
             <CardContent
-                style={{placeContent: 'center', textAlign: 'center', alignItems: 'center', padding: '5px 5px 0px 5px'}}>
-                <div style={{marginTop: 8}}>
+                style={{
+                    display: 'flex', placeContent: 'center', textAlign: 'center',
+                    alignItems: 'center', padding: 8
+                }}>
+                <Tooltip title='Edit' arrow disableInteractive placement={'top'}>
+                    <IconButton onClick={handleDrawerClick} style={{marginRight: 5, marginTop: 8}}>
+                        <EditIcon fontSize='small' style={{color: '#eee'}}/>
+                    </IconButton>
+                </Tooltip>
+
+                <div style={{flexGrow: 1, marginBottom: 0}}>
                     <div style={{fontSize: '0.85rem', marginBottom: 1, fontWeight: 500, opacity: 0.6}}>
                         {entry.type}
                     </div>
@@ -114,72 +124,38 @@ export default function EquipmentCard({entry={}, expanded, onExpand}) {
                         </Link>
                     </div>
                 </div>
+
+                <Tooltip title='Details' arrow disableFocusListener disableInteractive placement={'top'}>
+                    <ExpandMore style={{height: 36, width: 36, marginLeft: 5, marginTop: 8}} onClick={handleChange}
+                                expand={expanded}>
+                        <ExpandMoreIcon/>
+                    </ExpandMore>
+                </Tooltip>
             </CardContent>
             <CardActions sx={{padding: '0px 5px 4px 5px'}}>
                 <div style={{width: '100%', display: 'flex', placeItems: 'center'}}>
-                    <Tooltip title='Edit' arrow disableFocusListener>
-                        <IconButton onClick={handleDrawerClick} style={{marginRight: 2}}>
-                            <EditIcon fontSize='small' style={{color: '#eee'}}/>
-                        </IconButton>
-                    </Tooltip>
-                    <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={() => setAnchorEl(null)}
-                          slotProps={{paper: {sx: {backgroundColor: '#333'}}}}>
-                        <div style={{padding: 20, textAlign: 'center'}}>
-                            Delete cannot be undone.<br/>
-                            Are you sure?
-                        </div>
-                        <div style={{textAlign: 'center'}}>
-                            <Button style={{marginBottom: 10, color: '#000'}}
-                                    variant='contained'
-                                    onClick={handleDelete}
-                                    edge='start'
-                                    color='error'
-                            >
-                                Delete {entry.type}
-                            </Button>
-                        </div>
-                    </Menu>
-
-                    <Tooltip title='Details' arrow disableFocusListener>
-                        <ExpandMore style={{height: 36, width: 36}} onClick={handleChange} expand={expanded}>
-                            <ExpandMoreIcon/>
-                        </ExpandMore>
-                    </Tooltip>
                 </div>
             </CardActions>
 
             <ItemDrawer item={entry} open={drawerOpen} setOpen={setDrawerOpen} type={'Equipment'}/>
 
             <Collapse in={expanded} timeout='auto' unmountOnExit>
-                <CardContent style={{textAlign: 'left', padding: 10, color: '#fff'}}>
-                    <div style={{fontSize: '0.8rem'}}>&nbsp;{entry.year}&nbsp;</div>
+                <CardContent style={{display: 'flex', textAlign: 'left', padding: 10, color: '#fff'}}>
+                    <div style={{display: 'flex', flexGrow: 1}}>
+                        <FieldValue name='Model Year' value={entry.year} style={{marginRight: 24}}/>
+                        <FieldValue name='Notes' value={entry.notes &&
+                            notesLines.map((line, index) =>
+                                <div key={index} style={{marginLeft: 5}}>
+                                    {line}<br/>
+                                </div>
+                            )
+                        } style={{marginRight: 24}}/>
+                    </div>
+                    <div style={{display: 'flex', placeItems: 'center'}}>
+                        <LogEntryButton entry={entry} entryType={'Gear'} size={'small'}/>
+                        <DeleteEntryButton entry={entry} entryType={'Gear'} handleDelete={handleDelete}
+                                           size={'small'} style={{marginRight: 8}} tooltipPlacement={'top'}/>
 
-                    {entry.notes &&
-                        notesLines.map((line, index) =>
-                            <div key={index} style={{marginLeft: 5}}>
-                                {line}<br/>
-                            </div>
-                        )
-                    }
-
-                    <div style={{display: 'flex', placeContent: 'center'}}>
-                        <LogEntryButton entry={entry} entryType={'brew'} size={'small'}/>
-                        <div
-                            style={{
-                                display: 'flex',
-                                flexGrow: 1,
-                                placeContent: 'center end',
-                                marginRight: 5
-                            }}>
-                            <Tooltip title='Edit' arrow disableFocusListener placement={'top'}>
-                                <IconButton onClick={handleDrawerClick} style={{marginRight: 2}}>
-                                    <EditIcon fontSize='medium' style={{color: '#eee'}}/>
-                                </IconButton>
-                            </Tooltip>
-                            <DeleteEntryButton entry={entry} entryType={'Gear'} handleDelete={handleDelete} size={'small'}
-                                               style={{marginRight: 8}} tooltipPlacement={'top'}/>
-
-                        </div>
                     </div>
 
                     <Tracker feature='machineDetails' page={entry.name} id={entry.id}/>

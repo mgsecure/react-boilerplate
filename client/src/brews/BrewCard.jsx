@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton'
 import EditIcon from '@mui/icons-material/Edit'
 import DBContext from '../app/DBContext.jsx'
 import {enqueueSnackbar} from 'notistack'
-import {alpha, Button, Collapse} from '@mui/material'
+import {Button, Collapse} from '@mui/material'
 import useWindowSize from '../util/useWindowSize.jsx'
 import Stack from '@mui/material/Stack'
 import FieldValue from '../misc/FieldValue.jsx'
@@ -21,7 +21,7 @@ import cleanObject from '../util/cleanObject'
 import DeleteEntryButton from '../entries/DeleteEntryButton.jsx'
 import FilterContext from '../context/FilterContext.jsx'
 import {useNavigate} from 'react-router-dom'
-import FlagEntryButton from '../entries/FlagEntryButton.jsx'
+import EntryFlags from './EntryFlags.jsx'
 import AppContext from '../app/AppContext.jsx'
 
 export default function BrewCard({entry = {}, expanded, onExpand, context = 'brews', brewCount}) {
@@ -29,14 +29,15 @@ export default function BrewCard({entry = {}, expanded, onExpand, context = 'bre
     const {coffeesList, visibleEntries = []} = useContext(DataContext)
     const {updateCollection} = useContext(DBContext)
     const {addFilter, sort} = useContext(FilterContext)
-
-    const [brewExpanded, setBrewExpanded] = useState(false)
-    const [scrolled, setScrolled] = useState(false)
     const ref = useRef(null)
     const navigate = useNavigate()
     const theme = useTheme()
 
-    const [updating, setUpdating] = useState(false)
+    const [brewExpanded, setBrewExpanded] = useState(false)
+    const [scrolled, setScrolled] = useState(false)
+
+    const [updating, setUpdating] = useState(undefined)
+
     const handleAddFilter = useCallback((keyToAdd, valueToAdd, replace) => {
         addFilter(keyToAdd, valueToAdd, replace)
     }, [addFilter])
@@ -57,13 +58,12 @@ export default function BrewCard({entry = {}, expanded, onExpand, context = 'bre
 
     const [action, setAction] = useState('edit')
 
-    const handleUpdate = useCallback(async (entry) => {
-        setUpdating(true)
+    const handleUpdate = useCallback(async (entry, flag) => {
+        setUpdating(flag || true)
         const cleanEntry = cleanObject(entry)
         const flags = entry ? {update: true} : {}
         try {
             await updateCollection({collection: 'brews', item: cleanEntry, flags})
-            //enqueueSnackbar('Ratings saved', {variant: 'success'})
         } catch (error) {
             enqueueSnackbar(`Error saving ratings: ${error}`, {variant: 'error', autoHideDuration: 3000})
         } finally {
@@ -71,13 +71,12 @@ export default function BrewCard({entry = {}, expanded, onExpand, context = 'bre
         }
     }, [updateCollection])
 
-    const handleFlaggedChange = useCallback(async () => {
+    const handleFlaggedChange = useCallback(async (event, direction) => {
         const entryCopy = {
-            ...entry.originalEntry,
-            flagged: !entry.flagged
+            ...entry.originalEntry, flagged: entry.originalEntry.flagged === direction ? undefined : direction
         }
-        await handleUpdate(entryCopy)
-    }, [entry, handleUpdate])
+        await handleUpdate(entryCopy, direction)
+    }, [entry.originalEntry, handleUpdate])
 
     const handleDelete = useCallback(async () => {
         try {
@@ -94,9 +93,7 @@ export default function BrewCard({entry = {}, expanded, onExpand, context = 'bre
             const offset = isMobile ? 70 : 74
             const {id} = queryString.parse(location.search)
             const isIdFiltered = id === entry.id
-
             setScrolled(true)
-
             setTimeout(() => {
                 window.scrollTo({
                     left: 0,
@@ -146,13 +143,13 @@ export default function BrewCard({entry = {}, expanded, onExpand, context = 'bre
     const timeStyle = previousBrew?.brewTime && previousBrew.brewTime !== entry.brewTime ? highlightStyle : {}
     const recipeStyle = previousBrew?.recipePrep && previousBrew.recipePrep !== entry.recipePrep ? highlightStyle : {}
 
-    const flaggedColor = (entry.flagged || updating) ? theme.palette.success.main : alpha(theme.palette.primary.main, 0.3)
     const backgroundColor = context !== 'coffeeEntry' ? theme.palette.card.main : lighten(theme.palette.card.main, 0.05)
 
     const {isMobile, flexStyle, columnStyle} = useWindowSize()
     const flexDirection = isMobile ? 'column' : 'row'
-    const tooltipPlacement = isMobile ? 'bottom' : 'left'
-    const tooltipPlacementRight = isMobile ? 'bottom' : 'right'
+    const cardPadding = isMobile ? '5px 5px' : '5px 5px'
+    const dataMarginLeft = !isMobile ? 5 : 0
+    const buttonMarginRight = !isMobile ? 10 : 0
 
     return (
         <Card
@@ -166,82 +163,166 @@ export default function BrewCard({entry = {}, expanded, onExpand, context = 'bre
             }}
             id={entry.id}
             ref={ref}>
-            <CardContent style={{display: flexStyle, placeItems: 'center', padding: 10}}>
+            <CardContent style={{display: 'block', flexWrap: 'nowrap', placeItems: 'center', padding: cardPadding}}>
+
                 <ItemDrawer item={entry.originalEntry} open={drawerOpen} setOpen={setDrawerOpen} type={'Brew'}
                             action={action}/>
-
-                <div style={{width: '100%', flexGrow: 1}}>
-                    <div style={{
-                        display: 'flex',
-                        flexGrow: 1,
-                        flexDirection: flexDirection,
-                        placeItems: 'center',
-                        width: '100%'
-                    }}>
-                        <div style={{flexGrow: 1}}>
+                <div style={{display: 'flex', placeItems: 'center', width: '100%', flexGrow: 1}}>
+                    <div style={{display: flexStyle, placeItems: 'center', width: '100%', flexGrow: 1}}>
+                        <div style={{width: '100%', flexGrow: 1}}>
                             <div style={{
-                                marginBottom: 5,
+                                display: 'flex',
                                 flexGrow: 1,
-                                placeContent: 'center',
-                                textAlign: (isMobile ? 'center' : 'left')
+                                flexDirection: flexDirection,
+                                placeItems: 'center',
+                                width: '100%'
                             }}>
-                                <div style={{
-                                    fontSize: '1.1rem',
-                                    lineHeight: '1.3rem',
-                                    margin: '5px 0px 4px 5px'
-                                }}>
-                                    {context !== 'coffeeEntry' &&
-                                        <div style={{fontSize: '1.2rem', marginBottom: 5}}>
-                                            <Link style={{color: '#fff', fontWeight: 600}}
-                                                  onClick={() => handleAddFilter('coffeeName', thisCoffee?.name, true)}>
-                                                {thisCoffee?.name}
-                                            </Link>
-                                            {thisCoffee?.roasterName &&
-                                                <>
-                                                    &nbsp;(<Link style={{color: '#fff', fontWeight: 600}}
-                                                                 onClick={() => handleAddFilter('roasterName', thisCoffee?.roasterName, true)}>
-                                                    {thisCoffee?.roasterName}
-                                                </Link>)
-                                                </>
-                                            }
+                                {context !== 'coffeeEntry' &&
+                                    <div style={{
+                                        marginBottom: 5,
+                                        flexGrow: 1,
+                                        placeContent: 'center',
+                                        textAlign: (isMobile ? 'center' : 'left'),
+                                        fontSize: '1.2rem',
+                                        lineHeight: '1.3rem',
+                                        margin: '7px 0px 4px 5px'
+                                    }}>
+                                        <div style={{
+                                            display: flexStyle,
+                                            marginBottom: 5
+                                        }}>
+                                            <div>
+                                                <Link style={{color: '#fff', fontWeight: 600}}
+                                                      onClick={() => handleAddFilter('coffeeName', thisCoffee?.name, true)}>
+                                                    {thisCoffee?.name}
+                                                </Link>
+                                            </div>
+                                            <div style={{fontSize: '1.1rem', lineHeight: '1.4rem'}}>
+                                                {thisCoffee?.roasterName &&
+                                                    <>
+                                                        &nbsp;(<Link style={{color: '#fff', fontWeight: 400}}
+                                                                     onClick={() => handleAddFilter('roasterName', thisCoffee?.roasterName, true)}>
+                                                        {thisCoffee?.roasterName}
+                                                    </Link>)
+                                                    </>
+                                                }
+                                            </div>
                                         </div>
+                                    </div>
+                                }
+                            </div>
+
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    flexWrap: 'wrap',
+                                    alignContent: 'center',
+                                    marginLeft: dataMarginLeft
+                                }}>
+
+                                <div>
+                                    <FieldValue name={`${context === 'coffeeEntry' ? 'Latest ' : ''}Brew Date`}
+                                                value={`${entryDate} ${entryTime}`}
+                                                style={{marginRight: 15}}/>
+                                </div>
+                                <div style={{
+                                    display: 'flex',
+                                    flexWrap: 'wrap',
+                                    alignContent: 'center',
+                                    marginBottom: 4
+                                }}>
+                                    <FieldValue name='Dose' value={entry.dose} suffix={entry.doseUnit}
+                                                style={{marginRight: 15}} textStyle={doseStyle}/>
+                                    <FieldValue name='Yield' value={entry.yield} suffix={`${entry.yieldUnit} ${ratio}`}
+                                                style={{marginRight: 15}} textStyle={yieldStyle}/>
+                                    <FieldValue name='Temp' value={entry.temperature} suffix={entry.temperatureUnit}
+                                                style={{marginRight: 15}} textStyle={temperatureStyle}/>
+                                    <FieldValue name='Grind' value={entry.grinderSetting}
+                                                style={{marginRight: 15}} textStyle={grindStyle}/>
+                                    <FieldValue name='Time' value={brewTime}
+                                                style={{marginRight: 15}} textStyle={timeStyle}/>
+                                    <FieldValue name='Recipe/Prep' value={entry.recipePrep}
+                                                style={{marginRight: 15}} textStyle={recipeStyle}/>
+                                    {brewCount > 1 &&
+                                        <FieldValue name='More Info'
+                                                    value={<Link
+                                                        style={{color: theme.palette.primary.main}}
+                                                        onClick={() => handleViewAll()}>
+                                                        View all brews ({brewCount})
+                                                    </Link>}
+                                                    style={{}}/>
                                     }
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <Stack direction='row' spacing={0}
-                           style={{flexWrap: 'wrap', alignContent: 'center', marginBottom: 4}}>
-                        <FieldValue name={`${context === 'coffeeEntry' ? 'Latest ' : ''}Brew Date`}
-                                    value={`${entryDate} ${entryTime}`}
-                                    style={{marginRight: 24}}/>
-                        <FieldValue name='Dose' value={entry.dose} suffix={entry.doseUnit}
-                                    style={{marginRight: 15}} textStyle={doseStyle}/>
-                        <FieldValue name='Yield' value={entry.yield} suffix={`${entry.yieldUnit} ${ratio}`}
-                                    style={{marginRight: 15}} textStyle={yieldStyle}/>
-                        <FieldValue name='Temp' value={entry.temperature} suffix={entry.temperatureUnit}
-                                    style={{marginRight: 15}} textStyle={temperatureStyle}/>
-                        <FieldValue name='Grind' value={entry.grinderSetting}
-                                    style={{marginRight: 15}} textStyle={grindStyle}/>
-                        <FieldValue name='Time' value={brewTime}
-                                    style={{marginRight: 15}} textStyle={timeStyle}/>
-                        <FieldValue name='Recipe/Prep' value={entry.recipePrep}
-                                    style={{marginRight: 15}} textStyle={recipeStyle}/>
-                        {brewCount > 0 &&
-                            <FieldValue name='More Info'
-                                        value={<Link
-                                            style={{color: theme.palette.primary.main}}
-                                            onClick={() => handleViewAll()}>
-                                            View all brews ({brewCount})
-                                        </Link>}
-                                        style={{}}/>
-                        }
-                    </Stack>
+                        <div style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyItems: 'right',
+                            flexGrow: 0,
+                            width: 'auto'
+                        }}>
+                            {!isMobile &&
+                            <div style={{...columnStyle, placeContent: 'center', marginRight: buttonMarginRight}}>
+                                <Button onClick={handleCloneClick}
+                                        style={{textTransform: 'none', whiteSpace: 'nowrap', width: 90, padding: 4}}>
+                                    Make Copy</Button>
+                                <Button onClick={handleDrawerClick}
+                                        style={{textTransform: 'none', whiteSpace: 'nowrap', width: 90, padding: 4}}>
+                                    Edit</Button>
+                                <Button onClick={handleChange}
+                                        style={{
+                                            textTransform: 'none', whiteSpace: 'nowrap', width: 90, padding: 4,
+                                            fontWeight: expanded || brewExpanded ? 700 : 400
+                                        }}>
+                                    {(expanded || brewExpanded) ? 'Hide' : 'Show'} Details</Button>
+                            </div>
+                            }
+                            {!isMobile &&
+                                <div style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    placeContent: 'center',
+                                    borderLeft: '1px solid',
+                                    borderColor: lighten(theme.palette.card.add, 0.1)
+                                }}>
+                                    <EntryFlags entry={entry} handleFlaggedChange={handleFlaggedChange}
+                                                updating={updating}/>
+                                    <LogEntryButton entry={entry} entryType={'Brew'} size={'small'}
+                                                    style={{marginLeft: 10}}/>
+                                    {adminEnabled &&
+                                        <DeleteEntryButton entry={entry} entryType={'Brew'} handleDelete={handleDelete}
+                                                           size={'small'}
+                                                           style={{marginLeft: 10}} tooltipPlacement={'top'}/>
+                                    }
+                                </div>
+                            }
 
+                        </div>
+
+                    </div>
+
+                    {isMobile &&
+                        <div style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            placeContent: 'center',
+                            borderLeft: '1px solid',
+                            borderColor: lighten(theme.palette.card.add, 0.1)
+                        }}>
+                            <EntryFlags entry={entry} handleFlaggedChange={handleFlaggedChange} updating={updating}/>
+                            <LogEntryButton entry={entry} entryType={'Brew'} size={'small'} style={{marginLeft: 10}}/>
+                            {adminEnabled &&
+                                <DeleteEntryButton entry={entry} entryType={'Brew'} handleDelete={handleDelete}
+                                                   size={'small'}
+                                                   style={{marginLeft: 10}} tooltipPlacement={'top'}/>
+                            }
+                        </div>
+                    }
 
                 </div>
-                <div style={{display: 'flex', alignItems: 'center', justifyItems: 'right', flexGrow: 0, width: 'auto'}}>
-                    <div style={{...columnStyle, placeContent: 'center'}}>
+                {isMobile &&
+                    <div style={{...columnStyle, placeContent: 'center', marginRight: buttonMarginRight}}>
                         <Button onClick={handleCloneClick}
                                 style={{textTransform: 'none', whiteSpace: 'nowrap', width: 90, padding: 4}}>
                             Make Copy</Button>
@@ -255,19 +336,7 @@ export default function BrewCard({entry = {}, expanded, onExpand, context = 'bre
                                 }}>
                             {(expanded || brewExpanded) ? 'Hide' : 'Show'} Details</Button>
                     </div>
-                    <div style={{...columnStyle, placeContent: 'center'}}>
-                        <FlagEntryButton handleFlaggedChange={handleFlaggedChange} updating={updating}
-                                         flaggedColor={flaggedColor}
-                                         tooltipPlacement={'bottom'} entryType={'Brew'}
-                                         size={'small'} style={{marginLeft: 10}}/>
-                        <LogEntryButton entry={entry} entryType={'Brew'} size={'small'} style={{marginLeft: 10}}/>
-                        {adminEnabled &&
-                            <DeleteEntryButton entry={entry} entryType={'Brew'} handleDelete={handleDelete}
-                                               size={'small'}
-                                               style={{marginLeft: 10}} tooltipPlacement={'top'}/>
-                        }
-                    </div>
-                </div>
+                }
             </CardContent>
 
             <Collapse in={(expanded || brewExpanded)} timeout='auto' unmountOnExit>
@@ -309,9 +378,9 @@ export default function BrewCard({entry = {}, expanded, onExpand, context = 'bre
                                 placeContent: 'center end',
                                 marginRight: 5
                             }}>
-                            <Tooltip title='Edit' arrow disableFocusListener placement={'top'}>
+                            <Tooltip title='Edit' arrow disableFocusListener placement={'top'} disableInteractive>
                                 <IconButton onClick={handleDrawerClick} style={{marginRight: 2}}>
-                                    <EditIcon fontSize='medium' style={{color: '#eee'}}/>
+                                    <EditIcon fontSize='small' style={{color: '#eee'}}/>
                                 </IconButton>
                             </Tooltip>
                             <DeleteEntryButton entry={entry} entryType={'Brew'} handleDelete={handleDelete}

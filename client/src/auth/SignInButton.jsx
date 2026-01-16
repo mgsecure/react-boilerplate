@@ -5,14 +5,28 @@ import ListItemText from '@mui/material/ListItemText'
 import MenuItem from '@mui/material/MenuItem'
 import AuthContext from '../app/AuthContext'
 import Link from '@mui/material/Link'
+import DBContext from '../app/DBContext.jsx'
+import {enqueueSnackbar} from 'notistack'
+import Button from '@mui/material/Button'
 
 function SignInButton({onClick, linkText}) {
     const {authLoaded, isLoggedIn, login} = useContext(AuthContext)
+    const {setDemo} = useContext(DBContext)
 
-    const handleClick = useCallback(() => {
+    const handleClick = useCallback(async () => {
         onClick && onClick()
-        login()
-    }, [onClick, login])
+        try {
+            await login()
+        } catch (error) {
+            console.error('Error logging in:', error)
+            enqueueSnackbar('There was a problem logging you in. Please try again later. ', {
+                autoHideDuration: null,
+                action: <Button color='secondary' onClick={() => window.location.reload()}>Refresh</Button>
+            })
+        } finally {
+            setDemo(false)
+        }
+    }, [onClick, login, setDemo])
 
     if (!authLoaded || isLoggedIn) return null
 

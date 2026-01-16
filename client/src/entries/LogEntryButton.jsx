@@ -18,7 +18,7 @@ export default function LogEntryButton({entry, size='medium', entryType, style})
     if (!adminEnabled) return null
 
     return (
-        <Tooltip title='Log Entry Details' arrow disableFocusListener>
+        <Tooltip title='Log Entry Details' arrow disableInteractive>
             <IconButton onClick={handleClick} style={style}>
                 <WysiwygIcon fontSize={size} color='primary'/>
             </IconButton>

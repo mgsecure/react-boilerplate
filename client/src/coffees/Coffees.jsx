@@ -27,7 +27,7 @@ export default function Coffees() {
 
 
             <div style={{maxWidth: 1200, marginLeft: 'auto', marginRight: 'auto'}}>
-                <Grid container spacing={{xs: '6px', sm: '6px', md: '6px'}} columns={{xs: 1, sm: 1, md: 1}}
+                <Grid container spacing={'6px'} columns={{xs: 1, sm: 1, md: 1}}
                       style={{marginTop: 0, marginLeft: 0}}>
                     <AnimatePresence>
                         <Grid size={{xs: 4, sm: 4, md: 4}} key={'add-bean-card'}>

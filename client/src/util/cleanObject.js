@@ -12,5 +12,15 @@ export default function cleanObject(object) {
                 }
                 return [key, value]
             })
+            .filter(([_key, value]) => {
+                if (value === null || typeof value === 'undefined') {
+                    return false
+                }
+                if (typeof value === 'object' && !Array.isArray(value) && Object.keys(value).length === 0) {
+                    return false
+                }
+                return true
+            })
     )
+
 }

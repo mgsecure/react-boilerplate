@@ -64,9 +64,9 @@ function FilterDisplayAdvanced() {
     return (
         <FieldValue name='Current Filters'
                     headerStyle={{fontSize: '1.0rem', fontWeight: 700, color: theme.palette.text.primary, marginBottom:5}}
-                    style={{marginBottom: 10}}
+                    style={{}}
                     value={
-                        <Stack direction='row' spacing={0} sx={{flexWrap: 'wrap'}} style={{marginRight: -24}}>
+                        <Stack direction='row' spacing={0} sx={{flexWrap: 'wrap'}} style={{marginRight: 0}}>
                             {filterValues.map(({key, value: filter}, index) => {
                                     const bgColor = filter.startsWith('!') ? '#642c2c' : 'inherit'
                                     const chipLabel = cleanChipLabel(filterFieldsByFieldName[key]?.label, filter)
@@ -75,7 +75,7 @@ function FilterDisplayAdvanced() {
                                         key={index}
                                         label={chipLabel}
                                         variant='outlined'
-                                        style={{marginRight: 4, marginBottom: 4, backgroundColor: bgColor}}
+                                        style={{marginRight: 4, marginBottom: 8, backgroundColor: bgColor}}
                                         onDelete={handleDeleteFilter(key, filter)}
                                     />
                                 }

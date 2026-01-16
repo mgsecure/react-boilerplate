@@ -25,12 +25,11 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
     const theme = useTheme()
     const navigate = useNavigate()
 
-    console.log('action', {action, entry})
     const baseForm = useMemo(() => {
         return {
             ...entry,
             roastDate: entry?.roastDate ? dayjs(entry.roastDate) : null,
-            brewTime: entry?.brewTime ? dayjs(entry.brewTime) : null
+            brewedAt: entry?.brewedAt ? dayjs(entry.brewedAt) : dayjs()
         }
     }, [entry])
     const [form, setForm] = useState({})
@@ -77,7 +76,6 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
         const foundCoffee = coffeesList.find(c => [form.coffeeName, entry?.coffee?.fullName, coffee?.fullname].includes(c.fullName))
         return foundCoffee || entry?.coffee || coffee || {name: form.coffeeName, fulName: form.coffeeName}
     }, [coffee, coffeesList, entry, form.coffeeName])
-
 
     const machineNames = useMemo(() => {
         const systemMachines = machineList.reduce((acc, machine) => {
@@ -173,10 +171,10 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
                 fullName: thisGrinder ? entryName({entry: thisGrinder}) : undefined
             }),
             fullName: entryName({entry: thisCoffee, entryType: 'coffee'}),
-            brewedAt: action !== 'clone' ? entry?.brewedAt || entry?.addedAt : dayjs().format('YYYY-MM-DD HH:mm:ss'),
+            brewedAt: action === 'edit' ? (entry?.brewedAt || entry?.addedAt) : dayjs().format('YYYY-MM-DD HH:mm:ss'),
             ratings: ratingsChanged ? ratings : entry?.ratings,
-            roastDate: form.roastDate ? dayjs(form.roastDate).format('YYYY-MM-DD HH:mm:ss') : entry?.roastDate,
-            brewTime: form.brewTime ? dayjs(form.brewTime).format('YYYY-MM-DD HH:mm:ss') : entry?.brewTime
+            roastDate: form.roastDate ? dayjs(form.roastDate).format('YYYY-MM-DD HH:mm:ss') : undefined,
+            brewTime: form.brewTime ? dayjs(form.brewTime).format('YYYY-MM-DD HH:mm:ss') : undefined
         }
 
         delete formCopy.originalEntry
@@ -188,11 +186,7 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
 
         const flags = action === 'edit'
             ? {update: true, merge: true}
-            : action === 'clone'
-                ? {update: true}
-                : {}
-
-        console.log('submitting form', flags)
+            : {}
 
         const message = action === 'clone'
             ? 'Copied brew saved.'
@@ -212,6 +206,7 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
 
     const paddingLeft = !isMobile ? 15 : 15
 
+    const requiredStyle = {fontSize: '1.0rem', lineHeight: '1.3rem', fontWeight: 400}
 
     return (
         <div>
@@ -222,9 +217,9 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
                       onSubmit={handleSubmit}>
                     <div style={{paddingLeft: paddingLeft, color: theme.palette.text.primary, marginTop: 10}}>
 
-                        <div style={{marginRight: 15, marginBottom: 15}}>
-                            <div style={{fontSize: '1.1rem', fontWeight: 500, marginBottom: 2}}>
-                                Choose Coffee
+                        <div style={{marginTop: 15, marginRight: 15, marginBottom: 15}}>
+                            <div style={{fontSize: '1.1rem', lineHeight: '1.3rem', fontWeight: 700, marginBottom: 3}}>
+                                Choose Coffee <span style={requiredStyle}>(Required)</span>
                             </div>
                             <SelectBox changeHandler={handleFormChange}
                                        form={form}
@@ -239,7 +234,7 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
                                 <div style={{marginRight: 0, marginTop: 0}}>
                                     <div style={{fontSize: '1.0rem', marginBottom: 2}}>Dose</div>
                                     <div style={{display: 'flex'}}>
-                                        <TextField type='text' name='dose' style={{width: 70, marginRight: 5}}
+                                        <TextField type='number' name='dose' style={{width: 70, marginRight: 5}}
                                                    size='small'
                                                    onChange={handleFormChange} value={form.dose || ''}
                                                    color='info'/>
@@ -249,7 +244,7 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
                                 <div style={{marginRight: 20, marginTop: 0}}>
                                     <div style={{fontSize: '1.0rem', marginBottom: 2}}>Yield {ratio}</div>
                                     <div style={{display: 'flex'}}>
-                                        <TextField type='text' name='yield' style={{width: 70, marginRight: 5}}
+                                        <TextField type='number' name='yield' style={{width: 70, marginRight: 5}}
                                                    size='small'
                                                    onChange={handleFormChange} value={form.yield || ''}
                                                    color='info'/>
@@ -268,7 +263,7 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
                                 <div style={{marginRight: 20, marginTop: 0}}>
                                     <div style={{fontSize: '1.0rem', marginBottom: 2}}>Temperature</div>
                                     <div style={{display: 'flex'}}>
-                                        <TextField type='text' name='temperature' style={{width: 70, marginRight: 5}}
+                                        <TextField type='number' name='temperature' style={{width: 70, marginRight: 5}}
                                                    size='small'
                                                    onChange={handleFormChange} value={form.temperature || ''}
                                                    color='info'/>
@@ -319,8 +314,8 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
                         </div>
 
                         <div style={{display: flexStyle, alignItems: 'center'}}>
-                            <div style={{marginRight: 10}}>
-                                <div style={{fontSize: '1.0rem', marginBottom: 4}}>Roast Date</div>
+                            <div style={{marginRight: 10, marginBottom: '10px'}}>
+                                <div style={{fontSize: '1.0rem', marginBottom: 2}}>Roast Date</div>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DatePicker
                                         value={form.roastDate || null}
@@ -341,8 +336,8 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
                                     />
                                 </LocalizationProvider>
                             </div>
-                            <div style={{marginRight: 10}}>
-                                <div style={{fontSize: '1.1rem', fontWeight: 500, marginBottom: 2}}>
+                            <div style={{marginRight: 10, marginBottom: '10px'}}>
+                                <div style={{fontSize: '1.0rem', marginBottom: 2}}>
                                     Grinder
                                 </div>
                                 <SelectBox changeHandler={handleFormChange}
@@ -352,8 +347,8 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
                                            multiple={false} defaultValue={thisGrinder?.fullName || ''}
                                            size='small' width={300}/>
                             </div>
-                            <div style={{marginRight: 10}}>
-                                <div style={{fontSize: '1.1rem', fontWeight: 500, marginBottom: 2}}>
+                            <div style={{marginRight: 10, marginBottom: '10px'}}>
+                                <div style={{fontSize: '1.0rem', marginBottom: 2}}>
                                     Machine/Brewer
                                 </div>
                                 <SelectBox changeHandler={handleFormChange}
@@ -366,7 +361,7 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
                         </div>
 
                         <div style={{
-                            marginTop: 30,
+                            margin: '30px 0px 60px',
                             width: '100%',
                             display: 'flex',
                             justifyContent: 'center'

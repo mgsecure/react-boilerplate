@@ -30,6 +30,7 @@ export function BrewsDataProvider({children, profile}) {
                     grinderName: grinder?.fullName || 'Unknown Grinder',
                     machineName: machine?.fullName || 'Unknown Machine',
                     modifiedAt: entry.modifiedAt || entry.addedAt,
+                    brewedAt: entry.brewedAt || entry.addedAt,
                     restedDays: Math.max(dayjs(entry.addedAt).diff(dayjs(entry.roastDate), 'day'), 0),
                     isFlagged: entry.flagged ? 'Yes' : 'No',
                     fuzzy: removeAccents([
@@ -63,7 +64,7 @@ export function BrewsDataProvider({children, profile}) {
                 } else if (sort === 'dateAdded') {
                     return dayjs(b.addedAt).valueOf() - dayjs(a.addedAt).valueOf()
                 } else {
-                    return dayjs(b.brewedAt).valueOf() - dayjs(a.brewedAt).valueOf()
+                    return dayjs(b.brewedAt || b.addedAt).valueOf() - dayjs(a.brewedAt || b.addedAt).valueOf()
                 }
             })
         } else {

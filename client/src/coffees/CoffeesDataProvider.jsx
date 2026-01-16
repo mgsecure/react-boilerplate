@@ -35,18 +35,34 @@ export function CoffeesDataProvider({children, profile}) {
 
     const brewsList = useMemo(() => {
         return (mappedBrews || [])
-            .sort((a, b) => dayjs(b.modifiedAt).valueOf() - dayjs(a.modifiedAt).valueOf())
+            .sort((a, b) => dayjs(b.brewedAt).valueOf() - dayjs(a.brewedAt).valueOf())
     }, [mappedBrews])
 
     const allEntries = useMemo(() => {
         return profile.coffees || []
     }, [profile.coffees])
 
+    let weightUnits = useMemo( () => { return {oz: 0, g: 0}},[])
+
     const mappedEntries = useMemo(() => {
         return allEntries
             .map(entry => {
                 const roaster = roasters.find(r => r.id === entry.roaster?.id) || entry.roaster ? entry.roaster : {name: 'Unknown Roaster'}
                 const brews = brewsList?.filter(e => e.coffee?.id === entry.id) || []
+
+                entry.weightUnit && weightUnits[entry.weightUnit] ++
+                const pricePound = entry.price && entry.weight && entry.weightUnit
+                    ? entry.weightUnit === 'oz'
+                        ? entry.price / entry.weight * 16
+                        : entry.price / entry.weight * 453.592
+                    : undefined
+
+                const price100g = entry.price && entry.weight && entry.weightUnit
+                    ? entry.weightUnit === 'oz'
+                        ? entry.price / entry.weight * 28.3495
+                        : entry.price / entry.weight * 100
+                    : undefined
+
                 return {
                     ...entry,
                     originalEntry: entry,
@@ -56,14 +72,22 @@ export function CoffeesDataProvider({children, profile}) {
                     roasterName: roaster.name,
                     modifiedAt: entry.modifiedAt || entry.addedAt,
                     sortDate: brews[0]?.modifiedAt || entry.modifiedAt || entry.addedAt,
+                    latestBrewDate: brews[0]?.brewTime,
                     caffeine: entry.decaf ? 'Decaf' : 'Regular',
+                    pricePound: pricePound ? parseFloat(pricePound.toFixed(2)) : undefined,
+                    price100g: price100g ? parseFloat(price100g.toFixed(2)) : undefined,
                     fuzzy: removeAccents([
                         entry.name,
-                        entry.roaster?.name,
+                        entry.roaster?.name
                     ].join(','))
                 }
             })
-    }, [allEntries, brewsList])
+    }, [allEntries, brewsList, weightUnits])
+
+    const modeWeightUnit = Object.entries(weightUnits).reduce((a, b) =>
+        b[1] > a[1] || (b[1] === a[1] && b[0] < a[0]) ? b : a
+    )[0]
+
 
     const searchedEntries = useMemo(() => {
         return searchEntriesForText(search, mappedEntries)
@@ -82,10 +106,16 @@ export function CoffeesDataProvider({children, profile}) {
                     return a.fullName.localeCompare(b.fullName)
                 } else if (sort === 'roasterName') {
                     return a.roasterName.localeCompare(b.roasterName)
-                    || a.fullName.localeCompare(b.fullName)
+                        || a.fullName.localeCompare(b.fullName)
                 } else if (sort === 'rating') {
                     return (b.ratings?.rating || 0) - (a.ratings?.rating || 0)
                         || a.fullName.localeCompare(b.fullName)
+                } else if (sort === 'brewDate') {
+                    return b.latestBrewDate ? dayjs(b.latestBrewDate).valueOf() : 0 - a.latestBrewDate ? dayjs(a.latestBrewDate).valueOf() : 0
+                } else if (sort === 'price') {
+                    return (b.pricePound || 0) - (a.pricePound || 0)
+                } else if (sort === 'priceAsc') {
+                    return (a.pricePound || 9999) - (b.pricePound || 9999)
                 } else if (sort === 'dateAdded') {
                     return dayjs(b.addedAt).valueOf() - dayjs(a.addedAt).valueOf()
                 } else {
@@ -134,7 +164,8 @@ export function CoffeesDataProvider({children, profile}) {
         brewsList,
         coffeesList,
         roastersList,
-    }), [allEntries, mappedEntries, searchedEntries, visibleEntries, expandAll, grinderList, machineList, brewsList, coffeesList, roastersList])
+        modeWeightUnit
+    }), [allEntries, mappedEntries, searchedEntries, visibleEntries, expandAll, grinderList, machineList, brewsList, coffeesList, roastersList, modeWeightUnit])
 
     return (
         <DataContext.Provider value={value}>

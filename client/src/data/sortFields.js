@@ -17,9 +17,12 @@ export const coffeeSortFields = [
     {label: 'Last Updated', value: undefined},
     {label: 'Coffee Name', value: 'name'},
     {label: 'Roaster', value: 'roasterName'},
+    {label: 'Rating', value: 'rating'},
+    {label: 'Latest Brew Date', value: 'latestBrewDate'},
+    {label: 'Price (desc)', value: 'price'},
+    {label: 'Price (asc)', value: 'priceAsc'},
     {label: 'Date Added', value: 'dateAdded'}
 ]
-
 
 export const roasterSortFields = [
     {label: 'Name', value: undefined},

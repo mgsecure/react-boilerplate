@@ -21,15 +21,15 @@ export default function Equipment({machines = []}) {
             <div style={{maxWidth: 1200, marginLeft: 'auto', marginRight: 'auto'}}>
 
                     {machines?.length > 0 &&
-                        <Grid container spacing={{xs: 1, sm: 1, md: 1}} columns={{xs: 4, sm: 8, md: 12}}
-                              style={{marginTop: 0, marginLeft: 0}}>
+                        <Grid container spacing={'6px'} columns={{xs: 4, sm: 8, md: 12}}
+                              style={{margin: '0px 4px'}}>
                             {[...machines]
                                 .sort((a, b) => typeSort(a.type, b.type)
                                     || (a.brand || '').localeCompare(b.brand || '')
                                     || (a.model || '').localeCompare(b.model || ''))
                                 .filter(x => x)
                                 .map((machine) =>
-                                    <Grid size={{xs: 4, sm: 4, md: 4}} key={machine.id}>
+                                    <Grid size={{xs: 12, sm: 12, md: 12}} key={machine.id}>
                                         <EquipmentCard
                                             entry={machine}
                                             expanded={machine.id === defExpanded}
@@ -37,7 +37,7 @@ export default function Equipment({machines = []}) {
                                         />
                                     </Grid>
                                 )}
-                            <Grid size={{xs: 4, sm: 4, md: 4}} key={'add-machine-card'}>
+                            <Grid size={12} key={'add-machine-card'}>
                                 <AddNewItemCard type={'Gear'} count={machines.length}/>
                             </Grid>
                         </Grid>

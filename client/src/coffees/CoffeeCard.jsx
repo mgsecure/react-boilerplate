@@ -6,11 +6,9 @@ import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Collapse from '@mui/material/Collapse'
 import IconButton from '@mui/material/IconButton'
-import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import DBContext from '../app/DBContext.jsx'
 import {enqueueSnackbar} from 'notistack'
-import Menu from '@mui/material/Menu'
 import {Button} from '@mui/material'
 import useWindowSize from '../util/useWindowSize.jsx'
 import Stack from '@mui/material/Stack'
@@ -25,12 +23,20 @@ import {openInNewTab} from '../util/openInNewTab'
 import LocationDisplay from '../misc/LocationDisplay.jsx'
 import BrewCard from '../brews/BrewCard.jsx'
 import AddNewItemCard from '../profile/AddNewItemCard.jsx'
+import DeleteEntryButton from '../entries/DeleteEntryButton.jsx'
+import DataContext from '../context/DataContext.jsx'
+import FilterContext from '../context/FilterContext.jsx'
+import {useNavigate} from 'react-router-dom'
 
 export default function CoffeeCard({entry = {}, expanded, onExpand}) {
     const {updateCollection} = useContext(DBContext)
+    const {modeWeightUnit} = useContext(DataContext)
+    const {sort} = useContext(FilterContext)
     const [scrolled, setScrolled] = useState(false)
     const ref = useRef(null)
-    const [action, setAction] = useState('edit')
+    const navigate = useNavigate()
+
+    const action = 'edit'
 
     const ratings = useMemo(() => entry.ratings || {}, [entry])
     const ratingDimensions = {rating: 'rating'}
@@ -117,13 +123,10 @@ export default function CoffeeCard({entry = {}, expanded, onExpand}) {
     const handleDrawerClick = useCallback(() => {
         setDrawerOpen(true)
     }, [])
+    const handleCoffeeClick = useCallback(() => {
+        navigate(`/brews?coffeeName=${entry.name}`)
+    },[entry.name, navigate])
 
-    const [anchorEl, setAnchorEl] = useState(null)
-    const handleDeleteConfirm = useCallback((ev) => {
-        ev.preventDefault()
-        ev.stopPropagation()
-        setAnchorEl(ev.currentTarget)
-    }, [])
 
     const theme = useTheme()
     const linkSx = {
@@ -180,7 +183,7 @@ export default function CoffeeCard({entry = {}, expanded, onExpand}) {
                                     lineHeight: '1.5rem',
                                     fontWeight: 600
                                 }}>
-                                    <Link style={{color: '#fff'}} onClick={() => handleDrawerClick()}>
+                                    <Link style={{color: '#fff'}} onClick={() => handleCoffeeClick()}>
                                         {entry.name}
                                     </Link>
                                 </div>
@@ -194,10 +197,24 @@ export default function CoffeeCard({entry = {}, expanded, onExpand}) {
                             </div>
                         </div>
                         <div style={{display: 'flex', placeContent: 'center', marginBottom: 0}}>
-                            <Button onClick={handleChange}>{expanded ? 'Hide' : 'Show'} Details</Button>
+                            <Button onClick={handleChange}
+                                    style={{width: 115}}>{expanded ? 'Hide' : 'Show'} Details</Button>
                             <Button onClick={handleDrawerClick}>Edit</Button>
                         </div>
-
+                        {(sort === 'price' || sort === 'priceAsc') &&
+                            <div style={{marginLeft: 10}}>
+                                {modeWeightUnit === 'oz'
+                                    ? <FieldValue name='Price per pound'
+                                                  value={entry.pricePound ? parseFloat(entry.pricePound).toFixed(2) : null}
+                                                  prefix={`${currencySymbol} `} suffix={` ${currencyDescription}`}
+                                                  style={{marginRight: 24}}/>
+                                    : <FieldValue name='Price per 100g'
+                                                  value={entry.price100g ? parseFloat(entry.price100g).toFixed(2) : null}
+                                                  prefix={`${currencySymbol} `} suffix={` ${currencyDescription}`}
+                                                  style={{marginRight: 24}}/>
+                                }
+                            </div>
+                        }
                     </div>
                     <div style={{marginBottom: 10}}>
                         {latestBrew
@@ -252,10 +269,16 @@ export default function CoffeeCard({entry = {}, expanded, onExpand}) {
                         <FieldValue name='Price' value={entry.price ? parseFloat(entry.price).toFixed(2) : null}
                                     prefix={`${currencySymbol} `} suffix={` ${currencyDescription}`}
                                     style={{marginRight: 24}}/>
-                        <FieldValue name='Price per 100g' value={entry.price100g} prefix={`${entry.priceUnit} `}
-                                    suffix={'/100g'} style={{marginRight: 24}}/>
-                        <FieldValue name='Price per Pound' value={entry.pricePound} prefix={`${entry.priceUnit} `}
-                                    suffix={'/lb'} style={{marginRight: 24}}/>
+                        {entry.weightUnit === 'oz'
+                            ? <FieldValue name='Price per pound'
+                                          value={entry.pricePound ? parseFloat(entry.pricePound).toFixed(2) : null}
+                                          prefix={`${currencySymbol} `} suffix={` ${currencyDescription}`}
+                                          style={{marginRight: 24}}/>
+                            : <FieldValue name='Price per 100g'
+                                          value={entry.price100g ? parseFloat(entry.price100g).toFixed(2) : null}
+                                          prefix={`${currencySymbol} `} suffix={` ${currencyDescription}`}
+                                          style={{marginRight: 24}}/>
+                        }
                     </Stack>
 
                     <Stack direction='row' spacing={0} style={{flexWrap: 'wrap', marginBottom: 8}}>
@@ -294,29 +317,10 @@ export default function CoffeeCard({entry = {}, expanded, onExpand}) {
                                     <EditIcon fontSize='medium' style={{color: '#eee'}}/>
                                 </IconButton>
                             </Tooltip>
-                            <Tooltip title='Delete' arrow disableFocusListener placement='top'>
-                                <IconButton onClick={handleDeleteConfirm}>
-                                    <DeleteIcon fontSize='medium' style={{color: '#e3aba0'}}/>
-                                </IconButton>
-                                <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={() => setAnchorEl(null)}
-                                      slotProps={{paper: {sx: {backgroundColor: '#333'}}}}>
-                                    <div style={{padding: 20, textAlign: 'center'}}>
-                                        Delete cannot be undone.<br/>
-                                        Are you sure?
-                                    </div>
-                                    <div style={{textAlign: 'center'}}>
-                                        <Button style={{marginBottom: 10, color: '#000'}}
-                                                variant='contained'
-                                                onClick={handleDelete}
-                                                edge='start'
-                                                color='error'
-                                        >
-                                            Delete Coffee
-                                        </Button>
-                                    </div>
-                                </Menu>
+                            <DeleteEntryButton entry={entry} entryType={'Coffee'} handleDelete={handleDelete}
+                                               size={'small'}
+                                               style={{marginLeft: 10}} tooltipPlacement={'top'}/>
 
-                            </Tooltip>
                         </div>
                     </div>
 
