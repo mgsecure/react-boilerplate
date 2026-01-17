@@ -6,6 +6,7 @@ import removeAccents from 'remove-accents'
 import filterEntriesAdvanced from '../filters/filterEntriesAdvanced'
 import searchEntriesForText from '../filters/searchEntriesForText'
 
+
 export function EquipmentDataProvider({children, profile}) {
     const {filters: allFilters, advancedFilterGroups} = useContext(FilterContext)
     const {search, sort, expandAll} = allFilters

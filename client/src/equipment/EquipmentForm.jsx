@@ -134,6 +134,7 @@ export default function EquipmentForm({machine, open, setOpen}) {
             model,
             fullName
         }
+        delete formCopy.originalEntry
         delete formCopy.newBrand
         delete formCopy.newModel
         const cleanForm = Object.fromEntries(

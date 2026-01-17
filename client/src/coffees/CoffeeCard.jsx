@@ -27,6 +27,8 @@ import DeleteEntryButton from '../entries/DeleteEntryButton.jsx'
 import DataContext from '../context/DataContext.jsx'
 import FilterContext from '../context/FilterContext.jsx'
 import {useNavigate} from 'react-router-dom'
+import dayjs from 'dayjs'
+import {flagSort} from '../data/equipmentBeans'
 
 export default function CoffeeCard({entry = {}, expanded, onExpand}) {
     const {updateCollection} = useContext(DBContext)
@@ -48,7 +50,19 @@ export default function CoffeeCard({entry = {}, expanded, onExpand}) {
         finish: 'Finish'
     }
 
-    const latestBrew = entry.brews?.length > 0 ? entry.brews[0] : undefined
+    const sortedBrews = entry.brews?.length > 0
+        ? [...entry.brews].sort((a, b) => dayjs(b.brewedAt || 0).valueOf() - dayjs(a.brewedAt || 0).valueOf())
+        : []
+    const bestBrews = entry.brews?.length > 0
+        ? [...entry.brews].sort((a, b) => flagSort((a.flagged || 'none'), (b.flagged || 'none'))
+            || dayjs(b.brewedAt || 0).valueOf() - dayjs(a.brewedAt || 0).valueOf())
+        : []
+    const latestBrew = sortedBrews[0] || null
+    const bestBrew = bestBrews[0] || null
+    const [brewType, setBrewType] = useState('latest')
+    const currentBrew = brewType === 'latest' ? latestBrew : bestBrew
+    const showBrewToggle = latestBrew && bestBrew && latestBrew.brewedAt !== bestBrew.brewedAt
+
     const currencyDescription = entry.priceUnit?.match(/(\w{3})\s\((.*)\)/)[1]
     const currencySymbol = entry.priceUnit?.match(/(\w{3})\s\((.*)\)/)[2]
 
@@ -124,8 +138,8 @@ export default function CoffeeCard({entry = {}, expanded, onExpand}) {
         setDrawerOpen(true)
     }, [])
     const handleCoffeeClick = useCallback(() => {
-        navigate(`/brews?coffeeName=${entry.name}`)
-    },[entry.name, navigate])
+        navigate(`/brews?coffeeName=${encodeURIComponent(entry.name)}`)
+    }, [entry.name, navigate])
 
 
     const theme = useTheme()
@@ -219,9 +233,11 @@ export default function CoffeeCard({entry = {}, expanded, onExpand}) {
                     <div style={{marginBottom: 10}}>
                         {latestBrew
                             ? <BrewCard
-                                entry={latestBrew}
+                                entry={currentBrew}
                                 context={'coffeeEntry'}
                                 brewCount={entry.brews?.length}
+                                setBrewType={setBrewType}
+                                showBrewToggle={showBrewToggle}
                             />
                             : <div style={{padding: '10px 40px'}}>
                                 <AddNewItemCard type={'Brew'} label={'Brew It!'} count={0}

@@ -42,7 +42,12 @@ export function CoffeesDataProvider({children, profile}) {
         return profile.coffees || []
     }, [profile.coffees])
 
-    let weightUnits = useMemo( () => { return {oz: 0, g: 0}},[])
+    let weightUnits = useMemo(() => {
+        return {oz: 0, g: 0}
+    }, [])
+    let priceUnits = useMemo(() => {
+        return {'USD ($)': 0}
+    }, [])
 
     const mappedEntries = useMemo(() => {
         return allEntries
@@ -50,7 +55,9 @@ export function CoffeesDataProvider({children, profile}) {
                 const roaster = roasters.find(r => r.id === entry.roaster?.id) || entry.roaster ? entry.roaster : {name: 'Unknown Roaster'}
                 const brews = brewsList?.filter(e => e.coffee?.id === entry.id) || []
 
-                entry.weightUnit && weightUnits[entry.weightUnit] ++
+                entry.weightUnit && weightUnits[entry.weightUnit]++
+                if (entry.priceUnit) priceUnits[entry.priceUnit] = (priceUnits[entry.priceUnit] || 0) + 1
+
                 const pricePound = entry.price && entry.weight && entry.weightUnit
                     ? entry.weightUnit === 'oz'
                         ? entry.price / entry.weight * 16
@@ -82,9 +89,12 @@ export function CoffeesDataProvider({children, profile}) {
                     ].join(','))
                 }
             })
-    }, [allEntries, brewsList, weightUnits])
+    }, [allEntries, brewsList, priceUnits, weightUnits])
 
     const modeWeightUnit = Object.entries(weightUnits).reduce((a, b) =>
+        b[1] > a[1] || (b[1] === a[1] && b[0] < a[0]) ? b : a
+    )[0]
+    const modePriceUnit = Object.entries(priceUnits).reduce((a, b) =>
         b[1] > a[1] || (b[1] === a[1] && b[0] < a[0]) ? b : a
     )[0]
 
@@ -164,8 +174,9 @@ export function CoffeesDataProvider({children, profile}) {
         brewsList,
         coffeesList,
         roastersList,
-        modeWeightUnit
-    }), [allEntries, mappedEntries, searchedEntries, visibleEntries, expandAll, grinderList, machineList, brewsList, coffeesList, roastersList, modeWeightUnit])
+        modeWeightUnit,
+        modePriceUnit
+    }), [allEntries, mappedEntries, searchedEntries, visibleEntries, expandAll, grinderList, machineList, brewsList, coffeesList, roastersList, modeWeightUnit, modePriceUnit])
 
     return (
         <DataContext.Provider value={value}>

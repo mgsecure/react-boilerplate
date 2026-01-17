@@ -102,14 +102,14 @@ export default function YieldCalculatorButton() {
                     <div style={{display: 'flex', marginBottom: 10}}>
                         <div style={{marginRight: 15, marginTop: 0}}>
                             <div style={{fontSize: '1.0rem', marginBottom: 0}}>Dose</div>
-                            <TextField type='text' name='dose' style={{width: 65}}
+                            <TextField type='number' name='dose' style={{width: 65}}
                                        size='small' color='info'
                                        onChange={handleFormChange} value={form.dose || ''}
                                        sx={{input: {textAlign: 'center'}}} tabIndex={1}/>
                         </div>
                         <div style={{marginTop: 0}}>
                             <div style={{fontSize: '1.0rem', marginBottom: 0}}>Yield</div>
-                            <TextField type='text' name='yield' style={{width: 65}}
+                            <TextField type='number' name='yield' style={{width: 65}}
                                        size='small' color='info'
                                        onChange={handleFormChange} value={form.yield || ''}
                                        sx={{input: {textAlign: 'center'}}} tabIndex={2}/>
@@ -118,7 +118,7 @@ export default function YieldCalculatorButton() {
                     <div style={{marginBottom: 16}}>
                         <div style={{fontSize: '1.1rem', fontWeight: 600, marginBottom: 0}}>Ratio</div>
                         <div style={{display: 'flex', placeContent: 'center'}}>
-                            <TextField type='text' name='ratio' style={{width: 60}}
+                            <TextField type='number' name='ratio' style={{width: 60}}
                                        size='small' color='info'
                                        onChange={handleFormChange} value={form.ratio || ''}
                                        sx={{input: {textAlign: 'center'}}} tabIndex={2}/>

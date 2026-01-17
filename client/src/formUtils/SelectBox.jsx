@@ -1,5 +1,5 @@
 import React, {useCallback, useState} from 'react'
-import {FormControl, InputLabel, Select} from '@mui/material'
+import {Divider, FormControl, InputLabel, Select} from '@mui/material'
 import MenuItem from '@mui/material/MenuItem'
 
 export default function SelectBox({
@@ -41,7 +41,9 @@ export default function SelectBox({
                 variant={variant}
             >
                 {optionsList.map((option, index) =>
-                    <MenuItem key={index}
+                    optionsList[index] === 'divider'
+                    ? <Divider key={index}/>
+                    : <MenuItem key={index}
                               value={optionsList[index]}>{optionsList[index]}</MenuItem>
                 )}
             </Select>

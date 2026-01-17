@@ -15,13 +15,14 @@ import RatingTable from '../misc/RatingTable.jsx'
 import cleanObject from '../util/cleanObject'
 import AuthContext from '../app/AuthContext.jsx'
 import DataContext from '../context/DataContext.jsx'
+import FormToggleButtonGroup from '../formUtils/FormToggleButtonGroup.jsx'
 
 export default function CoffeeForm({coffee, open, setOpen}) {
     const theme = useTheme()
     const {flexStyle, isMobile} = useWindowSize()
     const {updateCollection} = useContext(DBContext)
     const {isLoggedIn} = useContext(AuthContext)
-    const {roastersList} = useContext(DataContext)
+    const {roastersList, brewsList, modeWeightUnit, modePriceUnit} = useContext(DataContext)
 
     const baseForm = useMemo(() => {
         return {
@@ -46,9 +47,10 @@ export default function CoffeeForm({coffee, open, setOpen}) {
         }
     }, [open, coffee, baseForm])
 
-
     const [roasterReset, setRoasterReset] = useState(false)
     const [inputValueOverride, setInputValueOverride] = useState(false)
+    const latestBrew = brewsList?.length > 0 ? brewsList[0] : {}
+    const doseUnitDefault = latestBrew.doseUnit || 'g'
 
     const roasterNames = useMemo(() => {
         return roastersList.map((roaster) => roaster.name)
@@ -158,6 +160,7 @@ export default function CoffeeForm({coffee, open, setOpen}) {
             ratings
         }
 
+        delete formCopy.originalEntry
         delete formCopy.roasterName
         delete formCopy.newRoasterName
         const cleanForm = Object.fromEntries(
@@ -418,13 +421,9 @@ export default function CoffeeForm({coffee, open, setOpen}) {
                                                size='small'
                                                onChange={handleFormChange} value={form.weight || ''}
                                                color='info'/>
-                                    <SelectBox changeHandler={handleFormChange}
-                                               form={form}
-                                               name='weightUnit'
-                                               optionsList={['g', 'oz']}
-                                               multiple={false} defaultValue={''}
-                                               size='small' width={65}/>
-
+                                    <FormToggleButtonGroup fieldName={'weightUnit'} options={['g', 'oz']}
+                                                           defaultValue={modeWeightUnit} form={form}
+                                                           handleFormChange={handleFormChange}/>
                                 </div>
                             </div>
 
@@ -439,7 +438,8 @@ export default function CoffeeForm({coffee, open, setOpen}) {
                                                form={form}
                                                name='priceUnit'
                                                optionsList={currencies}
-                                               multiple={false} defaultValue={''}
+                                               defaultValue={modePriceUnit}
+                                               multiple={false}
                                                size='small' width={125}/>
                                 </div>
                             </div>

@@ -5,7 +5,7 @@ import useWindowSize from '../util/useWindowSize.jsx'
 import SelectBox from '../formUtils/SelectBox.jsx'
 import DBContext from '../app/DBContext.jsx'
 import {enqueueSnackbar} from 'notistack'
-import {useTheme} from '@mui/material/styles'
+import {lighten, useTheme} from '@mui/material/styles'
 import DataContext from '../context/DataContext.jsx'
 import cleanObject from '../util/cleanObject'
 import entryName from '../entries/entryName'
@@ -16,6 +16,9 @@ import {DatePicker} from '@mui/x-date-pickers/DatePicker'
 import {useNavigate} from 'react-router-dom'
 import AuthContext from '../app/AuthContext.jsx'
 import TimePicker from '../misc/TimePicker.jsx'
+import EntryFlags from './EntryFlags.jsx'
+import LogEntryButton from '../entries/LogEntryButton.jsx'
+import FormToggleButtonGroup from '../formUtils/FormToggleButtonGroup.jsx'
 
 export default function BrewForm({entry, open, setOpen, action, coffee}) {
     const {grinderList, machineList, coffeesList, brewsList} = useContext(DataContext)
@@ -53,7 +56,6 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
 
     const latestBrew = brewsList?.length > 0 ? brewsList[0] : {}
     const doseUnitDefault = latestBrew.doseUnit || 'g'
-    const yieldUnitDefault = latestBrew.yieldUnit || 'g'
     const temperatureUnitDefault = latestBrew.temperatureUnit || '°C'
 
     useEffect(() => {
@@ -61,11 +63,10 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
             setForm((prevForm) => ({
                 ...prevForm,
                 doseUnit: prevForm.doseUnit || doseUnitDefault,
-                yieldUnit: prevForm.yieldUnit || yieldUnitDefault,
                 temperatureUnit: prevForm.temperatureUnit || temperatureUnitDefault
             }))
         }
-    }, [open, doseUnitDefault, yieldUnitDefault, temperatureUnitDefault])
+    }, [open, doseUnitDefault, temperatureUnitDefault])
 
     const coffeeNames = useMemo(() => {
         const systemCoffees = coffeesList.map((coffee) => coffee.fullName)
@@ -123,6 +124,12 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
         navigate(`/${route}/add`)
     }, [navigate])
 
+    const handleFlaggedChange = useCallback(async (event, direction) => {
+        const formCopy = {...form, flagged: form.flagged === direction ? undefined : direction}
+        setForm(formCopy)
+        setFormChanged(true)
+    }, [form])
+
     const handleFormChange = useCallback((event) => {
         const {name, value} = event.target
         if (name === 'coffeeName' && value === '[ add coffee ]') {
@@ -144,7 +151,6 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
         document.activeElement.blur()
         setOpen(false)
     }, [setOpen])
-
 
     const handleSubmit = useCallback(async (event) => {
         event.preventDefault()
@@ -217,86 +223,137 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
                       onSubmit={handleSubmit}>
                     <div style={{paddingLeft: paddingLeft, color: theme.palette.text.primary, marginTop: 10}}>
 
-                        <div style={{marginTop: 15, marginRight: 15, marginBottom: 15}}>
-                            <div style={{fontSize: '1.1rem', lineHeight: '1.3rem', fontWeight: 700, marginBottom: 3}}>
-                                Choose Coffee <span style={requiredStyle}>(Required)</span>
-                            </div>
-                            <SelectBox changeHandler={handleFormChange}
-                                       form={form}
-                                       name='coffeeName'
-                                       optionsList={[...coffeeNames, '[ add coffee ]']}
-                                       multiple={false} defaultValue={thisCoffee?.fullName || coffee?.fullName || ''}
-                                       size='small' width='100%'/>
-                        </div>
+                        <div style={{display: 'flex', placeContent: 'center'}}>
 
-                        <div style={{display: flexStyle}}>
-                            <div style={{display: 'flex', marginBottom: 10}}>
-                                <div style={{marginRight: 0, marginTop: 0}}>
-                                    <div style={{fontSize: '1.0rem', marginBottom: 2}}>Dose</div>
-                                    <div style={{display: 'flex'}}>
-                                        <TextField type='number' name='dose' style={{width: 70, marginRight: 5}}
-                                                   size='small'
-                                                   onChange={handleFormChange} value={form.dose || ''}
-                                                   color='info'/>
+                            <div style={{flexGrow: 1}}>
+                                <div style={{marginTop: 15, marginRight: 15, marginBottom: 15}}>
+                                    <div style={{
+                                        fontSize: '1.1rem',
+                                        lineHeight: '1.3rem',
+                                        fontWeight: 700,
+                                        marginBottom: 3
+                                    }}>
+                                        Choose Coffee <span style={requiredStyle}>(Required)</span>
                                     </div>
+                                    <SelectBox changeHandler={handleFormChange}
+                                               form={form}
+                                               name='coffeeName'
+                                               optionsList={[...coffeeNames, '[ add coffee ]']}
+                                               multiple={false}
+                                               defaultValue={thisCoffee?.fullName || coffee?.fullName || ''}
+                                               size='small' width='100%'/>
                                 </div>
 
-                                <div style={{marginRight: 20, marginTop: 0}}>
-                                    <div style={{fontSize: '1.0rem', marginBottom: 2}}>Yield {ratio}</div>
-                                    <div style={{display: 'flex'}}>
-                                        <TextField type='number' name='yield' style={{width: 70, marginRight: 5}}
-                                                   size='small'
-                                                   onChange={handleFormChange} value={form.yield || ''}
-                                                   color='info'/>
-                                        <SelectBox changeHandler={handleFormChange}
-                                                   form={form}
-                                                   name='doseUnit'
-                                                   optionsList={['g', 'oz']}
-                                                   multiple={false} defaultValue={''}
-                                                   size='small' width={65}/>
+                                <div style={{display: 'flex'}}>
 
+
+                                    <div style={{display: flexStyle}}>
+                                        <div style={{display: 'flex', marginBottom: 10}}>
+                                            <div style={{marginRight: 0, marginTop: 0}}>
+                                                <div style={{fontSize: '1.0rem', marginBottom: 2}}>Dose</div>
+                                                <div style={{display: 'flex'}}>
+                                                    <TextField type='number' name='dose'
+                                                               style={{width: 70, marginRight: 5}}
+                                                               size='small'
+                                                               onChange={handleFormChange} value={form.dose || ''}
+                                                               color='info'/>
+                                                </div>
+                                            </div>
+
+                                            <div style={{marginRight: 20, marginTop: 0}}>
+                                                <div style={{fontSize: '1.0rem', marginBottom: 2}}>Yield {ratio}</div>
+                                                <div style={{display: 'flex'}}>
+                                                    <TextField type='number' name='yield'
+                                                               style={{width: 70, marginRight: 5}}
+                                                               size='small'
+                                                               onChange={handleFormChange} value={form.yield || ''}
+                                                               color='info'/>
+                                                    <FormToggleButtonGroup fieldName={'doseUnit'} options={['g', 'oz']}
+                                                                           form={form}
+                                                                           handleFormChange={handleFormChange}/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div style={{display: 'flex', marginBottom: 10}}>
+                                            <div style={{marginRight: 20, marginTop: 0}}>
+                                                <div style={{fontSize: '1.0rem', marginBottom: 2}}>Temperature</div>
+                                                <div style={{display: 'flex'}}>
+                                                    <TextField type='number' name='temperature'
+                                                               style={{width: 70, marginRight: 5}}
+                                                               size='small'
+                                                               onChange={handleFormChange}
+                                                               value={form.temperature || ''}
+                                                               color='info'/>
+                                                    <FormToggleButtonGroup fieldName={'temperatureUnit'} options={['°C', '°F']}
+                                                                           form={form}
+                                                                           handleFormChange={handleFormChange}/>
+                                                </div>
+                                            </div>
+
+                                            <div style={{marginRight: 20, marginTop: 0}}>
+                                                <div style={{fontSize: '1.0rem', marginBottom: 2}}>Grind</div>
+                                                <div style={{display: 'flex'}}>
+                                                    <TextField type='text' name='grinderSetting' style={{width: 80}}
+                                                               size='small'
+                                                               onChange={handleFormChange}
+                                                               value={form.grinderSetting || ''}
+                                                               color='info'/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div style={{marginRight: 20, marginBottom: 10}}>
+                                            <div style={{fontSize: '1.0rem', marginBottom: 2}}>Time</div>
+                                            <TimePicker value={form.brewTime} handleChangeTime={handleChangeTime}/>
+                                        </div>
                                     </div>
+
+                                    {isMobile &&
+                                        <div style={{
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            placeContent: 'center',
+                                            margin: '10px 5px 10px 5px',
+                                            borderLeft: '1px solid',
+                                            borderColor: lighten(theme.palette.card.add, 0.1)
+                                        }}>
+                                            <EntryFlags entry={form} handleFlaggedChange={handleFlaggedChange}
+                                                        updating={false}/>
+                                            <LogEntryButton entry={form} entryType={'Brew'} size={'small'}
+                                                            style={{marginLeft: 10}}/>
+                                        </div>
+                                    }
+
                                 </div>
+
+
                             </div>
 
-                            <div style={{display: 'flex', marginBottom: 10}}>
-                                <div style={{marginRight: 20, marginTop: 0}}>
-                                    <div style={{fontSize: '1.0rem', marginBottom: 2}}>Temperature</div>
-                                    <div style={{display: 'flex'}}>
-                                        <TextField type='number' name='temperature' style={{width: 70, marginRight: 5}}
-                                                   size='small'
-                                                   onChange={handleFormChange} value={form.temperature || ''}
-                                                   color='info'/>
-                                        <SelectBox changeHandler={handleFormChange}
-                                                   form={form}
-                                                   name='temperatureUnit'
-                                                   optionsList={['°C', '°F']}
-                                                   multiple={false} defaultValue={form.temperatureUnit || ''}
-                                                   size='small' width={65}/>
-                                    </div>
-                                </div>
 
-                                <div style={{marginRight: 20, marginTop: 0}}>
-                                    <div style={{fontSize: '1.0rem', marginBottom: 2}}>Grind</div>
-                                    <div style={{display: 'flex'}}>
-                                        <TextField type='text' name='grinderSetting' style={{width: 80}}
-                                                   size='small'
-                                                   onChange={handleFormChange} value={form.grinderSetting || ''}
-                                                   color='info'/>
-                                    </div>
+                            {!isMobile &&
+                                <div style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    placeContent: 'center',
+                                    margin: '20px 30px 0px 30px',
+                                    borderLeft: '1px solid',
+                                    borderColor: lighten(theme.palette.card.add, 0.1)
+                                }}>
+                                    <EntryFlags entry={form} handleFlaggedChange={handleFlaggedChange}
+                                                updating={false}/>
+                                    <LogEntryButton entry={form} entryType={'Brew'} size={'small'}
+                                                    style={{marginLeft: 10}}/>
                                 </div>
-                            </div>
+                            }
 
-                            <div style={{marginRight: 20, marginBottom: 10}}>
-                                <div style={{fontSize: '1.0rem', marginBottom: 2}}>Time</div>
-                                <TimePicker value={form.brewTime} handleChangeTime={handleChangeTime} />
-                            </div>
+
                         </div>
 
                         <div style={{marginRight: 20, marginBottom: 10}}>
                             <div style={{display: 'flex'}}>
                                 <div style={{flexGrow: 1, marginRight: 10}}>
-                                    <div style={{fontSize: '1.0rem', marginBottom: 2}}>Recipe / Prep</div>
+                                    <div style={{fontSize: '1.0rem', marginBottom: 2}}>Recipe/Notes</div>
                                     <TextField type='text' name='recipePrep' fullWidth style={{minWidth: 300}}
                                                size='small'
                                                onChange={handleFormChange} value={form.recipePrep || ''}
@@ -306,7 +363,7 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
                         </div>
 
                         <div style={{marginRight: 10, marginBottom: 10}}>
-                            <div style={{fontSize: '1.0rem', marginBottom: 2}}>Brew Notes</div>
+                            <div style={{fontSize: '1.0rem', marginBottom: 2}}>Additional Notes</div>
                             <TextField type='text' name='tastingNotes' fullWidth style={{minWidth: 300}}
                                        size='small'
                                        onChange={handleFormChange} value={form.tastingNotes || ''}
