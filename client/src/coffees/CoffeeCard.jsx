@@ -60,6 +60,11 @@ export default function CoffeeCard({entry = {}, expanded, onExpand}) {
     const latestBrew = sortedBrews[0] || null
     const bestBrew = bestBrews[0] || null
     const [brewType, setBrewType] = useState('latest')
+    
+    const changeBrewType = useCallback((type) => {
+        setBrewType(type)
+    },[])
+
     const currentBrew = brewType === 'latest' ? latestBrew : bestBrew
     const showBrewToggle = latestBrew && bestBrew && latestBrew.brewedAt !== bestBrew.brewedAt
 
@@ -236,7 +241,7 @@ export default function CoffeeCard({entry = {}, expanded, onExpand}) {
                                 entry={currentBrew}
                                 context={'coffeeEntry'}
                                 brewCount={entry.brews?.length}
-                                setBrewType={setBrewType}
+                                changeBrewType={changeBrewType}
                                 showBrewToggle={showBrewToggle}
                             />
                             : <div style={{padding: '10px 40px'}}>

@@ -39,6 +39,10 @@ export function DBProvider({children}) {
         setDemo(value)
     }, [setDemo])
 
+    const [calculator, setCalculator] = useLocalStorage('calculator', {dose: '18', yield: '36', ratio: '2'})
+    const handleSetCalculator = useCallback(value => {
+        setCalculator(value)
+    }, [setCalculator])
 
     // Profile Subscription
     useEffect(() => {
@@ -251,7 +255,9 @@ export function DBProvider({children}) {
         demo,
         setDemo: handleSetDemo,
         demoEnabled,
-    }), [demoEnabled, userProfile, profileLoaded, updateProfileField, deleteAllUserData, updateCollection, addToEquipment, getEquipment, adminRole, removeFromLockCollection, getProfile, updateProfileDisplayName, qaUserRole, demo, handleSetDemo])
+        calculator,
+        setCalculator: handleSetCalculator
+    }), [demoEnabled, userProfile, profileLoaded, updateProfileField, deleteAllUserData, updateCollection, addToEquipment, getEquipment, adminRole, removeFromLockCollection, getProfile, updateProfileDisplayName, qaUserRole, demo, handleSetDemo, calculator, handleSetCalculator])
 
     return (
         <DBContext.Provider value={value}>

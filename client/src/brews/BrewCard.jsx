@@ -36,7 +36,7 @@ export default function BrewCard({
                                      onExpand,
                                      context = 'brews',
                                      brewCount,
-                                     setBrewType,
+                                     changeBrewType,
                                      showBrewToggle
                                  }) {
     const {adminEnabled} = useContext(AppContext)
@@ -50,12 +50,12 @@ export default function BrewCard({
     const [updating, setUpdating] = useState(undefined)
     const [brewExpanded, setBrewExpanded] = useState(false)
     const [scrolled, setScrolled] = useState(false)
-    
+
     const [brewToggleForm, setBrewToggleForm] = useState({brewType: 'latest'})
     const handleChangeBrew = useCallback((event) => {
-        setBrewType(event.target.value)
+        changeBrewType(event.target.value)
         setBrewToggleForm({brewType: event.target.value})
-    }, [setBrewType])
+    }, [changeBrewType])
 
     const handleAddFilter = useCallback((keyToAdd, valueToAdd, replace) => {
         addFilter(keyToAdd, valueToAdd, replace)
