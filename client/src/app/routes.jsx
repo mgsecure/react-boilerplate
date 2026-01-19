@@ -65,11 +65,29 @@ export default [{
         },
         {
             path: '/equipment',
-            name: 'equipment',
+            name: 'equipment parent route',
             lazy: async () => {
-                const {default: EquipmentRoute} = await import('../equipment/EquipmentRoute.jsx')
-                return {element: <Suspense><EquipmentRoute/></Suspense>}
-            }
+                const {default: EquipmentParentRoute} = await import('../equipment/EquipmentParentRoute.jsx')
+                return {element: <Suspense><EquipmentParentRoute/></Suspense>}
+            },
+            children: [
+                {
+                    path: '/equipment',
+                    name: 'equipment',
+                    lazy: async () => {
+                        const {default: EquipmentRoute} = await import('../equipment/EquipmentRoute.jsx')
+                        return {element: <Suspense><EquipmentRoute/></Suspense>}
+                    }
+                },
+                {
+                    path: '/equipment/add',
+                    name: 'add equipment',
+                    lazy: async () => {
+                        const {default: AddEquipment} = await import('../equipment/AddEquipment.jsx')
+                        return {element: <Suspense><AddEquipment/></Suspense>}
+                    }
+                }
+            ]
         },
         {
             path: '/coffees',

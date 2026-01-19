@@ -13,23 +13,36 @@ import {useTheme} from '@mui/material/styles'
 import equipment from '../data/equipment.json'
 import {setDeepUnique} from '../util/setDeep'
 import AuthContext from '../app/AuthContext.jsx'
+import {useNavigate, useSearchParams} from 'react-router-dom'
+import LoadingDisplayWhiteSmall from '../misc/LoadingDisplayWhiteSmall.jsx'
+import {machineTypes} from '../data/equipmentBeans'
+import cleanObject from '../util/cleanObject'
 
 export default function EquipmentForm({machine, open, setOpen}) {
     const theme = useTheme()
+    const navigate = useNavigate()
     const {flexStyle, isMobile} = useWindowSize()
     const {updateCollection} = useContext(DBContext)
     const {isLoggedIn} = useContext(AuthContext)
+    const [searchParams] = useSearchParams()
+    const equipmentType = searchParams.get('type')
 
-    const [form, setForm] = useState({})
+    const [form, setForm] = useState((equipmentType && !machine)
+        ? {type: equipmentType, id: `e_${genHexString(8)}`}
+        : {id: `e_${genHexString(8)}`})
     const [formChanged, setFormChanged] = useState(false)
     const [uploading, setUploading] = useState(false)
+
     const saveEnabled = useMemo(() => {
         return isLoggedIn && formChanged && form.type && (form.brand || form.newBrand) && !uploading
     }, [form.brand, form.newBrand, form.type, formChanged, isLoggedIn, uploading])
 
     useEffect(() => {
         if (open) {
-            setForm({...machine || {id: `e_${genHexString(8)}`}})
+            let newForm = {...machine || {id: `e_${genHexString(8)}`}}
+            if (machine?.altModel) newForm = ({...newForm, newModel: newForm.model || ''})
+            if (machine?.altBrand) newForm = ({...newForm, newBrand: newForm.brand || ''})
+            setForm(newForm)
             setInputValue(machine?.brand || '')
             setInputModelValue(machine?.model || '')
         }
@@ -50,17 +63,15 @@ export default function EquipmentForm({machine, open, setOpen}) {
         }, {})
     }, [])
 
-    const machineTypes = Object.keys(machineTypeBrandModels)
 
     const typeBrands = useMemo(() => {
-        return Object.keys(machineTypeBrandModels[form.type] || {}).filter(x => x)  || []
+        return Object.keys(machineTypeBrandModels[form.type] || {}).filter(x => x) || []
     }, [form.type, machineTypeBrandModels])
 
     const brandModels = useMemo(() => {
         return (machineTypeBrandModels[form.type]?.[form.brand] || []).filter(x => x)
     }, [form.brand, form.type, machineTypeBrandModels])
 
-    console.log('form', {machineTypes, typeBrands, brandModels})
     const handleFormChange = useCallback((event) => {
         const {name, value} = event.target
         setForm({...form, [name]: value})
@@ -72,14 +83,12 @@ export default function EquipmentForm({machine, open, setOpen}) {
         const formCopy = {...form}
         formCopy.altBrand = !formCopy.altBrand
         if (formCopy.altBrand) {
-            formCopy.newBrand = inputValue?.target?.value
+            formCopy.newBrand = inputValue
             delete formCopy['brand']
         } else {
             delete formCopy.newBrand
         }
-        setTimeout(() => {
-            setForm(formCopy)
-        }, 10)
+        setTimeout(() => setForm(formCopy), 10)
         setTimeout(() => {
             if (formCopy.altBrand) {
                 document.getElementById('newBrand').focus()
@@ -93,7 +102,7 @@ export default function EquipmentForm({machine, open, setOpen}) {
         const formCopy = {...form}
         formCopy.altModel = !formCopy.altModel
         if (formCopy.altModel) {
-            formCopy.newModel = inputModelValue?.target?.value
+            formCopy.newModel = inputModelValue
             delete formCopy['model']
         } else {
             delete formCopy.newModel
@@ -109,6 +118,11 @@ export default function EquipmentForm({machine, open, setOpen}) {
         }, 100)
     }, [form, inputModelValue, modelReset])
 
+    const handleComplete = useCallback(() => {
+        if (open) setOpen(false)
+        else navigate('/equipment')
+    }, [navigate, open, setOpen])
+
     const handleReload = useCallback(() => {
         setBrandReset(!brandReset)
         setModelReset(!modelReset)
@@ -116,8 +130,9 @@ export default function EquipmentForm({machine, open, setOpen}) {
         setInputModelValueOverride(!inputModelValueOverride)
         setForm({id: genHexString(8)})
         setUploading(false)
-        setOpen(false)
-    }, [brandReset, inputModelValueOverride, inputValueOverride, modelReset, setOpen])
+        handleComplete()
+    }, [brandReset, handleComplete, inputModelValueOverride, inputValueOverride, modelReset])
+
 
     const handleSubmit = useCallback(async (event) => {
         event.preventDefault()
@@ -137,11 +152,7 @@ export default function EquipmentForm({machine, open, setOpen}) {
         delete formCopy.originalEntry
         delete formCopy.newBrand
         delete formCopy.newModel
-        const cleanForm = Object.fromEntries(
-            Object.entries(formCopy).filter(([_key, value]) => {
-                return value !== null && typeof value !== 'undefined'
-            })
-        )
+        const cleanForm = cleanObject(formCopy)
         const flags = machine ? {update: true} : {}
         const message = machine
             ? 'Changes saved!'
@@ -150,7 +161,7 @@ export default function EquipmentForm({machine, open, setOpen}) {
         try {
             await updateCollection({collection: 'equipment', item: cleanForm, flags})
             enqueueSnackbar(message, {variant: 'success'})
-            setOpen(false)
+            handleComplete()
         } catch (error) {
             enqueueSnackbar(`Error saving item: ${error}`, {variant: 'error', autoHideDuration: 3000})
         } finally {
@@ -163,7 +174,7 @@ export default function EquipmentForm({machine, open, setOpen}) {
                 })
             }, 100)
         }
-    }, [form, machine, setOpen, updateCollection])
+    }, [form, handleComplete, machine, updateCollection])
 
     const detailsStyle = form.type ? {opacity: 1} : {opacity: 0.3, pointerEvents: 'none'}
     const brandBoxOpacity = form.altBrand > 0 ? 0.5 : 1
@@ -228,7 +239,7 @@ export default function EquipmentForm({machine, open, setOpen}) {
                                             <div style={{
                                                 fontSize: '1.0rem',
                                                 fontWeight: 500,
-                                                marginBottom: 2,
+                                                marginBottom: 0,
                                                 color: theme.palette.info.main
                                             }}>
                                                 Enter New Brand
@@ -284,7 +295,7 @@ export default function EquipmentForm({machine, open, setOpen}) {
                                         <div style={{
                                             fontSize: '1.0rem',
                                             fontWeight: 500,
-                                            marginBottom: 2,
+                                            marginBottom: 0,
                                             color: theme.palette.info.main
                                         }}>
                                             Enter New Model
@@ -354,7 +365,10 @@ export default function EquipmentForm({machine, open, setOpen}) {
                             </Button>
                             <Button type='submit' variant='contained' color='info'
                                     disabled={!saveEnabled} style={{boxShadow: 'none'}}>
-                                SAVE
+                                {uploading
+                                    ? <LoadingDisplayWhiteSmall size={'small'}/>
+                                    : 'SAVE'
+                                }
                             </Button>
                         </div>
 

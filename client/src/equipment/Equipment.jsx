@@ -1,11 +1,11 @@
-import React, {useDeferredValue, useState} from 'react'
+import React, {useContext, useDeferredValue, useState} from 'react'
 import EquipmentCard from './EquipmentCard.jsx'
 import AddNewItemCard from '../profile/AddNewItemCard.jsx'
 import Grid from '@mui/material/Grid'
-import {typeSort} from '../data/equipmentBeans'
+import DataContext from '../context/DataContext.jsx'
 
-export default function Equipment({machines = []}) {
-
+export default function Equipment() {
+    const {visibleEntries = []} = useContext(DataContext)
     const [expanded, setExpanded] = useState(undefined)
     const defExpanded = useDeferredValue(expanded)
 
@@ -20,13 +20,10 @@ export default function Equipment({machines = []}) {
 
             <div style={{maxWidth: 1200, marginLeft: 'auto', marginRight: 'auto'}}>
 
-                    {machines?.length > 0 &&
+                    {visibleEntries?.length > 0 &&
                         <Grid container spacing={'6px'} columns={{xs: 4, sm: 8, md: 12}}
                               style={{margin: '0px 4px'}}>
-                            {[...machines]
-                                .sort((a, b) => typeSort(a.type, b.type)
-                                    || (a.brand || '').localeCompare(b.brand || '')
-                                    || (a.model || '').localeCompare(b.model || ''))
+                            {[...visibleEntries]
                                 .filter(x => x)
                                 .map((machine) =>
                                     <Grid size={{xs: 12, sm: 12, md: 12}} key={machine.id}>
@@ -38,7 +35,7 @@ export default function Equipment({machines = []}) {
                                     </Grid>
                                 )}
                             <Grid size={12} key={'add-machine-card'}>
-                                <AddNewItemCard type={'Gear'} count={machines.length}/>
+                                <AddNewItemCard type={'Gear'} count={visibleEntries.length}/>
                             </Grid>
                         </Grid>
                     }

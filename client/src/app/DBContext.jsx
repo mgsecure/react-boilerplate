@@ -16,6 +16,7 @@ import {enqueueSnackbar} from 'notistack'
 import dayjs from 'dayjs'
 import demoProfile from '../data/demoProfile.json'
 import {useLocalStorage} from 'usehooks-ts'
+import cleanObject from '../util/cleanObject'
 
 /**
  * @typedef {object} award
@@ -117,11 +118,7 @@ export function DBProvider({children}) {
         if (!user?.uid) {
             enqueueSnackbar('You must be logged in to update your profile.', {variant: 'error'})
         } else {
-            const cleanItem = Object.fromEntries(
-                Object.entries(item).filter(([_key, value]) => {
-                    return value !== null && typeof value !== 'undefined'
-                })
-            )
+            const cleanItem = cleanObject(item)
             const timestamp = dayjs().format('YYYY-MM-DD HH:mm:ss')
             cleanItem.addedAt = cleanItem.addedAt || timestamp
             cleanItem.modifiedAt = timestamp
@@ -139,11 +136,11 @@ export function DBProvider({children}) {
             await runTransaction(db, async transaction => {
                 const sfDoc = await transaction.get(ref)
                 if (sfDoc.exists()) {
-                    transaction.update(ref, {[collection]: newItems})
-                    transaction.update(ref, {modifiedAt: timestamp})
+                    transaction.update(ref, {[collection]: newItems, modifiedAt: timestamp})
                 } else {
                     transaction.set(ref, {[collection]: newItems})
                     transaction.update(ref, {createdAt: timestamp})
+                    transaction.update(ref, {modifiedAt: timestamp})
                 }
             })
         }
@@ -216,19 +213,6 @@ export function DBProvider({children}) {
         })
     }, [dbError, user])
 
-    const updateProfileFieldX = useCallback(async (key, value) => {
-        if (dbError) return false
-        const ref = doc(db, 'lockcollections', user.uid)
-        await runTransaction(db, async transaction => {
-            const sfDoc = await transaction.get(ref)
-            if (!sfDoc.exists()) {
-                transaction.set(ref, {[key]: value})
-            } else {
-                transaction.update(ref, {[key]: value})
-            }
-        })
-    }, [dbError, user])
-
     const updateProfileDisplayName = useCallback(async (displayName) => {
         const ref = doc(db, 'lockcollections', user.uid)
         if (displayName) {
@@ -265,6 +249,5 @@ export function DBProvider({children}) {
         </DBContext.Provider>
     )
 }
-
 
 export default DBContext

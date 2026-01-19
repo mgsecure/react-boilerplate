@@ -8,12 +8,13 @@ import DBContext from '../app/DBContext.jsx'
 import AuthContext from '../app/AuthContext.jsx'
 import DemoBar from '../profile/DemoBar.jsx'
 import MustBeLoggedIn from '../profile/MustBeLoggedIn.jsx'
-import Brews from '../brews/Brews.jsx'
+import DataContext from '../context/DataContext.jsx'
 
 export default function EquipmentPage() {
     const {isMobile} = useWindowSize()
-    const {userProfile = {}, demoEnabled} = useContext(DBContext)
+    const {demoEnabled} = useContext(DBContext)
     const {isLoggedIn} = useContext(AuthContext)
+    const {visibleEntries = []} = useContext(DataContext)
 
     const extras = (
         <React.Fragment>
@@ -33,7 +34,7 @@ export default function EquipmentPage() {
 
             {!isLoggedIn && !demoEnabled
                 ? <MustBeLoggedIn actionText={'track your gear'}/>
-                : <Equipment machines={userProfile.equipment}/>
+                : <Equipment machines={visibleEntries}/>
             }
 
             <Tracker feature='equipment'/>

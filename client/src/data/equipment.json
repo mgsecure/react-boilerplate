@@ -285,6 +285,13 @@
     "fullName": "Bialetti Moka Pot"
   },
   {
+    "id": "7eb3b0b8",
+    "type": "French Press",
+    "brand": "Bialetti",
+    "model": "Preziosa",
+    "fullName": "Bialetti Preziosa"
+  },
+  {
     "id": "40ba6066",
     "type": "Drip",
     "brand": "BLACK+DECKER",
@@ -305,11 +312,32 @@
     "fullName": "Bodum Bistro"
   },
   {
+    "id": "92fd125d",
+    "type": "French Press",
+    "brand": "Bodum",
+    "model": "Brazil",
+    "fullName": "Bodum Brazil"
+  },
+  {
     "id": "9f730f96",
     "type": "Grinder",
     "brand": "Bodum",
     "model": "C-Mill Electric Coffee Grinder",
     "fullName": "Bodum C-Mill Electric Coffee Grinder"
+  },
+  {
+    "id": "a1996fbf",
+    "type": "French Press",
+    "brand": "Bodum",
+    "model": "Chambord",
+    "fullName": "Bodum Chambord"
+  },
+  {
+    "id": "972a7b0a",
+    "type": "French Press",
+    "brand": "Bodum",
+    "model": "Java",
+    "fullName": "Bodum Java"
   },
   {
     "id": "ab39e26d",
@@ -955,6 +983,27 @@
     "fullName": "ESPRO Bloom"
   },
   {
+    "id": "26898110",
+    "type": "French Press",
+    "brand": "ESPRO",
+    "model": "P3",
+    "fullName": "ESPRO P3"
+  },
+  {
+    "id": "3346cbb2",
+    "type": "French Press",
+    "brand": "ESPRO",
+    "model": "P5",
+    "fullName": "ESPRO P5"
+  },
+  {
+    "id": "a9f7e8a9",
+    "type": "French Press",
+    "brand": "ESPRO",
+    "model": "P7",
+    "fullName": "ESPRO P7"
+  },
+  {
     "id": "74affa89",
     "type": "Grinder",
     "brand": "Eureka",
@@ -1037,6 +1086,13 @@
     "brand": "Faema",
     "model": "Legend S/1",
     "fullName": "Faema Legend S/1"
+  },
+  {
+    "id": "39eb9710",
+    "type": "French Press",
+    "brand": "Fellow",
+    "model": "Clara",
+    "fullName": "Fellow Clara"
   },
   {
     "id": "9781c64b",
@@ -1191,6 +1247,12 @@
     "brand": "Hario",
     "model": "V60 Switch",
     "fullName": "Hario V60 Switch"
+  },
+  {
+    "id": "194a0f4d",
+    "type": "French Press",
+    "brand": "Hydro Flask",
+    "fullName": "Hydro Flask"
   },
   {
     "id": "68014e96",
@@ -2026,8 +2088,8 @@
     "id": "1ef7b2f5",
     "type": "Grinder",
     "brand": "Sage",
-    "model": "Dose Control Pro (modded)",
-    "fullName": "Sage Dose Control Pro (modded)"
+    "model": "Dose Control Pro",
+    "fullName": "Sage Dose Control Pro"
   },
   {
     "id": "7f818405",
@@ -2098,6 +2160,12 @@
     "brand": "Saint Anthony Industries",
     "model": "Phoenix70",
     "fullName": "Saint Anthony Industries Phoenix70"
+  },
+  {
+    "id": "b95e1e48",
+    "type": "French Press",
+    "brand": "Secura",
+    "fullName": "Secura"
   },
   {
     "id": "7465e9e0",

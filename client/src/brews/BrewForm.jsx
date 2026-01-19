@@ -19,9 +19,17 @@ import TimePicker from '../misc/TimePicker.jsx'
 import EntryFlags from './EntryFlags.jsx'
 import LogEntryButton from '../entries/LogEntryButton.jsx'
 import FormToggleButtonGroup from '../formUtils/FormToggleButtonGroup.jsx'
+import LoadingDisplayWhiteSmall from '../misc/LoadingDisplayWhiteSmall.jsx'
 
 export default function BrewForm({entry, open, setOpen, action, coffee}) {
-    const {grinderList, machineList, coffeesList, brewsList} = useContext(DataContext)
+    const {
+        grinderList,
+        machineList,
+        coffeesList,
+        brewsList,
+        modeDoseUnit,
+        modeTemperatureUnit
+    } = useContext(DataContext)
     const {flexStyle, isMobile} = useWindowSize()
     const {updateCollection} = useContext(DBContext)
     const {isLoggedIn} = useContext(AuthContext)
@@ -117,11 +125,8 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
         })()
         : ''
 
-    const [ratings, setRatings] = useState(entry?.ratings || {})
-    const [ratingsChanged, setRatingsChanged] = useState(false)
-
-    const handleAddNew = useCallback((route) => {
-        navigate(`/${route}/add`)
+    const handleAddNew = useCallback((route, params) => {
+        navigate(`/${route}/add${params ? `?${params}` : ''}`)
     }, [navigate])
 
     const handleFlaggedChange = useCallback(async (event, direction) => {
@@ -132,14 +137,27 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
 
     const handleFormChange = useCallback((event) => {
         const {name, value} = event.target
+        const newForm = {...form}
         if (name === 'coffeeName' && value === '[ add coffee ]') {
             setOpen(false)
-            handleAddNew('coffees')
+            handleAddNew('coffees', undefined)
             return
+        } else if (name === 'grinderName' && value === '[ add grinder ]') {
+            setOpen(false)
+            handleAddNew('equipment', 'type=Grinder')
+            return
+        } else if (name === 'machineName' && value === '[ add machine ]') {
+            setOpen(false)
+            handleAddNew('equipment', undefined)
+            return
+        } else if (name === 'temperature' && !form.temperatureUnit) {
+            newForm.temperatureUnit = modeTemperatureUnit
+        } else if (name === 'dose' && !form.doseUnit) {
+            newForm.doseUnit = modeDoseUnit
         }
         setForm({...form, [name]: value})
         setFormChanged(true)
-    }, [form, handleAddNew, setOpen])
+    }, [form, handleAddNew, modeDoseUnit, modeTemperatureUnit, setOpen])
 
     const handleChangeTime = useCallback((value) => {
         handleFormChange({target: {name: 'brewTime', value}})
@@ -178,7 +196,6 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
             }),
             fullName: entryName({entry: thisCoffee, entryType: 'coffee'}),
             brewedAt: action === 'edit' ? (entry?.brewedAt || entry?.addedAt) : dayjs().format('YYYY-MM-DD HH:mm:ss'),
-            ratings: ratingsChanged ? ratings : entry?.ratings,
             roastDate: form.roastDate ? dayjs(form.roastDate).format('YYYY-MM-DD HH:mm:ss') : undefined,
             brewTime: form.brewTime ? dayjs(form.brewTime).format('YYYY-MM-DD HH:mm:ss') : undefined
         }
@@ -208,10 +225,9 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
         } finally {
             setUploading(false)
         }
-    }, [form, thisCoffee, thisMachine, thisGrinder, ratingsChanged, ratings, entry, action, updateCollection, setOpen])
+    }, [form, thisCoffee, thisMachine, thisGrinder, entry, action, updateCollection, setOpen])
 
     const paddingLeft = !isMobile ? 15 : 15
-
     const requiredStyle = {fontSize: '1.0rem', lineHeight: '1.3rem', fontWeight: 400}
 
     return (
@@ -241,18 +257,22 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
                                                optionsList={[...coffeeNames, '[ add coffee ]']}
                                                multiple={false}
                                                defaultValue={thisCoffee?.fullName || coffee?.fullName || ''}
-                                               size='small' width='100%'/>
+                                               size='small'
+                                               width={isMobile ? 300 : '100%'}/>
                                 </div>
 
                                 <div style={{display: 'flex'}}>
-
-
                                     <div style={{display: flexStyle}}>
                                         <div style={{display: 'flex', marginBottom: 10}}>
                                             <div style={{marginRight: 0, marginTop: 0}}>
                                                 <div style={{fontSize: '1.0rem', marginBottom: 2}}>Dose</div>
                                                 <div style={{display: 'flex'}}>
                                                     <TextField type='number' name='dose'
+                                                               slotProps={{
+                                                                   htmlInput: {
+                                                                       min: 1, step: 1
+                                                                   }
+                                                               }}
                                                                style={{width: 70, marginRight: 5}}
                                                                size='small'
                                                                onChange={handleFormChange} value={form.dose || ''}
@@ -264,6 +284,11 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
                                                 <div style={{fontSize: '1.0rem', marginBottom: 2}}>Yield {ratio}</div>
                                                 <div style={{display: 'flex'}}>
                                                     <TextField type='number' name='yield'
+                                                               slotProps={{
+                                                                   htmlInput: {
+                                                                       min: 1, step: 1
+                                                                   }
+                                                               }}
                                                                style={{width: 70, marginRight: 5}}
                                                                size='small'
                                                                onChange={handleFormChange} value={form.yield || ''}
@@ -280,12 +305,18 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
                                                 <div style={{fontSize: '1.0rem', marginBottom: 2}}>Temperature</div>
                                                 <div style={{display: 'flex'}}>
                                                     <TextField type='number' name='temperature'
+                                                               slotProps={{
+                                                                   htmlInput: {
+                                                                       min: 1, step: 1
+                                                                   }
+                                                               }}
                                                                style={{width: 70, marginRight: 5}}
                                                                size='small'
                                                                onChange={handleFormChange}
                                                                value={form.temperature || ''}
                                                                color='info'/>
-                                                    <FormToggleButtonGroup fieldName={'temperatureUnit'} options={['°C', '°F']}
+                                                    <FormToggleButtonGroup fieldName={'temperatureUnit'}
+                                                                           options={['°C', '°F']}
                                                                            form={form}
                                                                            handleFormChange={handleFormChange}/>
                                                 </div>
@@ -326,8 +357,6 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
                                     }
 
                                 </div>
-
-
                             </div>
 
 
@@ -337,6 +366,7 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
                                     flexDirection: 'column',
                                     placeContent: 'center',
                                     margin: '20px 30px 0px 30px',
+                                    paddingLeft: 5,
                                     borderLeft: '1px solid',
                                     borderColor: lighten(theme.palette.card.add, 0.1)
                                 }}>
@@ -429,8 +459,11 @@ export default function BrewForm({entry, open, setOpen, action, coffee}) {
                                 CANCEL
                             </Button>
                             <Button type='submit' variant='contained' color='info'
-                                    disabled={!saveEnabled} style={{boxShadow: 'none'}}>
-                                SAVE
+                                    disabled={!saveEnabled || uploading} style={{boxShadow: 'none'}}>
+                                {uploading
+                                    ? <LoadingDisplayWhiteSmall size={'small'}/>
+                                    : 'SAVE'
+                                }
                             </Button>
                         </div>
 

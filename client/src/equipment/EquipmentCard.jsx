@@ -1,6 +1,5 @@
 import React, {useCallback, useContext, useEffect, useRef, useState} from 'react'
 import queryString from 'query-string'
-import Tracker from '../app/Tracker.jsx'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import {styled, useTheme} from '@mui/material/styles'
 import Card from '@mui/material/Card'
@@ -8,18 +7,16 @@ import CardContent from '@mui/material/CardContent'
 import CardActions from '@mui/material/CardActions'
 import Collapse from '@mui/material/Collapse'
 import IconButton from '@mui/material/IconButton'
-import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import DBContext from '../app/DBContext.jsx'
 import {enqueueSnackbar} from 'notistack'
-import Menu from '@mui/material/Menu'
-import {Button} from '@mui/material'
 import Link from '@mui/material/Link'
 import ItemDrawer from '../profile/ItemDrawer.jsx'
 import Tooltip from '@mui/material/Tooltip'
 import LogEntryButton from '../entries/LogEntryButton.jsx'
 import DeleteEntryButton from '../entries/DeleteEntryButton.jsx'
 import FieldValue from '../misc/FieldValue.jsx'
+import {useNavigate} from 'react-router-dom'
 
 const ExpandMore = styled((props) => {
     const {expand, ...other} = props
@@ -34,6 +31,7 @@ const ExpandMore = styled((props) => {
 
 export default function EquipmentCard({entry = {}, expanded, onExpand}) {
     const {updateCollection} = useContext(DBContext)
+    const navigate = useNavigate()
     const [scrolled, setScrolled] = useState(false)
     const ref = useRef(null)
     const theme = useTheme()
@@ -81,13 +79,6 @@ export default function EquipmentCard({entry = {}, expanded, onExpand}) {
         setDrawerOpen(true)
     }, [])
 
-    const [anchorEl, setAnchorEl] = useState(null)
-    const handleDeleteConfirm = useCallback((ev) => {
-        ev.preventDefault()
-        ev.stopPropagation()
-        setAnchorEl(ev.currentTarget)
-    }, [])
-
     return (
         <Card
             style={{
@@ -103,6 +94,9 @@ export default function EquipmentCard({entry = {}, expanded, onExpand}) {
                     display: 'flex', placeContent: 'center', textAlign: 'center',
                     alignItems: 'center', padding: 8
                 }}>
+
+                <ItemDrawer item={entry.originalEntry} open={drawerOpen} setOpen={setDrawerOpen} type={'Equipment'}/>
+
                 <Tooltip title='Edit' arrow disableInteractive placement={'top'}>
                     <IconButton onClick={handleDrawerClick} style={{marginRight: 5, marginTop: 8}}>
                         <EditIcon fontSize='small' style={{color: '#eee'}}/>
@@ -119,7 +113,8 @@ export default function EquipmentCard({entry = {}, expanded, onExpand}) {
                         textAlign: 'center',
                         flexGrow: 1
                     }}>
-                        <Link style={{color: '#fff'}} onClick={() => handleDrawerClick()}>
+                        <Link style={{color: '#fff'}}
+                              onClick={() => navigate(`/brews?${entry.type === 'Grinder' ? 'grinderName' : 'machineName'}=${encodeURIComponent(entry.fullName)}`)}>
                             {entryName}
                         </Link>
                     </div>
@@ -136,8 +131,6 @@ export default function EquipmentCard({entry = {}, expanded, onExpand}) {
                 <div style={{width: '100%', display: 'flex', placeItems: 'center'}}>
                 </div>
             </CardActions>
-
-            <ItemDrawer item={entry} open={drawerOpen} setOpen={setDrawerOpen} type={'Equipment'}/>
 
             <Collapse in={expanded} timeout='auto' unmountOnExit>
                 <CardContent style={{display: 'flex', textAlign: 'left', padding: 10, color: '#fff'}}>
@@ -157,8 +150,6 @@ export default function EquipmentCard({entry = {}, expanded, onExpand}) {
                                            size={'small'} style={{marginRight: 8}} tooltipPlacement={'top'}/>
 
                     </div>
-
-                    <Tracker feature='machineDetails' page={entry.name} id={entry.id}/>
                 </CardContent>
             </Collapse>
         </Card>

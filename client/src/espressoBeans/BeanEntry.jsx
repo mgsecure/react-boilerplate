@@ -12,7 +12,6 @@ import CopyLinkToEntryButton from '../entries/CopyLinkToEntryButton'
 import AccordionActions from '@mui/material/AccordionActions'
 import Button from '@mui/material/Button'
 import CopyEntryTextButton from '../entries/CopyEntryTextButton.jsx'
-import Tracker from '../app/Tracker'
 import queryString from 'query-string'
 import CopyEntryIdButton from '../entries/CopyEntryIdButton.jsx'
 import OpenLinkToEntryButton from '../entries/OpenLinkToEntryButton.jsx'
@@ -240,12 +239,6 @@ function BeanEntry({entry, expanded, onExpand}) {
                     <AccordionActions disableSpacing>
                         <div style={{display: 'flex', width: '100%'}}>
                             <div style={{flexGrow: 1, justifyItems: 'left'}}>
-                                {!expandAll && !!search &&
-                                    <Tracker feature='lock' id={entry.id} search={search}/>
-                                }
-                                {!expandAll && !search &&
-                                    <Tracker feature='lock' id={entry.id}/>
-                                }
                                 {beta &&
                                     <>
                                         <CopyEntryIdButton entry={entry}/>

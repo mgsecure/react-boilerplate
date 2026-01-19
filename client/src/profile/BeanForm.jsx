@@ -13,6 +13,7 @@ import {useTheme} from '@mui/material/styles'
 import {roastLevels, currencies} from '../data/equipmentBeans'
 import roasters from '../data/roasters.json'
 import EntryRating from './EntryRating.jsx'
+import cleanObject from '../util/cleanObject'
 
 export default function BeanForm({bean, open}) {
     const {flexStyle, isMobile} = useWindowSize()
@@ -55,7 +56,7 @@ export default function BeanForm({bean, open}) {
         const formCopy = {...form}
         formCopy.altRoaster = !formCopy.altRoaster
         if (formCopy.altRoaster) {
-            formCopy.newRoaster = inputValue?.target?.value
+            formCopy.newRoaster = inputValue
             delete formCopy['roaster']
         } else {
             delete formCopy.newRoaster
@@ -87,11 +88,7 @@ export default function BeanForm({bean, open}) {
         }
         delete formCopy.newRoaster
         delete formCopy.newModel
-        const cleanForm = Object.fromEntries(
-            Object.entries(formCopy).filter(([_key, value]) => {
-                return value !== null && typeof value !== 'undefined'
-            })
-        )
+        const cleanForm = cleanObject(formCopy)
         const flags = bean ? {update: true} : {}
         const message = bean
             ? 'Changes saved!'

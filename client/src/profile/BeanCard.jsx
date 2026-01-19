@@ -1,6 +1,5 @@
 import React, {useCallback, useContext, useEffect, useMemo, useRef, useState} from 'react'
 import queryString from 'query-string'
-import Tracker from '../app/Tracker.jsx'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import {styled, useTheme} from '@mui/material/styles'
 import Card from '@mui/material/Card'
@@ -13,7 +12,6 @@ import DBContext from '../app/DBContext.jsx'
 import {enqueueSnackbar} from 'notistack'
 import Menu from '@mui/material/Menu'
 import {Button} from '@mui/material'
-import {beanFields} from '../data/equipmentBeans'
 import useWindowSize from '../util/useWindowSize.jsx'
 import Stack from '@mui/material/Stack'
 import FieldValue from '../misc/FieldValue.jsx'
@@ -24,6 +22,7 @@ import ItemDrawer from './ItemDrawer.jsx'
 import LogEntryButton from '../entries/LogEntryButton.jsx'
 import Tooltip from '@mui/material/Tooltip'
 import RatingTable from '../misc/RatingTable.jsx'
+import cleanObject from '../util/cleanObject'
 
 const ExpandMore = styled((props) => {
     const {expand, ...other} = props
@@ -79,11 +78,7 @@ export default function BeanCard({entry = {}, expanded, onExpand}) {
     const ratingDimensions = {rating: 'rating'}
 
     const handleUpdate = useCallback(async (entry) => {
-        const cleanEntry = Object.fromEntries(
-            Object.entries(entry).filter(([_key, value]) => {
-                return value !== null && typeof value !== 'undefined'
-            })
-        )
+        const cleanEntry = cleanObject(entry)
         const flags = entry ? {update: true} : {}
         try {
             await updateCollection({collection: 'beans', item: cleanEntry, flags})
@@ -101,8 +96,6 @@ export default function BeanCard({entry = {}, expanded, onExpand}) {
         await handleUpdate(entryCopy)
     }, [entry, handleUpdate, ratings])
 
-    const beanFieldsOther = beanFields.filter(field => !['id', 'roaster', 'name'].includes(field))
-    const moreDetails = Object.keys(entry).some(key => beanFieldsOther.includes(key))
     const notesLines = entry.notes?.split('\n')
     const linkSx = {
         color: '#aaa', textDecoration: 'none', cursor: 'pointer',
@@ -126,7 +119,7 @@ export default function BeanCard({entry = {}, expanded, onExpand}) {
 
     const theme = useTheme()
 
-    const {isMobile, flexStyle} = useWindowSize()
+    const {isMobile} = useWindowSize()
     const detailsDivWidth = isMobile ? 36 : 74
     const flexDirection = isMobile ? 'column' : 'row'
 
@@ -280,8 +273,6 @@ export default function BeanCard({entry = {}, expanded, onExpand}) {
                             </Menu>
                         </div>
                     </div>
-
-                    <Tracker feature='beanDetails' id={entry.id}/>
                 </CardContent>
             </Collapse>
         </Card>

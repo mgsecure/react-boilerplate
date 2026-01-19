@@ -6,6 +6,9 @@ import removeAccents from 'remove-accents'
 import filterEntriesAdvanced from '../filters/filterEntriesAdvanced'
 import searchEntriesForText from '../filters/searchEntriesForText'
 
+let doseUnits = {g: 0}
+let temperatureUnits = {'C': 0}
+
 export function BrewsDataProvider({children, profile}) {
     const {filters: allFilters, advancedFilterGroups} = useContext(FilterContext)
     const {search, sort, expandAll} = allFilters
@@ -20,6 +23,10 @@ export function BrewsDataProvider({children, profile}) {
                 const coffee = profile.coffees?.find(g => g.id === entry.coffee?.id) || entry.coffee || {}
                 const grinder = profile.equipment?.find(g => g.id === entry.grinder?.id) || entry.grinder || {}
                 const machine = profile.equipment?.find(g => g.id === entry.machine?.id) || entry.machine || {}
+
+                const tempUnit = entry.temperatureUnit?.substring(1, 2)
+                if (tempUnit) temperatureUnits[tempUnit] = (temperatureUnits[tempUnit] || 0) + 1
+                if (entry.doseUnit) doseUnits[entry.doseUnit] = (doseUnits[entry.doseUnit] || 0) + 1
 
                 return {
                     ...entry,
@@ -39,6 +46,15 @@ export function BrewsDataProvider({children, profile}) {
                 }
             })
     }, [allEntries, profile.coffees, profile.equipment])
+
+    const modeDoseUnit = Object.entries(doseUnits).reduce((a, b) =>
+        b[1] > a[1] || (b[1] === a[1] && b[0] < a[0]) ? b : a
+    )[0]
+
+    const modeTempUnit = Object.entries(temperatureUnits).reduce((a, b) =>
+        b[1] > a[1] || (b[1] === a[1] && b[0] < a[0]) ? b : a
+    )[0]
+    const modeTemperatureUnit = `º${modeTempUnit}`
 
     const searchedEntries = useMemo(() => {
         return searchEntriesForText(search, mappedEntries)
@@ -98,7 +114,9 @@ export function BrewsDataProvider({children, profile}) {
         expandAll,
         grinderList,
         machineList,
-        coffeesList
+        coffeesList,
+        modeDoseUnit,
+        modeTemperatureUnit
     }), [
         allEntries,
         mappedEntries,
@@ -107,7 +125,9 @@ export function BrewsDataProvider({children, profile}) {
         expandAll,
         grinderList,
         machineList,
-        coffeesList
+        coffeesList,
+        modeDoseUnit,
+        modeTemperatureUnit
     ])
 
     return (

@@ -28,3 +28,9 @@ export const brewFilterFields = [
     {label: 'Grinder', fieldName: 'grinderName'},
     {label: 'Flagged', fieldName: 'isFlagged'},
 ]
+
+export const equipmentFilterFields = [
+    {label: 'Type', fieldName: 'city'},
+    {label: 'Brand', fieldName: 'stateRegion'},
+]
+

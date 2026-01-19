@@ -342,7 +342,8 @@ export function FilterProvider({children, filterFields = []}) {
             ...acc,
             [value.fieldName]: value
         }), {id: {label: 'ID'}}),
-        isSearch, isFiltered,
+        isSearch,
+        isFiltered,
         sort: filters.sort,
         nonFilters,
         // Advanced helpers
@@ -364,7 +365,8 @@ export function FilterProvider({children, filterFields = []}) {
         removeFilters,
         setFilters,
         filterFields,
-        isSearch, isFiltered,
+        isSearch,
+        isFiltered,
         nonFilters,
         advancedFilterGroups,
         setAdvancedFilterGroups,

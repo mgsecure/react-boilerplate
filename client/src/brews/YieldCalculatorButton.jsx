@@ -11,7 +11,8 @@ import {useTheme} from '@mui/material/styles'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import ReplayIcon from '@mui/icons-material/Replay'
 import StopIcon from '@mui/icons-material/Stop'
-import LocalCafeIcon from '@mui/icons-material/LocalCafe'
+import GpsFixedIcon from '@mui/icons-material/GpsFixed'
+import CancelIcon from '@mui/icons-material/Cancel'
 
 import {useStopwatch} from './Stopwatch.jsx'
 
@@ -91,9 +92,9 @@ export default function YieldCalculatorButton() {
 
     return (
         <>
-            <Tooltip title='Yield Calculator' arrow disableFocusListener>
-                <IconButton onClick={handleClick} style={{height: 40, marginTop: 5}}>
-                    <LocalCafeIcon/>
+            <Tooltip title='Dial it in!' arrow disableFocusListener>
+                <IconButton onClick={handleClick} style={{height: 40, width: 40, marginTop: 5}}>
+                    <GpsFixedIcon size='small' style={{height: 20, width: 20}}/>
                 </IconButton>
             </Tooltip>
             <Dialog open={menuOpen} onClose={handleClose}
@@ -104,125 +105,136 @@ export default function YieldCalculatorButton() {
                                 backgroundImage: 'none',
                                 boxShadow: 'none',
                                 padding: 0,
-                                margin: 0,
+                                margin: '-200px 0px 0px 0px',
                                 placeItems: 'center',
                                 placeContent: 'center',
-                                textAlign: 'center'
+                                textAlign: 'center',
+
                             }
                         }
                     }}>
                 <Zoom in={menuOpen}>
-                    <div style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        textAlign: 'center',
-                        backgroundColor: '#333',
-                        border: '2px solid #999',
-                        placeItems: 'center',
-                        paddingTop: '40px',
-                        height: diameter,
-                        width: diameter,
-                        borderRadius: '50%',
-                        margin: '0px 0px 200px 0px'
-                    }}>
-                        <div style={{display: 'flex', placeItems: 'center', marginBottom: 10, width: 250}}>
-                            <div style={{width: 125, placeItems: 'center', padding: 10}}>
-                                <div style={{
-                                    display: 'flex',
-                                    alignItems: 'flex-end',
-                                    fontSize: '1.2rem',
-                                    fontWeight: 600,
-                                    marginBottom: 4
-                                }}>
-                                    <div style={{margin: '0px 2px 0px 7px'}}>Dose</div>
-                                    <LockedIcon variable={'dose'} locked={locked} setLocked={setLocked}/>
-                                </div>
-                                <TextField type='number' name='dose' style={{width: 75}}
-                                           size='small' color='info'
-                                           onChange={handleFormChange} value={form.dose || ''}
-                                           sx={{input: {textAlign: 'center'}}} tabIndex={1}/>
-                            </div>
-
-                            <div style={{width: 125, placeItems: 'center', padding: 10}}>
-                                <div style={{
-                                    display: 'flex',
-                                    alignItems: 'flex-end',
-                                    fontSize: '1.2rem',
-                                    fontWeight: 600,
-                                    marginBottom: 4
-                                }}>
-                                    <div style={{margin: '0px 2px 0px 7px'}}>Yield</div>
-                                    <LockedIcon variable={'yield'} locked={locked} setLocked={setLocked}/>
-                                </div>
-                                <TextField type='number' name='yield' style={{width: 75}}
-                                           size='small' color='info'
-                                           onChange={handleFormChange} value={form.yield || ''}
-                                           sx={{input: {textAlign: 'center'}}} tabIndex={2}/>
-                            </div>
+                    <div style={{textAlign: 'right'}}>
+                        <div style={{
+                            position: 'absolute',
+                            top: 0,
+                            right: 20
+                        }}>
+                            <IconButton onClick={handleClose} style={{}}>
+                                <CancelIcon fontSize='large' style={{color: alpha(theme.palette.primary.main, 0.6)}}/>
+                            </IconButton>
                         </div>
-
-                        <div style={{display: 'flex', placeItems: 'center', marginBottom: 10}}>
-
-                            <div style={{width: 125, placeItems: 'center'}}>
-                                <div style={{
-                                    display: 'flex',
-                                    placeContent: 'flex-end center',
-                                    fontSize: '1.2rem',
-                                    fontWeight: 600,
-                                    marginBottom: 4
-                                }}>
-                                    <div style={{margin: '0px 2px 0px 7px'}}>Ratio</div>
-                                    <LockedIcon variable={'ratio'} locked={locked} setLocked={setLocked}/>
-                                </div>
-                                <div style={{display: 'flex', placeContent: 'center', marginLeft: 7}}>
-                                    <TextField type='number' name='ratio' style={{width: 75}}
+                        <div style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            textAlign: 'center',
+                            backgroundColor: '#333',
+                            border: '2px solid #999',
+                            placeItems: 'center',
+                            paddingTop: 60,
+                            height: diameter,
+                            width: diameter,
+                            borderRadius: '50%',
+                            margin: '0px 0px 0px 0px'
+                        }}>
+                            <div style={{display: 'flex', placeItems: 'center', marginBottom: 10, width: 250}}>
+                                <div style={{width: 125, placeItems: 'center'}}>
+                                    <div style={{
+                                        display: 'flex',
+                                        placeContent: 'flex-end center',
+                                        fontSize: '1.2rem',
+                                        fontWeight: 600,
+                                        marginBottom: 4
+                                    }}>
+                                        <div style={{margin: '0px 2px 0px 7px'}}>Dose</div>
+                                        <LockedIcon variable={'dose'} locked={locked} setLocked={setLocked}/>
+                                    </div>
+                                    <TextField type='number' name='dose' style={{width: 75}}
                                                size='small' color='info'
-                                               onChange={handleFormChange} value={form.ratio || ''}
+                                               onChange={handleFormChange} value={form.dose || ''}
+                                               sx={{input: {textAlign: 'center'}}} tabIndex={1}/>
+                                </div>
+
+                                <div style={{width: 125, placeItems: 'center'}}>
+                                    <div style={{
+                                        display: 'flex',
+                                        placeContent: 'flex-end center',
+                                        fontSize: '1.2rem',
+                                        fontWeight: 600,
+                                        marginBottom: 4
+                                    }}>
+                                        <div style={{margin: '0px 2px 0px 7px'}}>Yield</div>
+                                        <LockedIcon variable={'yield'} locked={locked} setLocked={setLocked}/>
+                                    </div>
+                                    <TextField type='number' name='yield' style={{width: 75}}
+                                               size='small' color='info'
+                                               onChange={handleFormChange} value={form.yield || ''}
                                                sx={{input: {textAlign: 'center'}}} tabIndex={2}/>
-                                    <div style={{fontSize: '1.2rem', fontWeight: 500, margin: 4}}>:1</div>
                                 </div>
                             </div>
 
-                            <div style={{width: 125, placeItems: 'center', padding: 10}}>
-                                <div style={{
-                                    display: 'flex',
-                                    alignItems: 'flex-end',
-                                    fontSize: '1.2rem',
-                                    fontWeight: 600,
-                                    marginBottom: 4
-                                }}>
-                                    <div style={{margin: '0px 2px 0px 0px'}}>Stopwatch</div>
+                            <div style={{display: 'flex', placeItems: 'center', marginBottom: 10}}>
+                                <div style={{width: 125, placeItems: 'center'}}>
+                                    <div style={{
+                                        display: 'flex',
+                                        placeContent: 'flex-end center',
+                                        fontSize: '1.2rem',
+                                        fontWeight: 600,
+                                        marginBottom: 4
+                                    }}>
+                                        <div style={{margin: '0px 2px 0px 7px'}}>Ratio</div>
+                                        <LockedIcon variable={'ratio'} locked={locked} setLocked={setLocked}/>
+                                    </div>
+                                    <div style={{display: 'flex', placeContent: 'center', marginLeft: 7}}>
+                                        <TextField type='number' name='ratio' style={{width: 75}}
+                                                   size='small' color='info'
+                                                   onChange={handleFormChange} value={form.ratio || ''}
+                                                   sx={{input: {textAlign: 'center'}}} tabIndex={2}/>
+                                        <div style={{fontSize: '1.2rem', fontWeight: 500, margin: 4}}>:1</div>
+                                    </div>
                                 </div>
-                                <div style={{
-                                    display: 'flex', placeItems: 'center', height: 40,
-                                    fontSize: '1.1rem', fontWeight: 600, border: '1px solid',
-                                    borderColor: alpha(theme.palette.primary.main, 0.3), borderRadius: 5,
-                                    padding: '0px 10px'
-                                }}>
-                                    {formattedTimeMS}
-                                </div>
-                            </div>
 
-                        </div>
-                        <div>
-                            <IconButton
-                                onClick={running ? stop : start}
-                                size='large'
-                                style={{
-                                    color: running ? theme.palette.warning.main : theme.palette.info.main,
-                                    backgroundColor: alpha(theme.palette.primary.main, 0.2),
-                                    marginTop: 10, marginRight: 15
-                                }}>
-                                {running ? <StopIcon/> : <PlayArrowIcon/>}
-                            </IconButton>
-                            <IconButton onClick={reset} disabled={!duration || running}
-                                        size='large'
-                                        style={{
-                                            backgroundColor: alpha(theme.palette.primary.main, 0.3),
-                                            marginTop: 10
-                                        }}>
-                                <ReplayIcon/>
-                            </IconButton>
+                                <div style={{width: 125, placeItems: 'center', padding: 10}}>
+                                    <div style={{
+                                        display: 'flex',
+                                        alignItems: 'flex-end',
+                                        fontSize: '1.2rem',
+                                        fontWeight: 600,
+                                        marginBottom: 4
+                                    }}>
+                                        <div style={{margin: '0px 2px 0px 0px'}}>Stopwatch</div>
+                                    </div>
+                                    <div style={{
+                                        display: 'flex', placeItems: 'center', height: 40,
+                                        fontSize: '1.1rem', fontWeight: 600, border: '1px solid',
+                                        borderColor: alpha(theme.palette.primary.main, 0.3), borderRadius: 5,
+                                        padding: '0px 10px'
+                                    }}>
+                                        {formattedTimeMS}
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div>
+                                <IconButton
+                                    onClick={running ? stop : start}
+                                    size='large'
+                                    style={{
+                                        color: running ? theme.palette.warning.main : theme.palette.info.main,
+                                        backgroundColor: alpha(theme.palette.primary.main, 0.2),
+                                        marginTop: 10, marginRight: 15
+                                    }}>
+                                    {running ? <StopIcon/> : <PlayArrowIcon/>}
+                                </IconButton>
+                                <IconButton onClick={reset} disabled={!duration || running}
+                                            size='large'
+                                            style={{
+                                                backgroundColor: alpha(theme.palette.primary.main, 0.3),
+                                                marginTop: 10
+                                            }}>
+                                    <ReplayIcon/>
+                                </IconButton>
+                            </div>
                         </div>
                     </div>
                 </Zoom>

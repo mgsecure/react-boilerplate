@@ -1,5 +1,4 @@
 import React, {useContext} from 'react'
-import Tracker from '../app/Tracker'
 import useWindowSize from '../util/useWindowSize'
 import Nav from '../nav/Nav'
 import DataContext from '../context/DataContext.jsx'
@@ -22,7 +21,6 @@ export default function AddCoffee() {
             <div style={{marginBottom: 16}}/>
             <CoffeeForm entries={visibleEntries}/>
 
-            <Tracker feature='brews'/>
         </React.Fragment>
     )
 }

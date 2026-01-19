@@ -1,4 +1,4 @@
-export const machineTypes = ['Grinder', 'Espresso', 'Pour-over', 'Stovetop', 'Drip', 'Other']
+export const machineTypes = ['Grinder', 'Espresso', 'Pour-over', 'French Press', 'Stovetop', 'Drip', 'Other']
 
 export const typeSort = (a, b) => {
     return machineTypes.indexOf(a) - machineTypes.indexOf(b)
@@ -15,4 +15,20 @@ export const beanFields = ['roaster', 'name', 'origin', 'caffeine', 'roastLevel'
 
 export const roastLevels = ['Light', 'Light/Medium', 'Medium', 'Medium/Dark', 'Dark']
 
-export const currencies = ['EUR (€)',  'USD ($)', 'divider', 'ARS ($)', 'AUD (A$)', 'CAD (C$)', 'CHF (CHF)', 'GBP (£)', 'IDR (Rp)', 'INR (₹)', 'JPY (¥)', 'NOK (kr)', 'NZD (NZ$)', 'SEK (kr)', 'SGD (S$)']
+export const currencies = [
+    'EUR (€)',
+    'USD ($)',
+    'divider',
+    'ARS ($)',
+    'AUD (A$)',
+    'CAD (C$)',
+    'CHF (CHF)',
+    'GBP (£)',
+    'IDR (Rp)',
+    'INR (₹)',
+    'JPY (¥)',
+    'NOK (kr)',
+    'NZD (NZ$)',
+    'SEK (kr)',
+    'SGD (S$)'
+]

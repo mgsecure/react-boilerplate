@@ -1,9 +1,8 @@
 import React, {useContext} from 'react'
-import {brewFilterFields} from '../data/filterFields'
+import {equipmentFilterFields} from '../data/filterFields'
 import {FilterProvider} from '../context/FilterContext.jsx'
 import usePageTitle from '../util/usePageTitle'
 import DataProvider from './EquipmentDataProvider.jsx'
-import espressoBeans from '../data/espressoBeansDatabase.json'
 import EquipmentPage from './EquipmentPage.jsx'
 import DBContext from '../app/DBContext.jsx'
 
@@ -12,8 +11,8 @@ function EquipmentRoute() {
     const {userProfile = {}} = useContext(DBContext)
 
     return (
-        <FilterProvider filterFields={brewFilterFields}>
-            <DataProvider allEntries={espressoBeans} profile={userProfile}>
+        <FilterProvider filterFields={equipmentFilterFields}>
+            <DataProvider allEntries={userProfile?.equipment} profile={userProfile}>
                 <EquipmentPage/>
             </DataProvider>
         </FilterProvider>

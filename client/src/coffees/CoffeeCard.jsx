@@ -1,6 +1,5 @@
 import React, {useCallback, useContext, useEffect, useMemo, useRef, useState} from 'react'
 import queryString from 'query-string'
-import Tracker from '../app/Tracker.jsx'
 import {useTheme} from '@mui/material/styles'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
@@ -29,6 +28,7 @@ import FilterContext from '../context/FilterContext.jsx'
 import {useNavigate} from 'react-router-dom'
 import dayjs from 'dayjs'
 import {flagSort} from '../data/equipmentBeans'
+import cleanObject from '../util/cleanObject'
 
 export default function CoffeeCard({entry = {}, expanded, onExpand}) {
     const {updateCollection} = useContext(DBContext)
@@ -39,7 +39,6 @@ export default function CoffeeCard({entry = {}, expanded, onExpand}) {
     const navigate = useNavigate()
 
     const action = 'edit'
-
     const ratings = useMemo(() => entry.ratings || {}, [entry])
     const ratingDimensions = {rating: 'rating'}
     const ratingDimensionsFull = {
@@ -60,7 +59,7 @@ export default function CoffeeCard({entry = {}, expanded, onExpand}) {
     const latestBrew = sortedBrews[0] || null
     const bestBrew = bestBrews[0] || null
     const [brewType, setBrewType] = useState('latest')
-    
+
     const changeBrewType = useCallback((type) => {
         setBrewType(type)
     },[])
@@ -72,11 +71,7 @@ export default function CoffeeCard({entry = {}, expanded, onExpand}) {
     const currencySymbol = entry.priceUnit?.match(/(\w{3})\s\((.*)\)/)[2]
 
     const handleUpdate = useCallback(async (entry) => {
-        const cleanEntry = Object.fromEntries(
-            Object.entries(entry).filter(([_key, value]) => {
-                return value !== null && typeof value !== 'undefined'
-            })
-        )
+        const cleanEntry = cleanObject(entry)
         const flags = entry ? {update: true} : {}
         try {
             await updateCollection({collection: 'coffees', item: cleanEntry, flags})
@@ -88,7 +83,7 @@ export default function CoffeeCard({entry = {}, expanded, onExpand}) {
 
     const handleRatingChange = useCallback(async ({dimension, rating}) => {
         const entryCopy = {
-            ...entry,
+            ...entry.originalEntry,
             ratings: {...ratings, [dimension]: rating}
         }
         await handleUpdate(entryCopy)
@@ -175,6 +170,7 @@ export default function CoffeeCard({entry = {}, expanded, onExpand}) {
             id={entry.id}
             ref={ref}>
             <CardContent style={{display: flexStyle, placeItems: 'center', padding: 10, width: '100%'}}>
+
                 <ItemDrawer item={entry.originalEntry} open={drawerOpen} setOpen={setDrawerOpen} type={'Coffee'}
                             action={action}/>
 
@@ -208,28 +204,28 @@ export default function CoffeeCard({entry = {}, expanded, onExpand}) {
                                 </div>
                             </div>
                         </div>
-                        <div style={{marginRight: 0}}>
-                            <div style={{display: 'flex', marginBottom: 0, width: 250, placeItems: 'center'}}>
-                                <RatingTable ratingDimensions={ratingDimensions} onRatingChange={handleRatingChange}
-                                             ratings={ratings} emptyColor={'#555'} showLabel={false}
-                                             fontSize={'0.85rem'} size={20} paddingData={0} iconsCount={10}/>
-                            </div>
-                        </div>
                         <div style={{display: 'flex', placeContent: 'center', marginBottom: 0}}>
                             <Button onClick={handleChange}
                                     style={{width: 115}}>{expanded ? 'Hide' : 'Show'} Details</Button>
                             <Button onClick={handleDrawerClick}>Edit</Button>
                         </div>
+                        <div style={{marginRight: 0}}>
+                            <div style={{display: 'flex', marginBottom: 0, width: 230, placeItems: 'center'}}>
+                                <RatingTable ratingDimensions={ratingDimensions} onRatingChange={handleRatingChange}
+                                             ratings={ratings} emptyColor={'#555'} showLabel={false}
+                                             fontSize={'0.85rem'} size={20} paddingData={0} iconsCount={10}/>
+                            </div>
+                        </div>
                         {(sort === 'price' || sort === 'priceAsc') &&
                             <div style={{marginLeft: 10}}>
                                 {modeWeightUnit === 'oz'
-                                    ? <FieldValue name='Price per pound'
+                                    ? <FieldValue name='Price/pound'
                                                   value={entry.pricePound ? parseFloat(entry.pricePound).toFixed(2) : null}
-                                                  prefix={`${currencySymbol} `} suffix={` ${currencyDescription}`}
+                                                  prefix={`${currencySymbol} `}
                                                   style={{marginRight: 24}}/>
-                                    : <FieldValue name='Price per 100g'
+                                    : <FieldValue name='Price/100g'
                                                   value={entry.price100g ? parseFloat(entry.price100g).toFixed(2) : null}
-                                                  prefix={`${currencySymbol} `} suffix={` ${currencyDescription}`}
+                                                  prefix={`${currencySymbol} `}
                                                   style={{marginRight: 24}}/>
                                 }
                             </div>
@@ -335,7 +331,7 @@ export default function CoffeeCard({entry = {}, expanded, onExpand}) {
                             }}>
                             <Tooltip title='Edit' arrow disableFocusListener placement='top'>
                                 <IconButton onClick={handleDrawerClick} style={{marginRight: 2}}>
-                                    <EditIcon fontSize='medium' style={{color: '#eee'}}/>
+                                    <EditIcon fontSize='small' style={{color: '#eee'}}/>
                                 </IconButton>
                             </Tooltip>
                             <DeleteEntryButton entry={entry} entryType={'Coffee'} handleDelete={handleDelete}
@@ -344,8 +340,6 @@ export default function CoffeeCard({entry = {}, expanded, onExpand}) {
 
                         </div>
                     </div>
-
-                    <Tracker feature='beanDetails' id={entry.id}/>
                 </CardContent>
             </Collapse>
         </Card>

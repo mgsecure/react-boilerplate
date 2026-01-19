@@ -10,14 +10,12 @@ import FilterChip from '../filters/FilterChip'
 import AccordionActions from '@mui/material/AccordionActions'
 import OpenLinkInNewTabButton from '../misc/OpenLinkInNewTabButton.jsx'
 import CopyEntryTextButton from '../entries/CopyEntryTextButton'
-import Tracker from '../app/Tracker'
 import queryString from 'query-string'
 import CopyEntryIdButton from '../entries/CopyEntryIdButton.jsx'
 import OpenLinkToEntryButton from '../entries/OpenLinkToEntryButton.jsx'
 import DataContext from '../context/DataContext.jsx'
 import LogEntryButton from '../entries/LogEntryButton.jsx'
 import useWindowSize from '../util/useWindowSize.jsx'
-import FilterContext from '../context/FilterContext.jsx'
 import isValidUrl from '../util/isValidUrl'
 import AppContext from '../app/AppContext.jsx'
 import {useTheme} from '@mui/material/styles'
@@ -26,8 +24,6 @@ import {alpha} from '@mui/material'
 function RoasterEntry({entry, expanded, onExpand}) {
     const {beta} = useContext(AppContext)
     const {expandAll} = useContext(DataContext)
-    const {filters} = useContext(FilterContext)
-    const {search, sort} = filters
     const [scrolled, setScrolled] = useState(false)
     const style = {width: '100%', maxWidth: 800, marginLeft: 'auto', marginRight: 'auto'}
     const ref = useRef(null)

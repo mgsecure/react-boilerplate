@@ -16,14 +16,18 @@ import cleanObject from '../util/cleanObject'
 import AuthContext from '../app/AuthContext.jsx'
 import DataContext from '../context/DataContext.jsx'
 import FormToggleButtonGroup from '../formUtils/FormToggleButtonGroup.jsx'
+import {useNavigate} from 'react-router-dom'
+import LoadingDisplayWhiteSmall from '../misc/LoadingDisplayWhiteSmall.jsx'
+import FilterContext from '../context/FilterContext.jsx'
 
 export default function CoffeeForm({coffee, open, setOpen}) {
     const theme = useTheme()
+    const navigate = useNavigate()
     const {flexStyle, isMobile} = useWindowSize()
     const {updateCollection} = useContext(DBContext)
     const {isLoggedIn} = useContext(AuthContext)
-    const {roastersList, brewsList, modeWeightUnit, modePriceUnit} = useContext(DataContext)
-
+    const {roastersList, modeWeightUnit, modePriceUnit} = useContext(DataContext)
+    const {sort} = useContext(FilterContext)
     const baseForm = useMemo(() => {
         return {
             ...coffee,
@@ -35,9 +39,6 @@ export default function CoffeeForm({coffee, open, setOpen}) {
     const [form, setForm] = useState(coffee ? baseForm : {id: `c_${genHexString(8)}`})
     const [formChanged, setFormChanged] = useState(false)
     const [uploading, setUploading] = useState(false)
-    const saveEnabled = useMemo(() => {
-        return isLoggedIn && formChanged && form.name && (form.roasterName || form.newRoasterName) && !uploading
-    },[form.name, form.newRoasterName, form.roasterName, formChanged, isLoggedIn, uploading])
 
     const [inputValue, setInputValue] = useState(coffee?.roaster?.name || '')
     useEffect(() => {
@@ -49,8 +50,6 @@ export default function CoffeeForm({coffee, open, setOpen}) {
 
     const [roasterReset, setRoasterReset] = useState(false)
     const [inputValueOverride, setInputValueOverride] = useState(false)
-    const latestBrew = brewsList?.length > 0 ? brewsList[0] : {}
-    const doseUnitDefault = latestBrew.doseUnit || 'g'
 
     const roasterNames = useMemo(() => {
         return roastersList.map((roaster) => roaster.name)
@@ -72,14 +71,18 @@ export default function CoffeeForm({coffee, open, setOpen}) {
 
     const handleFormChange = useCallback((event) => {
         let {name, value} = event.target
-
+        const newForm = {...form}
         const checkboxes = ['decaf']
         if (checkboxes.includes(event.target.name)) {
             value = !form[name]
+        } else if (name === 'weight' && !form.weightUnit) {
+            newForm.weightUnit = modeWeightUnit
+        } else if (name === 'price' && !form.priceUnit) {
+            newForm.priceUnit = modePriceUnit
         }
-        setForm({...form, [name]: value})
+        setForm({...newForm, [name]: value})
         setFormChanged(true)
-    }, [form])
+    }, [form, modePriceUnit, modeWeightUnit])
 
     const handleAltRoasterToggle = useCallback(() => {
         setRoasterReset(!roasterReset)
@@ -87,7 +90,7 @@ export default function CoffeeForm({coffee, open, setOpen}) {
         const formCopy = {...form}
         formCopy.altRoaster = !formCopy.altRoaster
         if (formCopy.altRoaster) {
-            formCopy.newRoasterName = inputValue?.target?.value
+            formCopy.newRoasterName = inputValue
             delete formCopy['roaster']
         } else {
             delete formCopy.newRoasterName
@@ -117,20 +120,27 @@ export default function CoffeeForm({coffee, open, setOpen}) {
         setRatingsChanged(true)
     }, [ratings])
 
+    const handleComplete = useCallback(() => {
+        if (open) setOpen(false)
+        else navigate('/coffees')
+    }, [navigate, open, setOpen])
+
     const handleReload = useCallback(() => {
         setRoasterReset(!roasterReset)
         setInputValueOverride(!inputValueOverride)
         setForm({id: `c_${genHexString(8)}`})
         setUploading(false)
         document.activeElement.blur()
-        setOpen(false)
-    }, [inputValueOverride, roasterReset, setOpen])
+        handleComplete()
+    }, [handleComplete, inputValueOverride, roasterReset])
+
+    const saveEnabled = useMemo(() => {
+        return isLoggedIn && (formChanged || ratingsChanged) && form.name && (form.roasterName || form.newRoasterName) && !uploading
+    }, [form.name, form.newRoasterName, form.roasterName, formChanged, isLoggedIn, ratingsChanged, uploading])
 
     const handleSubmit = useCallback(async (event) => {
         event.preventDefault()
         setUploading(true)
-
-        // todo: save default units here or DBContext
 
         const roasterName = thisRoaster?.name || coffee?.roaster?.name || form.newRoasterName || 'Unknown Roaster'
         const fullName = roasterName !== 'Unknown Roaster'
@@ -161,14 +171,13 @@ export default function CoffeeForm({coffee, open, setOpen}) {
         }
 
         delete formCopy.originalEntry
+        delete formCopy.brews
         delete formCopy.roasterName
         delete formCopy.newRoasterName
-        const cleanForm = Object.fromEntries(
-            Object.entries(formCopy).filter(([_key, value]) => {
-                return value !== null && typeof value !== 'undefined'
-            })
-        )
-        const flags = coffee ? {update: true} : {}
+        const cleanForm = cleanObject(formCopy)
+        const flags = coffee
+            ? {update: true, merge: true}
+            : {}
         const message = coffee
             ? 'Changes saved!'
             : 'New coffee saved!'
@@ -181,7 +190,7 @@ export default function CoffeeForm({coffee, open, setOpen}) {
         } finally {
             setUploading(false)
             handleReload()
-            setTimeout(() => {
+            if (!sort) setTimeout(() => {
                 window.scrollTo({
                     left: 0,
                     top: 0,
@@ -190,16 +199,11 @@ export default function CoffeeForm({coffee, open, setOpen}) {
             }, 100)
             setOpen(false)
         }
-    }, [form, coffee, ratings, updateCollection, handleReload, setOpen, thisRoaster])
+    }, [thisRoaster.name, thisRoaster.id, coffee, form, ratings, updateCollection, handleReload, sort, setOpen])
 
     const roasterBoxOpacity = form.altRoaster > 0 ? 0.5 : 1
     const paddingLeft = !isMobile ? 15 : 15
     const cityMarginTop = (form.roaster && !isMobile) ? 0 : 0
-    const linkSx = {
-        color: '#fff', textDecoration: 'none', cursor: 'pointer', '&:hover': {
-            textDecoration: 'underline'
-        }
-    }
     const requiredStyle = {fontSize: '1.0rem', lineHeight: '1.3rem', fontWeight: 400}
 
     return (
@@ -212,7 +216,12 @@ export default function CoffeeForm({coffee, open, setOpen}) {
                     <div style={{paddingLeft: paddingLeft, color: theme.palette.text.primary}}>
                         <div style={{marginTop: 15, marginRight: 10}}>
                             <div style={{marginRight: 0, marginTop: 0}}>
-                                <div style={{fontSize: '1.1rem', lineHeight: '1.3rem', fontWeight: 500, marginBottom: 3}}>
+                                <div style={{
+                                    fontSize: '1.1rem',
+                                    lineHeight: '1.3rem',
+                                    fontWeight: 500,
+                                    marginBottom: 3
+                                }}>
                                     Coffee Name <span style={requiredStyle}>(Required)</span>
                                 </div>
                                 <TextField type='text' name='name' fullWidth style={{minWidth: 300}}
@@ -228,8 +237,13 @@ export default function CoffeeForm({coffee, open, setOpen}) {
                                 <div style={{marginTop: 10, minWidth: 350}}>
                                     <Collapse in={!form.altRoaster}>
                                         <div style={{marginRight: 10}}>
-                                            <div style={{fontSize: '1.1rem', lineHeight: '1.3rem', fontWeight: 500, marginBottom: 3}}>
-                                                Choose Roaster
+                                            <div style={{
+                                                fontSize: '1.1rem',
+                                                lineHeight: '1.3rem',
+                                                fontWeight: 500,
+                                                marginBottom: 3
+                                            }}>
+                                                Roaster Name <span style={requiredStyle}>(Required)</span>
                                             </div>
                                             <AutoCompleteBox changeHandler={handleFormChange}
                                                              options={roasterNames || []}
@@ -380,13 +394,14 @@ export default function CoffeeForm({coffee, open, setOpen}) {
                                     <Checkbox onChange={handleFormChange}
                                               name='decaf' id='decaf'
                                               checked={form.decaf || false} color='info'
-                                              size='small' style={{marginBottom:3}}/>
-                                    <Link style={{color: theme.palette.text.primary, marginBottom:1}} onClick={() => handleFormChange({
-                                        target: {
-                                            name: 'decaf',
-                                            value: !form.decaf
-                                        }
-                                    })}>Decaf</Link>
+                                              size='small' style={{marginBottom: 3}}/>
+                                    <Link style={{color: theme.palette.text.primary, marginBottom: 1}}
+                                          onClick={() => handleFormChange({
+                                              target: {
+                                                  name: 'decaf',
+                                                  value: !form.decaf
+                                              }
+                                          })}>Decaf</Link>
                                 </div>
                             </div>
                         </div>
@@ -464,8 +479,11 @@ export default function CoffeeForm({coffee, open, setOpen}) {
                                 CANCEL
                             </Button>
                             <Button type='submit' variant='contained' color='info'
-                                    disabled={!saveEnabled} style={{boxShadow: 'none'}}>
-                                SAVE
+                                    disabled={!saveEnabled || uploading} style={{boxShadow: 'none'}}>
+                                {uploading
+                                    ? <LoadingDisplayWhiteSmall size={'small'}/>
+                                    : 'SAVE'
+                                }
                             </Button>
                         </div>
 
